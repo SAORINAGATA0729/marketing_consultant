@@ -119,6 +119,7 @@
 
 ## スキル一覧
 - `/brand-strategy` - ブランド戦略分析（ターゲティング〜カスタマージャーニー）
+- `/schedule-interview` - 採用面談の日程調整。Googleカレンダーに面談予定を登録（Google Meet自動発行）。
 - `/interview-report` - 採用面談レポート自動生成（Fireflies→分析→Slack投稿）
 - `/keyword-tree` - KWツリー統合（ペルソナ別KWを統合・MECE判定・コンテンツ種別判定）
 - `/site-renewal` - サイトリニューアル設計（既存サイト→機能ページ・ユースケースLP・SEO記事の全体マップ）
