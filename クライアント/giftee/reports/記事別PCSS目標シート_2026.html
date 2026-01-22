@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>giftee 記事別PC SS目標シート 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        /* Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .summary-card h3 {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-card .value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .summary-card .unit {
+            font-size: 14px;
+            color: #666;
+            margin-left: 4px;
+        }
+
+        .summary-card.target .value { color: #10b981; }
+        .summary-card.current .value { color: #f59e0b; }
+        .summary-card.gap .value { color: #ef4444; }
+        .summary-card.progress .value { color: #667eea; }
+
+        .progress-bar-container {
+            margin-top: 12px;
+            background: #e5e7eb;
+            border-radius: 8px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 8px;
+            transition: width 0.5s ease;
+        }
+
+        /* Strategy Section */
+        .strategy-section {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .strategy-section h2 {
+            font-size: 20px;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .strategy-item {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .strategy-item h4 {
+            font-size: 14px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .strategy-item p {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .strategy-item .number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+
+        /* Table Section */
+        .table-section {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .table-header h2 {
+            font-size: 20px;
+            color: #1a1a2e;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+        }
+
+        .filter-tab {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            border: none;
+            background: #f1f5f9;
+            color: #64748b;
+            transition: all 0.2s;
+        }
+
+        .filter-tab.active {
+            background: #667eea;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 14px 12px;
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #e5e7eb;
+            background: #f8fafc;
+        }
+
+        th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        th:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        td {
+            padding: 14px 12px;
+            font-size: 13px;
+            color: #374151;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .rank {
+            font-weight: 700;
+            color: #667eea;
+            width: 50px;
+        }
+
+        .rank.top3 {
+            color: #f59e0b;
+        }
+
+        .article-name {
+            max-width: 300px;
+        }
+
+        .article-name a {
+            color: #374151;
+            text-decoration: none;
+        }
+
+        .article-name a:hover {
+            color: #667eea;
+            text-decoration: underline;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .tag.btoc {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .tag.btob {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .ss-value {
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .ss-current {
+            color: #64748b;
+        }
+
+        .ss-target {
+            color: #10b981;
+            font-weight: 700;
+        }
+
+        .ss-gap {
+            text-align: right;
+        }
+
+        .ss-gap.positive {
+            color: #ef4444;
+        }
+
+        .ss-gap.achieved {
+            color: #10b981;
+        }
+
+        .mini-progress {
+            width: 80px;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .mini-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #34d399);
+            border-radius: 3px;
+        }
+
+        .action-tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .action-tag.rewrite { background: #fef3c7; color: #92400e; }
+        .action-tag.seo { background: #dbeafe; color: #1e40af; }
+        .action-tag.maintain { background: #d1fae5; color: #065f46; }
+        .action-tag.new { background: #ede9fe; color: #5b21b6; }
+
+        /* Tier badges */
+        .tier-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .tier-s { background: #fef3c7; color: #b45309; }
+        .tier-a { background: #dbeafe; color: #1e40af; }
+        .tier-b { background: #e0e7ff; color: #4338ca; }
+        .tier-c { background: #f1f5f9; color: #64748b; }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 1200px) {
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .strategy-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>giftee 記事別PC SS目標シート</h1>
+        <p class="subtitle">2026年度 PC Sessions 50,000達成に向けた記事別KPI管理</p>
+
+        <!-- Summary Cards -->
+        <div class="summary-grid">
+            <div class="summary-card target">
+                <h3>年間目標</h3>
+                <div class="value">50,000<span class="unit">SS/月</span></div>
+            </div>
+            <div class="summary-card current">
+                <h3>1月着地想定</h3>
+                <div class="value">20,035<span class="unit">SS</span></div>
+                <div style="font-size: 11px; color: #999; margin-top: 4px;">※1/21実績×31/21で換算</div>
+            </div>
+            <div class="summary-card gap">
+                <h3>必要増加分</h3>
+                <div class="value">+29,965<span class="unit">SS</span></div>
+            </div>
+            <div class="summary-card progress">
+                <h3>達成率</h3>
+                <div class="value">40.1<span class="unit">%</span></div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 40.1%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategy Section -->
+        <div class="strategy-section">
+            <h2>戦略サマリー：50,000 SS達成への道筋</h2>
+            <div class="strategy-grid">
+                <div class="strategy-item">
+                    <div class="number">4,190</div>
+                    <h4>Tier S: happy-receive</h4>
+                    <p>最重要記事。季節変動で12月8,299→1月着地4,190。2月以降の回復とCTA最適化でCV貢献も狙う</p>
+                </div>
+                <div class="strategy-item">
+                    <div class="number">6,987</div>
+                    <h4>Tier A: TOP10記事</h4>
+                    <p>PC SS 400以上の上位10記事（着地想定）。リライト・内部リンク強化で各記事+30%増を目指す</p>
+                </div>
+                <div class="strategy-item">
+                    <div class="number">8,858</div>
+                    <h4>Tier B-C: 中堅記事群</h4>
+                    <p>PC SS 15-399の記事群（着地想定）。BtoB記事を中心にリライト優先度をつけ、CV貢献を重視した改善を実施</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Table -->
+        <div class="table-section">
+            <div class="table-header">
+                <h2>記事別PC SS目標一覧（TOP 100）</h2>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" onclick="filterTable('all')">All</button>
+                    <button class="filter-tab" onclick="filterTable('btob')">BtoB</button>
+                    <button class="filter-tab" onclick="filterTable('btoc')">BtoC</button>
+                    <button class="filter-tab" onclick="filterTable('gap')">Gap大</button>
+                </div>
+            </div>
+
+            <table id="articleTable">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>記事名</th>
+                        <th>タイプ</th>
+                        <th>1月着地想定</th>
+                        <th>目標PC SS</th>
+                        <th>Gap</th>
+                        <th>達成率</th>
+                        <th>施策</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Tier S -->
+                    <tr data-type="btoc">
+                        <td class="rank top3">1</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/happy-receive/" target="_blank">もらって嬉しいギフトカード</a><span class="tier-badge tier-s">Tier S</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">4,190</td>
+                        <td class="ss-value ss-target">6,000</td>
+                        <td class="ss-gap positive">+1,810</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 70%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <!-- Tier A: TOP 10 -->
+                    <tr data-type="btoc">
+                        <td class="rank top3">2</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/quocard/" target="_blank">QUOカードとは</a><span class="tier-badge tier-a">Tier A</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">1,261</td>
+                        <td class="ss-value ss-target">1,800</td>
+                        <td class="ss-gap positive">+539</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 70%"></div></div></td>
+                        <td><span class="action-tag rewrite">リライト</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank top3">3</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/amazon-giftcard/" target="_blank">Amazonギフトカードとは</a><span class="tier-badge tier-a">Tier A</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">1,244</td>
+                        <td class="ss-value ss-target">1,700</td>
+                        <td class="ss-gap positive">+456</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 73%"></div></div></td>
+                        <td><span class="action-tag rewrite">リライト</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">4</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/pregnancygift/" target="_blank">産休 ギフト</a><span class="tier-badge tier-a">Tier A</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">863</td>
+                        <td class="ss-value ss-target">1,200</td>
+                        <td class="ss-gap positive">+337</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 72%"></div></div></td>
+                        <td><span class="action-tag rewrite">リライト</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">5</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/welfare-expense-tax/" target="_blank">福利厚生費</a><span class="tier-badge tier-a">Tier A</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">828</td>
+                        <td class="ss-value ss-target">1,200</td>
+                        <td class="ss-gap positive">+372</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 69%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">6</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/aggregation-method/" target="_blank">アンケート結果 まとめ方</a><span class="tier-badge tier-a">Tier A</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">813</td>
+                        <td class="ss-value ss-target">1,100</td>
+                        <td class="ss-gap positive">+287</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 74%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">7</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/departmentstore-giftcertificate/" target="_blank">全国百貨店共通商品券とは</a><span class="tier-badge tier-a">Tier A</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">748</td>
+                        <td class="ss-value ss-target">1,050</td>
+                        <td class="ss-gap positive">+302</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 71%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">8</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/keihyoho/" target="_blank">景表法 わかりやすく</a><span class="tier-badge tier-a">Tier A</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">744</td>
+                        <td class="ss-value ss-target">1,050</td>
+                        <td class="ss-gap positive">+306</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 71%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">9</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/giftcertificate/" target="_blank">商品券 種類</a><span class="tier-badge tier-a">Tier A</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">677</td>
+                        <td class="ss-value ss-target">950</td>
+                        <td class="ss-gap positive">+273</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 71%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">10</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/jcbgiftcard/" target="_blank">JCBギフトカードとは</a><span class="tier-badge tier-a">Tier A</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">574</td>
+                        <td class="ss-value ss-target">800</td>
+                        <td class="ss-gap positive">+226</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 72%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">11</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/jtbgift/" target="_blank">JTB旅行券とは</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">568</td>
+                        <td class="ss-value ss-target">800</td>
+                        <td class="ss-gap positive">+232</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 71%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">12</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/240527-survey/" target="_blank">アンケート回答メール 例文</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">502</td>
+                        <td class="ss-value ss-target">750</td>
+                        <td class="ss-gap positive">+248</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 67%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">13</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/vvgift/" target="_blank">バニラVISAギフトカードとは</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">452</td>
+                        <td class="ss-value ss-target">650</td>
+                        <td class="ss-gap positive">+198</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 70%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">14</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/giftcertificate-mail/" target="_blank">商品券 郵送</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">326</td>
+                        <td class="ss-value ss-target">500</td>
+                        <td class="ss-gap positive">+174</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 65%"></div></div></td>
+                        <td><span class="action-tag rewrite">リライト</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">15</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/linegift/" target="_blank">LINEギフトとは</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">323</td>
+                        <td class="ss-value ss-target">500</td>
+                        <td class="ss-gap positive">+177</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 65%"></div></div></td>
+                        <td><span class="action-tag rewrite">リライト</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">16</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/visagiftcard/" target="_blank">VISAギフトカード 購入</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">311</td>
+                        <td class="ss-value ss-target">450</td>
+                        <td class="ss-gap positive">+139</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 69%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">17</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/rakutengiftcard/" target="_blank">楽天ギフトカードとは</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">274</td>
+                        <td class="ss-value ss-target">400</td>
+                        <td class="ss-gap positive">+126</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 69%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">18</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/survey-request/" target="_blank">アンケート ご協力 お願い 文例</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">239</td>
+                        <td class="ss-value ss-target">400</td>
+                        <td class="ss-gap positive">+161</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 60%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">19</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/insurancebusiness-law/" target="_blank">保険キャンペーン</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">211</td>
+                        <td class="ss-value ss-target">350</td>
+                        <td class="ss-gap positive">+139</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 60%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">20</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/yearendparty-prizes/" target="_blank">忘年会 景品 おすすめ</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">202</td>
+                        <td class="ss-value ss-target">300</td>
+                        <td class="ss-gap positive">+98</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 67%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">21</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/paypaygiftcard/" target="_blank">PayPayポイントコードとは</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">189</td>
+                        <td class="ss-value ss-target">300</td>
+                        <td class="ss-gap positive">+111</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 63%"></div></div></td>
+                        <td><span class="action-tag rewrite">リライト</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">22</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/amazongiftcard-email/" target="_blank">Amazonギフトカード eメールタイプ</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">186</td>
+                        <td class="ss-value ss-target">280</td>
+                        <td class="ss-gap positive">+94</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 66%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">23</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/juten-shien-kofu-kyufu/" target="_blank">住宅支援 交付・給付</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">179</td>
+                        <td class="ss-value ss-target">280</td>
+                        <td class="ss-gap positive">+101</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 64%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">24</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/anniversary-celebration/" target="_blank">周年祝い</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">176</td>
+                        <td class="ss-value ss-target">270</td>
+                        <td class="ss-gap positive">+94</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 65%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">25</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/applegiftcards/" target="_blank">アップルギフトカードとは</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">174</td>
+                        <td class="ss-value ss-target">270</td>
+                        <td class="ss-gap positive">+96</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 64%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">26</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/amazongiftcard-buy/" target="_blank">Amazonギフトカード 購入</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">167</td>
+                        <td class="ss-value ss-target">250</td>
+                        <td class="ss-gap positive">+83</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 67%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">27</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/amazongiftcard-payment/" target="_blank">Amazonギフトカード 支払い方法</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">158</td>
+                        <td class="ss-value ss-target">240</td>
+                        <td class="ss-gap positive">+82</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 67%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">28</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/shohinken-place/" target="_blank">商品券 購入</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">146</td>
+                        <td class="ss-value ss-target">220</td>
+                        <td class="ss-gap positive">+74</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 66%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">29</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/promotional-campaign/" target="_blank">キャンペーン 販促</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">136</td>
+                        <td class="ss-value ss-target">220</td>
+                        <td class="ss-gap positive">+84</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 62%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">30</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/longservice/" target="_blank">永年勤続</a><span class="tier-badge tier-b">Tier B</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">134</td>
+                        <td class="ss-value ss-target">220</td>
+                        <td class="ss-gap positive">+86</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 61%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <!-- Tier C: 31-50 -->
+                    <tr data-type="btoc">
+                        <td class="rank">31</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/digitalgift-receive/" target="_blank">デジタルギフト 受け取り方</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">122</td>
+                        <td class="ss-value ss-target">190</td>
+                        <td class="ss-gap positive">+68</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 64%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">32</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/apology-item/" target="_blank">お詫びの品</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">122</td>
+                        <td class="ss-value ss-target">190</td>
+                        <td class="ss-gap positive">+68</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 64%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">33</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/anniversary-celebration-employee/" target="_blank">周年記念</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">111</td>
+                        <td class="ss-value ss-target">180</td>
+                        <td class="ss-gap positive">+69</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 62%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">34</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/diversity-inclusion/" target="_blank">ダイバーシティ＆インクルージョン</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">105</td>
+                        <td class="ss-value ss-target">160</td>
+                        <td class="ss-gap positive">+55</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 66%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">35</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/amazongiftcard-survey/" target="_blank">Amazonギフトカード アンケート謝礼</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">100</td>
+                        <td class="ss-value ss-target">160</td>
+                        <td class="ss-gap positive">+60</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 63%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">36</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/240313/" target="_blank">X抽選ツールとは</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">90</td>
+                        <td class="ss-value ss-target">150</td>
+                        <td class="ss-gap positive">+60</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 60%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">37</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/240617-survey/" target="_blank">アンケート謝礼 相場</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">87</td>
+                        <td class="ss-value ss-target">150</td>
+                        <td class="ss-gap positive">+41</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 59%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">38</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/winmail/" target="_blank">当選メール</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">59</td>
+                        <td class="ss-value ss-target">100</td>
+                        <td class="ss-gap positive">+41</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 59%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">39</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/retirementgift/" target="_blank">退職 ギフト</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">52</td>
+                        <td class="ss-value ss-target">90</td>
+                        <td class="ss-gap positive">+38</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 58%"></div></div></td>
+                        <td><span class="action-tag rewrite">リライト</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">40</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/salespromotionideas/" target="_blank">販売促進アイデア</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">52</td>
+                        <td class="ss-value ss-target">90</td>
+                        <td class="ss-gap positive">+38</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 58%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">41</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/peerbonus/" target="_blank">ピアボーナスとは</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">51</td>
+                        <td class="ss-value ss-target">90</td>
+                        <td class="ss-gap positive">+39</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 57%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">42</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/digitalgift-list/" target="_blank">デジタルギフト 比較</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">48</td>
+                        <td class="ss-value ss-target">90</td>
+                        <td class="ss-gap positive">+42</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 53%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">43</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/welcomeparty-entertainment/" target="_blank">歓迎会 余興</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">45</td>
+                        <td class="ss-value ss-target">80</td>
+                        <td class="ss-gap positive">+35</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 56%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">44</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/jcb-premo/" target="_blank">JCBプレモカード</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">44</td>
+                        <td class="ss-value ss-target">80</td>
+                        <td class="ss-gap positive">+36</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 55%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">45</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/interview-reward/" target="_blank">インタビュー謝礼</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">42</td>
+                        <td class="ss-value ss-target">80</td>
+                        <td class="ss-gap positive">+38</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 53%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">46</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/amazongiftcard-message/" target="_blank">Amazonギフトカード メッセージ</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">39</td>
+                        <td class="ss-value ss-target">70</td>
+                        <td class="ss-gap positive">+31</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 56%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">47</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/storevisits-promotion/" target="_blank">来店促進</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">38</td>
+                        <td class="ss-value ss-target">70</td>
+                        <td class="ss-gap positive">+32</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 54%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">48</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/companytrip-entertainment/" target="_blank">社員旅行 余興</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">38</td>
+                        <td class="ss-value ss-target">70</td>
+                        <td class="ss-gap positive">+32</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 54%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">49</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/googleplaygiftcards/" target="_blank">グーグルプレイカードとは</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">37</td>
+                        <td class="ss-value ss-target">70</td>
+                        <td class="ss-gap positive">+33</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 53%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">50</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/cataloggifts/" target="_blank">カタログギフト おすすめ</a><span class="tier-badge tier-c">Tier C</span></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">35</td>
+                        <td class="ss-value ss-target">60</td>
+                        <td class="ss-gap positive">+25</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 58%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <!-- 51-100: Remaining articles -->
+                    <tr data-type="btob">
+                        <td class="rank">51</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/company-sports-tournament/" target="_blank">会社 スポーツ大会</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">35</td>
+                        <td class="ss-value ss-target">60</td>
+                        <td class="ss-gap positive">+25</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 58%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">52</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/shinsotsu-welcome-gift-onboarding/" target="_blank">新卒 ウェルカムギフト オンボーディング</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">31</td>
+                        <td class="ss-value ss-target">55</td>
+                        <td class="ss-gap positive">+24</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 56%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">53</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/referral-campaign/" target="_blank">友達紹介キャンペーンとは</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">30</td>
+                        <td class="ss-value ss-target">55</td>
+                        <td class="ss-gap positive">+25</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 55%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">54</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/twitter-instantwin-3tips/" target="_blank">Xインスタントウィンとは</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">29</td>
+                        <td class="ss-value ss-target">50</td>
+                        <td class="ss-gap positive">+21</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 58%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">55</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/digitalgift-howto/" target="_blank">デジタルギフト 使い方</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">28</td>
+                        <td class="ss-value ss-target">50</td>
+                        <td class="ss-gap positive">+22</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 56%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">56</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/twitter-campaign-tips/" target="_blank">Xキャンペーン 事例</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">27</td>
+                        <td class="ss-value ss-target">50</td>
+                        <td class="ss-gap positive">+23</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 54%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">57</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/digital-gift-3tips/" target="_blank">キャンペーン 景品</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">26</td>
+                        <td class="ss-value ss-target">50</td>
+                        <td class="ss-gap positive">+24</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 52%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">58</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/uniqlo-gift-card/" target="_blank">ユニクロギフトカードとは</a></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">25</td>
+                        <td class="ss-value ss-target">45</td>
+                        <td class="ss-gap positive">+20</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 56%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">59</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/instantwin/" target="_blank">インスタントウィンとは</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">25</td>
+                        <td class="ss-value ss-target">50</td>
+                        <td class="ss-gap positive">+25</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 50%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">60</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/aeongiftcard/" target="_blank">イオンギフトカードとは</a></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">23</td>
+                        <td class="ss-value ss-target">40</td>
+                        <td class="ss-gap positive">+17</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 58%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">61</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/campaignplanning/" target="_blank">キャンペーン 企画</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">23</td>
+                        <td class="ss-value ss-target">45</td>
+                        <td class="ss-gap positive">+22</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 51%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">62</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/vmoney/" target="_blank">Vマネー</a></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">22</td>
+                        <td class="ss-value ss-target">40</td>
+                        <td class="ss-gap positive">+18</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 55%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">63</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/corporate-gifts/" target="_blank">法人ギフトとは</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">22</td>
+                        <td class="ss-value ss-target">45</td>
+                        <td class="ss-gap positive">+23</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 49%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">64</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/monitor-reward/" target="_blank">モニター謝礼</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">22</td>
+                        <td class="ss-value ss-target">45</td>
+                        <td class="ss-gap positive">+23</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 49%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">65</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/line-campaign-tips/" target="_blank">LINEキャンペーン 事例</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">22</td>
+                        <td class="ss-value ss-target">45</td>
+                        <td class="ss-gap positive">+23</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 49%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">66</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/240328/" target="_blank">アンケート謝礼</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">22</td>
+                        <td class="ss-value ss-target">45</td>
+                        <td class="ss-gap positive">+23</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 49%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">67</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/mustbuy-campaign/" target="_blank">マストバイキャンペーンとは</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">21</td>
+                        <td class="ss-value ss-target">40</td>
+                        <td class="ss-gap positive">+19</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 53%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">68</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/incentive-design/" target="_blank">インセンティブ 設計</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">21</td>
+                        <td class="ss-value ss-target">40</td>
+                        <td class="ss-gap positive">+19</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 53%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">69</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/toycard/" target="_blank">こども商品券とは</a></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">20</td>
+                        <td class="ss-value ss-target">35</td>
+                        <td class="ss-gap positive">+15</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 57%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">70</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/paypay-buy/" target="_blank">PayPayポイントコード 購入</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">20</td>
+                        <td class="ss-value ss-target">40</td>
+                        <td class="ss-gap positive">+20</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 50%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">71</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/socialgathering-planning/" target="_blank">会社 懇親会 企画</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">18</td>
+                        <td class="ss-value ss-target">35</td>
+                        <td class="ss-gap positive">+17</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 51%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btoc">
+                        <td class="rank">72</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/tiktok-campaign/" target="_blank">TikTokキャンペーンとは</a></td>
+                        <td><span class="tag btoc">BtoC</span></td>
+                        <td class="ss-value ss-current">18</td>
+                        <td class="ss-value ss-target">35</td>
+                        <td class="ss-gap positive">+17</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 51%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">73</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/internal-awards/" target="_blank">社内表彰 景品</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">16</td>
+                        <td class="ss-value ss-target">35</td>
+                        <td class="ss-gap positive">+19</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 46%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">74</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/visitorsgift/" target="_blank">来場者プレゼント</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">16</td>
+                        <td class="ss-value ss-target">30</td>
+                        <td class="ss-gap positive">+14</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 53%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">75</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/giftmarketing/" target="_blank">ギフトマーケティングとは</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">16</td>
+                        <td class="ss-value ss-target">30</td>
+                        <td class="ss-gap positive">+14</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 53%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">76</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/seminar-benefits/" target="_blank">セミナー特典</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">15</td>
+                        <td class="ss-value ss-target">30</td>
+                        <td class="ss-gap positive">+15</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 50%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">77</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/communicationdesignnight/" target="_blank">コミュニケーションデザインナイト</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">15</td>
+                        <td class="ss-value ss-target">25</td>
+                        <td class="ss-gap positive">+10</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 60%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">78</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/quocardpay/" target="_blank">QUOカードPay</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">15</td>
+                        <td class="ss-value ss-target">30</td>
+                        <td class="ss-gap positive">+15</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 50%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">79</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/survey-responserates/" target="_blank">アンケート回答率</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">14</td>
+                        <td class="ss-value ss-target">30</td>
+                        <td class="ss-gap positive">+16</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 47%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">80</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/amazongiftcard-briefing/" target="_blank">企業説明会 Amazonギフト券</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">14</td>
+                        <td class="ss-value ss-target">30</td>
+                        <td class="ss-gap positive">+16</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 47%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">81</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/city-promotion/" target="_blank">シティプロモーションとは</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">14</td>
+                        <td class="ss-value ss-target">30</td>
+                        <td class="ss-gap positive">+16</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 47%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">82</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/receipt-campaign/" target="_blank">レシートキャンペーン</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">13</td>
+                        <td class="ss-value ss-target">30</td>
+                        <td class="ss-gap positive">+17</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 43%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">83</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/kenko-keiei-fukuri-kosei/" target="_blank">健康経営</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">12</td>
+                        <td class="ss-value ss-target">25</td>
+                        <td class="ss-gap positive">+13</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 48%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">84</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/recommended-gifts-spring/" target="_blank">春のおすすめギフト</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">12</td>
+                        <td class="ss-value ss-target">25</td>
+                        <td class="ss-gap positive">+13</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 48%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">85</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/awardsystem/" target="_blank">表彰制度</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">12</td>
+                        <td class="ss-value ss-target">25</td>
+                        <td class="ss-gap positive">+13</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 48%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">86</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/employee-experience/" target="_blank">従業員体験</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">12</td>
+                        <td class="ss-value ss-target">25</td>
+                        <td class="ss-gap positive">+13</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 48%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">87</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/paypay-promotion/" target="_blank">PayPayポイントコード 販促施策</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">12</td>
+                        <td class="ss-value ss-target">25</td>
+                        <td class="ss-gap positive">+13</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 48%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">88</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/mvpaward/" target="_blank">MVP 表彰</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">11</td>
+                        <td class="ss-value ss-target">25</td>
+                        <td class="ss-gap positive">+14</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 44%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">89</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/240607/" target="_blank">Xキャンペーンとは</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">11</td>
+                        <td class="ss-value ss-target">25</td>
+                        <td class="ss-gap positive">+14</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 44%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">90</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/social-gifts/" target="_blank">ソーシャルギフトとは</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">11</td>
+                        <td class="ss-value ss-target">25</td>
+                        <td class="ss-gap positive">+14</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 44%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">91</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/humancapitalmanagement/" target="_blank">人的資本経営とは</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">11</td>
+                        <td class="ss-value ss-target">25</td>
+                        <td class="ss-gap positive">+14</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 44%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">92</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/vpoint/" target="_blank">Vポイント</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">10</td>
+                        <td class="ss-value ss-target">20</td>
+                        <td class="ss-gap positive">+10</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 50%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">93</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/aupaygiftcard/" target="_blank">au PAY ギフトカード</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">10</td>
+                        <td class="ss-value ss-target">20</td>
+                        <td class="ss-gap positive">+10</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 50%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">94</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/sns-campaign/" target="_blank">SNSキャンペーンとは</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">10</td>
+                        <td class="ss-value ss-target">25</td>
+                        <td class="ss-gap positive">+15</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 40%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">95</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/amazongiftcard-charge/" target="_blank">Amazonギフトカード チャージ 方法</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">10</td>
+                        <td class="ss-value ss-target">20</td>
+                        <td class="ss-gap positive">+10</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 50%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">96</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/roundtable-reward/" target="_blank">座談会謝礼</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">9</td>
+                        <td class="ss-value ss-target">20</td>
+                        <td class="ss-gap positive">+11</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 45%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">97</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/digital-gift/" target="_blank">デジタルギフトとは</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">9</td>
+                        <td class="ss-value ss-target">25</td>
+                        <td class="ss-gap positive">+16</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 36%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">98</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/amazongiftcard-merit/" target="_blank">Amazonギフトカード メリット</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">9</td>
+                        <td class="ss-value ss-target">20</td>
+                        <td class="ss-gap positive">+11</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 45%"></div></div></td>
+                        <td><span class="action-tag maintain">維持</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">99</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/line-instantwin-3tips/" target="_blank">LINEインスタントウィンとは</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">9</td>
+                        <td class="ss-value ss-target">25</td>
+                        <td class="ss-gap positive">+16</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 36%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                    <tr data-type="btob">
+                        <td class="rank">100</td>
+                        <td class="article-name"><a href="https://giftee.biz/columns/cataloggift-business/" target="_blank">カタログギフト</a></td>
+                        <td><span class="tag btob">BtoB</span></td>
+                        <td class="ss-value ss-current">9</td>
+                        <td class="ss-value ss-target">20</td>
+                        <td class="ss-gap positive">+11</td>
+                        <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 45%"></div></div></td>
+                        <td><span class="action-tag seo">SEO強化</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="footer">giftee BtoB Marketing Report | Last Updated: 2026/01/21</p>
+    </div>
+
+    <script>
+        function filterTable(type) {
+            const rows = document.querySelectorAll('#articleTable tbody tr');
+            const tabs = document.querySelectorAll('.filter-tab');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            rows.forEach(row => {
+                const rowType = row.getAttribute('data-type');
+                if (type === 'all') {
+                    row.style.display = '';
+                } else if (type === 'btob') {
+                    row.style.display = rowType === 'btob' ? '' : 'none';
+                } else if (type === 'btoc') {
+                    row.style.display = rowType === 'btoc' ? '' : 'none';
+                } else if (type === 'gap') {
+                    // Show rows with gap > 100
+                    const gapCell = row.querySelector('.ss-gap');
+                    const gapValue = parseInt(gapCell.textContent.replace('+', ''));
+                    row.style.display = gapValue > 100 ? '' : 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+[
+  {
+    "company_name": "NOVEL株式会社",
+    "url": "https://www.wantedly.com/companies/company_1207250",
+    "home": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/company_1207250 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x106325820>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))",
+    "about_us": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/company_1207250 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x106325820>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))"
+  },
+  {
+    "company_name": "株式会社メディアファースト",
+    "url": "https://www.wantedly.com/companies/media1st",
+    "home": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/media1st (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x1062822b0>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))",
+    "about_us": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/media1st (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x1062822b0>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))"
+  },
+  {
+    "company_name": "株式会社リーヴオン",
+    "url": "https://www.wantedly.com/companies/company_525282",
+    "home": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/company_525282 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x106282c40>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))",
+    "about_us": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/company_525282 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x106282c40>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))"
+  },
+  {
+    "company_name": "株式会社エアークローゼット",
+    "url": "https://www.wantedly.com/companies/airCloset",
+    "home": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/airCloset (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x10627c670>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))",
+    "about_us": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/airCloset (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x10627c670>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))"
+  },
+  {
+    "company_name": "PROJECT GROUP株式会社",
+    "url": "https://www.wantedly.com/companies/project-lc2012",
+    "home": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/project-lc2012 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x1062827c0>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))",
+    "about_us": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/project-lc2012 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x1062827c0>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))"
+  },
+  {
+    "company_name": "ジャッグジャパン株式会社",
+    "url": "https://www.wantedly.com/companies/jagjapan",
+    "home": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/jagjapan (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x106282130>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))",
+    "about_us": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/jagjapan (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x106282130>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))"
+  },
+  {
+    "company_name": "株式会社AINEXT",
+    "url": "https://www.wantedly.com/companies/company_686692",
+    "home": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/company_686692 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x106325610>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))",
+    "about_us": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/company_686692 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x106325610>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))"
+  },
+  {
+    "company_name": "株式会社エスコプロモーション",
+    "url": "https://www.wantedly.com/companies/company_2055615",
+    "home": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/company_2055615 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x10627c640>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))",
+    "about_us": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/company_2055615 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x10627c640>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))"
+  },
+  {
+    "company_name": "株式会社 サン・クレア",
+    "url": "https://www.wantedly.com/companies/sun-crea",
+    "home": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/sun-crea (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x106270100>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))",
+    "about_us": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/sun-crea (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x106270100>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))"
+  },
+  {
+    "company_name": "株式会社LiNew",
+    "url": "https://www.wantedly.com/companies/company_513077",
+    "home": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/company_513077 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x106270a90>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))",
+    "about_us": "エラー: HTTPSConnectionPool(host='www.wantedly.com', port=443): Max retries exceeded with url: /companies/company_513077 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x106270a90>: Failed to resolve 'www.wantedly.com' ([Errno 8] nodename nor servname provided, or not known)\"))"
+  }
+]

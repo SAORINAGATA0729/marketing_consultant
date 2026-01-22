@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAAAN 稟議承認書 - 採用媒体契約</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        @media print {
+            @page {
+                size: A4;
+                margin: 15mm;
+            }
+            body {
+                background: white;
+                padding: 0;
+            }
+            .no-print {
+                display: none;
+            }
+            .print-break {
+                page-break-after: always;
+            }
+            .print-avoid-break {
+                page-break-inside: avoid;
+            }
+            /* 重要な要素のみ分断を避ける */
+            .amount-box,
+            table thead,
+            table tbody tr {
+                page-break-inside: avoid;
+            }
+            /* セクション間のマージンを調整 */
+            .section {
+                margin-bottom: 20px;
+                page-break-inside: auto;
+            }
+            .content-box {
+                page-break-inside: auto;
+            }
+            /* 表がページをまたぐのを許可 */
+            table {
+                page-break-inside: auto;
+            }
+            /* ヘッダーとコンテンツの間隔を調整 */
+            .header {
+                margin-bottom: 20px;
+                page-break-after: avoid;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .header h3 {
+            margin: 0;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin: 15px 0 20px;
+            line-height: 1.4;
+        }
+
+        .content-box {
+            background: rgba(255,255,255,0.95);
+            padding: 40px;
+            border-radius: 12px;
+            margin-top: 30px;
+            color: #2c3e50;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h3 {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 0 15px;
+            color: #2c3e50;
+        }
+
+        .amount-box {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+            border-radius: 8px;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .amount-box p {
+            margin: 0;
+        }
+
+        .amount-large {
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .amount-medium {
+            font-size: 20px;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #e9ecef;
+            text-align: left;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        td {
+            text-align: right;
+        }
+
+        td:first-child {
+            text-align: left;
+        }
+
+        .info-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .info-box h4 {
+            margin: 0 0 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .info-box p {
+            margin: 0 0 15px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .info-box ul {
+            margin: 0 0 15px;
+            padding-left: 25px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .info-box li {
+            margin-bottom: 8px;
+        }
+
+        .reference-table {
+            margin-top: 25px;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+        }
+
+        .reference-table h4 {
+            margin: 0 0 15px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .reference-table table {
+            font-size: 13px;
+        }
+
+        .highlight-row {
+            background: #e8f4f8;
+        }
+
+        .highlight-row td {
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .calculation-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .calculation-box h5 {
+            margin-top: 0;
+            font-size: 14px;
+        }
+
+        .calculation-box ul {
+            padding-left: 20px;
+            font-size: 12px;
+            margin-bottom: 0;
+        }
+
+        .target-box {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .target-box p {
+            margin: 0;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .simple-box {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #2c3e50;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+                padding: 0;
+            }
+            .header {
+                background: #2c3e50 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .amount-box {
+                background: #c0392b !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .highlight-row {
+                background: #e8f4f8 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .target-box {
+                background: #fff3cd !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h3>稟議承認書</h3>
+        </div>
+
+        <div class="content-box">
+            <!-- 1. 承認してもらいたい金額 -->
+            <div class="section">
+                <h3>1. 今回承認してもらいたい金額</h3>
+                <div class="amount-box">
+                    <p class="amount-large">月額39万円</p>
+                    <p class="amount-medium">年間468万円</p>
+                </div>
+                <table>
+                    <tr style="background: #f8f9fa;">
+                        <th>項目</th>
+                        <th style="text-align: right;">月額</th>
+                        <th style="text-align: right;">年間</th>
+                    </tr>
+                    <tr>
+                        <td>Wantedly プレミアム（12ヶ月）</td>
+                        <td>19万円</td>
+                        <td>228万円</td>
+                    </tr>
+                    <tr>
+                        <td>Wantedly 追加スカウト（100通/2ヶ月）</td>
+                        <td>20万円</td>
+                        <td>240万円</td>
+                    </tr>
+                </table>
+                
+                <!-- Wantedly料金プラン表（参考） -->
+                <div class="reference-table">
+                    <h4>Wantedly基本プラン料金表（税抜・月額）</h4>
+                    <table>
+                        <thead>
+                            <tr style="background: #f8f9fa;">
+                                <th>プラン</th>
+                                <th style="text-align: center;">期間</th>
+                                <th style="text-align: right;">月額料金</th>
+                                <th style="text-align: center;">ダイレクトスカウト通数</th>
+                                <th style="text-align: center;">管理画面人数</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ライト</td>
+                                <td style="text-align: center;">6ヶ月</td>
+                                <td>6万円</td>
+                                <td style="text-align: center;">なし</td>
+                                <td style="text-align: center;">15人</td>
+                            </tr>
+                            <tr>
+                                <td>ライト</td>
+                                <td style="text-align: center;">12ヶ月</td>
+                                <td>5.5万円</td>
+                                <td style="text-align: center;">なし</td>
+                                <td style="text-align: center;">15人</td>
+                            </tr>
+                            <tr>
+                                <td>ライト</td>
+                                <td style="text-align: center;">24ヶ月</td>
+                                <td>5万円</td>
+                                <td style="text-align: center;">なし</td>
+                                <td style="text-align: center;">15人</td>
+                            </tr>
+                            <tr>
+                                <td>スタンダード</td>
+                                <td style="text-align: center;">6ヶ月</td>
+                                <td>15万円</td>
+                                <td style="text-align: center;">150通</td>
+                                <td style="text-align: center;">30人</td>
+                            </tr>
+                            <tr>
+                                <td>スタンダード</td>
+                                <td style="text-align: center;">12ヶ月</td>
+                                <td>14万円</td>
+                                <td style="text-align: center;">300通</td>
+                                <td style="text-align: center;">30人</td>
+                            </tr>
+                            <tr>
+                                <td>スタンダード</td>
+                                <td style="text-align: center;">24ヶ月</td>
+                                <td>13万円</td>
+                                <td style="text-align: center;">600通</td>
+                                <td style="text-align: center;">30人</td>
+                            </tr>
+                            <tr class="highlight-row">
+                                <td>プレミアム</td>
+                                <td style="text-align: center;">6ヶ月</td>
+                                <td>22万円</td>
+                                <td style="text-align: center;">300通</td>
+                                <td style="text-align: center;">無制限</td>
+                            </tr>
+                            <tr class="highlight-row">
+                                <td>プレミアム</td>
+                                <td style="text-align: center;">12ヶ月</td>
+                                <td>19万円</td>
+                                <td style="text-align: center;">600通</td>
+                                <td style="text-align: center;">無制限</td>
+                            </tr>
+                            <tr>
+                                <td>プレミアム</td>
+                                <td style="text-align: center;">24ヶ月</td>
+                                <td>16万円</td>
+                                <td style="text-align: center;">1,200通</td>
+                                <td style="text-align: center;">無制限</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="margin: 15px 0 0; font-size: 12px; color: #666;">
+                        <strong>※重要：</strong>ダイレクトスカウトはスタンダードプラン以上で利用可能。スカウト返信率に応じた割引率の設定あり。
+                    </p>
+                </div>
+                
+                <!-- Wantedly転換率（参考データ） -->
+                <div class="reference-table">
+                    <h4>Wantedly転換率（参考データ）</h4>
+                    <table>
+                        <thead>
+                            <tr style="background: #f8f9fa;">
+                                <th>ステップ</th>
+                                <th style="text-align: center;">転換率</th>
+                                <th style="text-align: center;">月次目標</th>
+                                <th>計算式・備考</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: bold;">スカウト送信</td>
+                                <td style="text-align: center;">-</td>
+                                <td style="text-align: center; font-weight: bold;">100通/月</td>
+                                <td>目標面談数から逆算</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">↓</td>
+                                <td style="text-align: center; font-weight: bold; color: #3498db;">50%</td>
+                                <td style="text-align: center; font-weight: bold;">50件/月</td>
+                                <td>スカウト返信率</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">返信</td>
+                                <td style="text-align: center;">-</td>
+                                <td style="text-align: center; font-weight: bold;">50件/月</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">↓</td>
+                                <td style="text-align: center; font-weight: bold; color: #3498db;">80%</td>
+                                <td style="text-align: center; font-weight: bold;">40件/月</td>
+                                <td>返信→面談化率</td>
+                            </tr>
+                            <tr style="background: #fff3cd;">
+                                <td style="font-weight: bold;">面談実施（KGI）</td>
+                                <td style="text-align: center;">-</td>
+                                <td style="text-align: center; font-weight: bold; color: #e67e22;">40件/月</td>
+                                <td>目標値</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">↓</td>
+                                <td style="text-align: center; font-weight: bold; color: #3498db;">20-30%</td>
+                                <td style="text-align: center; font-weight: bold;">8-12名/月</td>
+                                <td>面談→内定率</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">内定</td>
+                                <td style="text-align: center;">-</td>
+                                <td style="text-align: center; font-weight: bold;">8-12名/月</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">↓</td>
+                                <td style="text-align: center; font-weight: bold; color: #3498db;">80-90%</td>
+                                <td style="text-align: center; font-weight: bold;">6-11名/月</td>
+                                <td>内定→入社率</td>
+                            </tr>
+                            <tr style="background: #e8f5e9;">
+                                <td style="font-weight: bold;">入社決定</td>
+                                <td style="text-align: center;">-</td>
+                                <td style="text-align: center; font-weight: bold; color: #27ae60;">約6-11名/月</td>
+                                <td>理論値</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="calculation-box">
+                        <h5>計算根拠（月次40面談獲得の場合）</h5>
+                        <ul>
+                            <li>面談40件/月 ÷ 面談化率80% = 返信50件/月必要</li>
+                            <li>返信50件/月 ÷ 返信率50% = スカウト100通/月必要</li>
+                            <li>スカウト100通/月 × 3,900円/通 = 39万円/月（プレミアム19万円 + 追加スカウト20万円）</li>
+                            <li>面談40件/月 × 内定率20-30% = 内定8-12名/月</li>
+                            <li>内定8-12名/月 × 入社率80-90% = 入社6-11名/月</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="target-box">
+                        <p>
+                            <strong>📊 目標設定との整合性</strong><br>
+                            <strong>目標：月次40面談以上の獲得（Wantedly実績ベース）</strong><br>
+                            ・スカウト送信：100通/月（返信率50%で50件返信、面談化率80%で40件面談）<br>
+                            ・内定率：面談の20-30%（8-12名/月）<br>
+                            ・入社率：内定者の80-90%（6-11名/月）<br>
+                            ・転換率向上とトライアンドエラーで改善を継続<br>
+                            → 月次で40面談以上を目指す
+                        </p>
+                    </div>
+                </div>
+                
+                        <div class="info-box">
+                    <h4>この組み合わせにした理由</h4>
+                    <p>
+                        <strong>目的：月次40面談以上の獲得</strong>
+                    </p>
+                    <p>
+                        <strong>1. 転換率ロジックから逆算（Wantedly実績ベース）：</strong>
+                    </p>
+                    <ul>
+                        <li>目標：<strong>40件面談/月</strong></li>
+                        <li>返信→面談化率：80% → 40件面談 ÷ 80% = <strong>50件返信/月が必要</strong></li>
+                        <li>スカウト返信率：50% → 50件返信 ÷ 50% = <strong>100通/月のスカウト送信が必要</strong></li>
+                    </ul>
+                    <p>
+                        <strong>2. プラン選択の根拠：</strong>上記料金表の通り、Wantedlyでスカウト100通/月を送信するには、プレミアムプラン（12ヶ月）で600通/年（50通/月）が含まれますが、100通/月を達成するには追加スカウトオプション（100通/2ヶ月 = 50通/月）が必要です。プレミアムプラン（19万円/月）+ 追加スカウト（20万円/月）= 合計39万円/月となります。
+                    </p>
+                    <p>
+                        <strong>3. なぜこのプランを選んだのか：</strong>
+                    </p>
+                    <ul>
+                        <li><strong>Wantedlyを選んだ理由：</strong>須藤の採用実績があり（Wantedly経由）、登録者数400万人と母集団が大きい。また、成功報酬ゼロで費用が予測可能（採用数が増えても費用増なし）</li>
+                        <li><strong>プレミアムプランを選んだ理由：</strong>スタンダードプラン（300通/年 = 25通/月）では100通/月に不足。プレミアムプラン（600通/年 = 50通/月）に追加スカウト（50通/月）を組み合わせることで、100通/月を達成可能</li>
+                        <li><strong>他の媒体（Green、ビズリーチ）と比較：</strong>Greenは成功報酬が高額（年収の15-20%）、ビズリーチも初期費用85万円〜+成功報酬15%と高額。Wantedlyは固定費のみで費用対効果が高い</li>
+                    </ul>
+                    <p>
+                        <strong>4. 実績ベースでの達成可能性：</strong>この組み合わせにより、月次40面談以上の獲得が可能です（須藤のWantedly経由での採用実績あり）。
+                    </p>
+                </div>
+            </div>
+
+            <!-- 2. 何をしたいのか -->
+            <div class="section">
+                <h3>2. 何をしたいのか</h3>
+                <p class="simple-box">
+                    Wantedlyでスカウト100通/月を送信し、月次40面談以上を獲得する
+                </p>
+            </div>
+
+            <!-- 3. 何を達成するのか -->
+            <div class="section">
+                <h3>3. 何を達成するのか</h3>
+                <p class="simple-box">
+                    月次40面談以上の獲得により、採用人数を確保する（Wantedly実績ベース、須藤のWantedly経由での採用実績あり）
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

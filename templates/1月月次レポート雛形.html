@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>giftee for Business 1月月次レポート</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <style>
+        /* Material Icons Fix */
+        .material-icons-round {
+            font-family: 'Material Icons Round';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            -moz-osx-font-smoothing: grayscale;
+            font-feature-settings: 'liga';
+        }
+
+        :root {
+            /* Modern Flat Colors (Slate / Blue Gray based) */
+            --primary-color: #334155;    /* Slate 700 */
+            --secondary-color: #64748b;  /* Slate 500 */
+            --bg-color: #f1f5f9;         /* Slate 100 */
+            --border-color: #e2e8f0;     /* Slate 200 */
+            --card-bg: #ffffff;
+            --text-color: #1e293b;       /* Slate 800 */
+            
+            /* Accents */
+            --accent-color: #0ea5e9;     /* Sky 500 */
+            --sidebar-bg: #1e293b;       /* Slate 800 */
+            
+            /* Charts */
+            --chart-pc: #3b82f6;         /* Blue 500 */
+            --chart-sp: #f97316;         /* Orange 500 */
+            
+            /* Status */
+            --success-color: #10b981;    /* Emerald 500 */
+            --success-bg: #ecfdf5;       /* Emerald 50 */
+            --warning-color: #f59e0b;    /* Amber 500 */
+            --warning-bg: #fffbeb;       /* Amber 50 */
+            --danger-color: #ef4444;     /* Red 500 */
+            --danger-bg: #fef2f2;        /* Red 50 */
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Layout Structure */
+        .wrapper {
+            display: flex;
+            max-width: 1600px;
+            margin: 0 auto;
+            background: var(--bg-color);
+            min-height: 100vh;
+        }
+
+        /* Fixed Sidebar (Agenda) */
+        .sidebar {
+            flex: 0 0 260px;
+            background-color: var(--sidebar-bg);
+            color: #f8fafc;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 30px 0;
+            box-sizing: border-box;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 0 24px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 20px;
+        }
+
+        .sidebar-header h1 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.4;
+            color: #f8fafc;
+            letter-spacing: 0.02em;
+        }
+        
+        .sidebar-header .subtitle {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 6px;
+        }
+
+        .agenda-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .agenda-group {
+            margin-bottom: 30px;
+        }
+
+        .agenda-group-title {
+            padding: 0 24px;
+            margin-bottom: 10px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #64748b;
+            font-weight: 700;
+        }
+
+        .agenda-item {
+            border-left: 3px solid transparent;
+        }
+
+        .agenda-item a {
+            display: flex;
+            align-items: center;
+            padding: 10px 24px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .agenda-item a:hover, .agenda-item a.active {
+            background-color: rgba(255,255,255,0.05);
+            color: #fff;
+            border-left-color: var(--accent-color);
+        }
+        
+        .agenda-item a .material-icons-round {
+            font-size: 18px;
+            margin-right: 12px;
+            opacity: 0.8;
+        }
+
+        .agenda-sub-item a {
+            padding: 8px 24px 8px 54px;
+            font-size: 12px;
+            color: #94a3b8;
+            display: block;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .agenda-sub-item a:hover {
+            color: #e2e8f0;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 50px 60px;
+            overflow-x: hidden;
+            background: #fff;
+            border-radius: 20px 0 0 20px;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.02);
+            margin-left: -20px; /* Overlap effect */
+            z-index: 10;
+        }
+
+        section {
+            margin-bottom: 80px;
+            scroll-margin-top: 40px;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: var(--primary-color);
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 30px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 0.02em;
+        }
+
+        h3 {
+            font-size: 18px;
+            color: var(--secondary-color);
+            margin: 40px 0 20px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 12px;
+            font-weight: 700;
+        }
+
+        h4 {
+            font-size: 15px;
+            margin: 20px 0 12px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* KPI Cards (Refined) */
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: transparent;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--secondary-color);
+            margin-bottom: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1;
+            margin-bottom: 12px;
+            font-feature-settings: "tnum";
+        }
+
+        .metric-sub {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 500;
+        }
+
+        .trend-up { color: var(--success-color); }
+        .trend-down { color: var(--danger-color); }
+        .trend-flat { color: var(--secondary-color); }
+
+        /* Charts */
+        .chart-container {
+            padding: 30px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.3s;
+        }
+        
+        .chart-container:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .chart-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--secondary-color);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Detailed Phase Section (Used for Actions) */
+        .phase-detail {
+            margin-bottom: 40px;
+            padding: 32px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .phase-detail::before {
+            content: '';
+            position: absolute;
+            top: 32px;
+            left: 0;
+            width: 4px;
+            height: calc(100% - 64px);
+            background: var(--accent-color);
+            border-radius: 0 4px 4px 0;
+        }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .phase-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .phase-status {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 99px;
+            letter-spacing: 0.02em;
+        }
+        .status-done { background: var(--success-bg); color: var(--success-color); }
+        .status-alert { background: var(--danger-bg); color: var(--danger-color); }
+        .status-info { background: #e0f2fe; color: #0284c7; }
+        .status-progress { background: var(--warning-bg); color: var(--warning-color); }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 20px;
+            font-size: 13px;
+            background: transparent;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 16px;
+            background-color: transparent;
+            color: var(--secondary-color);
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+            white-space: nowrap;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        tr:last-child td { border-bottom: none; }
+        
+        .pc-col { background-color: #f8fafc; color: var(--chart-pc); font-weight: 600; }
+        .sp-col { color: var(--chart-sp); font-weight: 600; }
+
+        /* Highlight Boxes */
+        .highlight-box {
+            background: var(--bg-color);
+            border-left: 4px solid var(--primary-color);
+            padding: 24px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 30px;
+        }
+
+        .highlight-box.alert {
+            background: var(--danger-bg);
+            border-left-color: var(--danger-color);
+        }
+
+        .highlight-box.success {
+            background: var(--success-bg);
+            border-left-color: var(--success-color);
+        }
+
+        .box-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .bg-success { background: var(--success-bg) !important; color: var(--success-color) !important; }
+        .bg-warning { background: var(--warning-bg) !important; color: var(--warning-color) !important; }
+        .bg-danger { background: var(--danger-bg) !important; color: var(--danger-color) !important; }
+
+        @media (max-width: 1000px) {
+            .charts-grid { grid-template-columns: 1fr; }
+            .wrapper { flex-direction: column; }
+            .sidebar { position: static; height: auto; padding: 20px 0; }
+            .main-content { padding: 30px; margin-left: 0; border-radius: 0; }
+        }
+
+        /* Print Specific Styles - Stronger Reset */
+        @media print {
+            @page { size: A4; margin: 10mm; }
+            
+            html, body {
+                width: 100% !important;
+                height: auto !important;
+                background-color: #fff !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .wrapper { display: block !important; width: 100% !important; box-shadow: none !important; }
+            .sidebar { display: none !important; }
+            .print-header { display: block !important; text-align: center; margin-bottom: 30px; border-bottom: 2px solid #333; padding-bottom: 20px; }
+            .print-header h1 { margin: 0; font-size: 24px; }
+            .main-content { padding: 0 !important; width: 100% !important; margin: 0 !important; box-shadow: none !important; }
+            section { margin-bottom: 30px !important; break-inside: avoid; }
+            .chart-container, .metric-card, .phase-detail { box-shadow: none !important; border: 1px solid #ccc !important; break-inside: avoid; }
+            .metric-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 10px !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <!-- Sidebar Agenda -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h1>月次レポート</h1>
+            <div class="subtitle">2026年1月 (1/1〜1/31)</div>
+        </div>
+        
+        <div class="agenda-group">
+            <div class="agenda-group-title">REPORT MENU</div>
+            <ul class="agenda-list">
+                <li class="agenda-item">
+                    <a href="#summary" class="active">
+                        <span class="material-icons-round">dashboard</span>エグゼクティブサマリー
+                    </a>
+                </li>
+                <li class="agenda-item">
+                    <a href="#overall">
+                        <span class="material-icons-round">analytics</span>全体・デバイス別実績
+                    </a>
+                </li>
+                <li class="agenda-item">
+                    <a href="#articles">
+                        <span class="material-icons-round">article</span>主要記事パフォーマンス
+                    </a>
+                </li>
+                <li class="agenda-item">
+                    <a href="#actions">
+                        <span class="material-icons-round">build</span>実施施策と効果
+                    </a>
+                </li>
+                <li class="agenda-item">
+                    <a href="#issues">
+                        <span class="material-icons-round">warning</span>確認・課題事項
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Quick Links -->
+        <div class="agenda-group" style="margin-top: 40px;">
+            <div class="agenda-group-title">QUICK ACCESS</div>
+            <ul class="agenda-list">
+                <li class="agenda-sub-item"><a href="#cta-action">CTA施策詳細</a></li>
+                <li class="agenda-sub-item"><a href="#aio-action">AIO対策施策</a></li>
+                <li class="agenda-sub-item"><a href="#rewrite-action">リライト進捗</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Print Only Header -->
+        <div class="print-header" style="display: none;">
+            <h1>giftee for Business 1月月次レポート</h1>
+            <p>対象期間: 2026年1月1日〜1月31日</p>
+        </div>
+        
+        <!-- 1. Executive Summary -->
+        <section id="summary">
+            <h2><span class="material-icons-round">dashboard</span>1. エグゼクティブサマリー</h2>
+            
+            <div style="background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); color: #fff; padding: 25px; border-radius: 12px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                <div>
+                    <h3 style="margin: 0; border: none; color: #fff; font-size: 14px; opacity: 0.9; padding: 0;">2026年上半期目標 (Target)</h3>
+                    <p style="font-size: 24px; font-weight: 700; margin: 5px 0 0;">6月末までにcolumn経由でのCVを60/月にする</p>
+                    <p style="font-size: 14px; opacity: 0.9; margin: 8px 0 0;">1月目標: PC CV [ ]件 / PC SS [ ]件 / PC CVR [ ]%</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 30px; font-weight: bold;">
+                    Status: [達成/未達]
+                </div>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="metric-grid">
+                <div class="metric-card" style="border-top: 4px solid #e74c3c;">
+                    <div class="metric-label"><span class="material-icons-round" style="font-size:16px;">flag</span>PC CV数</div>
+                    <div class="metric-value">[ ]<span style="font-size:14px; font-weight:500; color:#999;">件</span></div>
+                    <div class="metric-sub">
+                        <span class="material-icons-round" style="font-size:16px;">info</span>
+                        目標比 [ ]% ([達成/未達])
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label"><span class="material-icons-round" style="font-size:16px;">visibility</span>PCセッション</div>
+                    <div class="metric-value">[ ]</div>
+                    <div class="metric-sub">
+                        <span class="material-icons-round" style="font-size:16px;">trending_up</span>
+                        前月比 [ ]%
+                    </div>
+                </div>
+                <div class="metric-card" style="border-top: 4px solid #27ae60;">
+                    <div class="metric-label"><span class="material-icons-round" style="font-size:16px;">touch_app</span>PC CTA到達数</div>
+                    <div class="metric-value">[ ]<span style="font-size:14px; font-weight:500; color:#999;">件</span></div>
+                    <div class="metric-sub">
+                        <span class="material-icons-round" style="font-size:16px;">verified</span>
+                        前月比 [ ]%
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label"><span class="material-icons-round" style="font-size:16px;">percent</span>PC CVR</div>
+                    <div class="metric-value">[ ]<span style="font-size:14px; font-weight:500; color:#999;">%</span></div>
+                    <div class="metric-sub">
+                        <span class="material-icons-round" style="font-size:16px;">info</span>
+                        前月比 [ ]pt / 目標0.12%まで[ ]pt
+                    </div>
+                </div>
+            </div>
+
+            <!-- 目標シミュレーションチャート -->
+            <div class="chart-container" style="margin-bottom: 30px;">
+                <div class="chart-title">2026年6月目標：column経由でのCVを60/月にする</div>
+                <div style="position: relative; height: 300px;">
+                    <canvas id="simulationChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Summary Text -->
+            <div class="highlight-box">
+                <div class="box-title"><span class="material-icons-round">summarize</span>1月の総括</div>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.8;">
+                    <li><strong>トラフィック</strong>: 12月までの大量リライト効果（ストック効果）と、月5〜7本の新規記事追加により、広告費をかけずに自然増で達成可能なライン。SS成長率108%を目指す。</li>
+                    <li><strong>施策の効果</strong>: CTA改善やLP化を進めることで、現在の0.09%から0.12%へのCVR改善を見込む（BtoB平均水準への回帰）。</li>
+                    <li><strong>課題・改善点</strong>: [ ]</li>
+                    <li><strong>次月への展望</strong>: 6月末時点でPCセッション5.5万、PC CV 66件（約70件）への着地を目指す。</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 2. Overall & Device Performance -->
+        <section id="overall">
+            <h2><span class="material-icons-round">analytics</span>2. 全体・デバイス別実績</h2>
+
+            <!-- 実績推移表 -->
+            <div style="background: #fff; padding: 25px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 40px; box-shadow: var(--shadow-sm);">
+                <h4 style="margin: 0 0 20px; display: flex; align-items: center; gap: 8px;">
+                    <span class="material-icons-round" style="font-size: 20px; color: var(--primary-color);">assessment</span>
+                    実績推移（2026年1月〜）
+                </h4>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; font-size: 13px;">
+                        <thead>
+                            <tr style="background: #f8f9fa;">
+                                <th style="padding: 12px; text-align: center; white-space: nowrap;">月</th>
+                                <th style="padding: 12px; text-align: center; white-space: nowrap;">PC SS</th>
+                                <th style="padding: 12px; text-align: center; white-space: nowrap; background: #fff3e0;">フォームSS<br><span style="font-size:10px; font-weight: normal;">(CTAクリック)</span></th>
+                                <th style="padding: 12px; text-align: center; white-space: nowrap;">PC CV</th>
+                                <th style="padding: 12px; text-align: center; white-space: nowrap;">フォームCTR<br><span style="font-size:10px; font-weight: normal;">(SS→Form)</span></th>
+                                <th style="padding: 12px; text-align: center; white-space: nowrap;">フォームCVR<br><span style="font-size:10px; font-weight: normal;">(Form→CV)</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background: #e3f2fd; font-weight: bold; border-top: 2px solid var(--accent-color);">
+                                <td style="text-align: center;">1月</td>
+                                <td style="text-align: right;">[ ]</td>
+                                <td style="text-align: right; background: #bbdefb;">[ ]</td>
+                                <td style="text-align: right;">[ ]</td>
+                                <td style="text-align: right;">[ ]%</td>
+                                <td style="text-align: right;">[ ]%</td>
+                            </tr>
+                            <tr style="background: #f5f5f5;">
+                                <td style="text-align: center;">2月</td>
+                                <td style="text-align: right;">[ ]</td>
+                                <td style="text-align: right; background: #f0f0f0;">[ ]</td>
+                                <td style="text-align: right;">[ ]</td>
+                                <td style="text-align: right;">[ ]%</td>
+                                <td style="text-align: right;">[ ]%</td>
+                            </tr>
+                            <tr style="background: #f5f5f5;">
+                                <td style="text-align: center;">3月</td>
+                                <td style="text-align: right;">[ ]</td>
+                                <td style="text-align: right; background: #f0f0f0;">[ ]</td>
+                                <td style="text-align: right;">[ ]</td>
+                                <td style="text-align: right;">[ ]%</td>
+                                <td style="text-align: right;">[ ]%</td>
+                            </tr>
+                            <tr style="background: #f5f5f5;">
+                                <td style="text-align: center;">4月</td>
+                                <td style="text-align: right;">[ ]</td>
+                                <td style="text-align: right; background: #f0f0f0;">[ ]</td>
+                                <td style="text-align: right;">[ ]</td>
+                                <td style="text-align: right;">[ ]%</td>
+                                <td style="text-align: right;">[ ]%</td>
+                            </tr>
+                            <tr style="background: #f5f5f5;">
+                                <td style="text-align: center;">5月</td>
+                                <td style="text-align: right;">[ ]</td>
+                                <td style="text-align: right; background: #f0f0f0;">[ ]</td>
+                                <td style="text-align: right;">[ ]</td>
+                                <td style="text-align: right;">[ ]%</td>
+                                <td style="text-align: right;">[ ]%</td>
+                            </tr>
+                            <tr style="background: #f5f5f5;">
+                                <td style="text-align: center;">6月</td>
+                                <td style="text-align: right;">[ ]</td>
+                                <td style="text-align: right; background: #f0f0f0;">[ ]</td>
+                                <td style="text-align: right;">[ ]</td>
+                                <td style="text-align: right;">[ ]%</td>
+                                <td style="text-align: right;">[ ]%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="font-size: 11px; color: #666; margin-top: 10px; text-align: right;">
+                    ※フォームCTR = フォームSS / PC SS<br>
+                    ※フォームCVR = PC CV / フォームSS
+                </p>
+            </div>
+
+            <!-- Device Ratio & Details -->
+            <div style="display: flex; gap: 30px; align-items: flex-start; margin-bottom: 40px; flex-wrap: wrap;">
+                <!-- Device Ratio -->
+                <div class="chart-container" style="flex: 1; min-width: 300px; margin-bottom: 0;">
+                    <div class="chart-title"><span class="material-icons-round">pie_chart</span> 1月デバイス比率 (SS)</div>
+                    <div style="position: relative; height: 250px;">
+                        <canvas id="deviceRatioChart"></canvas>
+                    </div>
+                    <p style="font-size:12px; text-align:center; color:#666; margin-top:15px; border-top: 1px dashed #ddd; padding-top: 10px;">
+                        PC比率は[ ]%。[ ]</p>
+                </div>
+
+                <!-- Device Details Table -->
+                <div style="flex: 2; min-width: 400px; overflow-x: auto;">
+                    <h4 style="margin-top: 0; display: flex; align-items: center; gap: 5px;">
+                        <span class="material-icons-round" style="color: var(--primary-color);">devices</span> デバイス別詳細 (PC vs Mobile)
+                    </h4>
+                    <table style="margin-bottom: 0;">
+                    <thead>
+                        <tr>
+                            <th>デバイス</th>
+                            <th>指標</th>
+                            <th>12月実績</th>
+                            <th>1月実績</th>
+                            <th>前月比</th>
+                            <th>評価</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- PC -->
+                        <tr style="background-color: #f0f7fb;">
+                            <td rowspan="5" style="font-weight:bold; color:var(--chart-pc); border-right:1px solid #ddd;">PC (Desktop)</td>
+                            <td>セッション</td>
+                            <td>[ ]</td>
+                            <td><strong>[ ]</strong></td>
+                            <td class="trend-up">[ ]%</td>
+                            <td><span class="status-badge bg-success" style="background:#dcfce7; padding:2px 8px; border-radius:10px; font-weight:bold; color:#166534;">[評価]</span></td>
+                        </tr>
+                        <tr style="background-color: #f0f7fb;">
+                            <td>CTA到達数</td>
+                            <td>[ ]</td>
+                            <td><strong>[ ]</strong></td>
+                            <td class="trend-up">[ ]%</td>
+                            <td><span class="status-badge bg-success" style="background:#dcfce7; padding:2px 8px; border-radius:10px; font-weight:bold; color:#166534;">[評価]</span></td>
+                        </tr>
+                        <tr style="background-color: #f0f7fb;">
+                            <td>CV数</td>
+                            <td>[ ]</td>
+                            <td><strong>[ ]</strong></td>
+                            <td class="trend-up">[ ]%</td>
+                            <td><span class="status-badge bg-warning" style="background:#fef3c7; padding:2px 8px; border-radius:10px; font-weight:bold; color:#92400e;">[評価]</span></td>
+                        </tr>
+                        <tr style="background-color: #f0f7fb;">
+                            <td>CTR (CTA/SS)</td>
+                            <td>[ ]%</td>
+                            <td>[ ]%</td>
+                            <td class="trend-up">[ ]pt</td>
+                            <td><span class="status-badge bg-success" style="background:#dcfce7; padding:2px 8px; border-radius:10px; font-weight:bold; color:#166534;">[評価]</span></td>
+                        </tr>
+                        <tr style="background-color: #f0f7fb; border-bottom: 2px solid #ddd;">
+                            <td>CVR (CV/CTA_SS)</td>
+                            <td>[ ]%</td>
+                            <td>[ ]%</td>
+                            <td class="trend-down">[ ]pt</td>
+                            <td><span class="status-badge bg-danger" style="background:#fee2e2; padding:2px 8px; border-radius:10px; font-weight:bold; color:#991b1b;">[評価]</span></td>
+                        </tr>
+                        <!-- Mobile -->
+                        <tr>
+                            <td rowspan="5" style="font-weight:bold; color:var(--chart-sp); border-right:1px solid #ddd;">Mobile (SP)</td>
+                            <td>セッション</td>
+                            <td>[ ]</td>
+                            <td>[ ]</td>
+                            <td class="trend-up">[ ]%</td>
+                            <td><span class="status-badge bg-success" style="background:#dcfce7; padding:2px 8px; border-radius:10px; font-weight:bold; color:#166534;">[評価]</span></td>
+                        </tr>
+                        <tr>
+                            <td>CTA到達数</td>
+                            <td>[ ]</td>
+                            <td>[ ]</td>
+                            <td class="trend-up">[ ]%</td>
+                            <td><span class="status-badge bg-success" style="background:#dcfce7; padding:2px 8px; border-radius:10px; font-weight:bold; color:#166534;">[評価]</span></td>
+                        </tr>
+                        <tr>
+                            <td>CV数</td>
+                            <td>[ ]</td>
+                            <td>[ ]</td>
+                            <td class="trend-down">[ ]%</td>
+                            <td><span class="status-badge bg-danger" style="background:#fee2e2; padding:2px 8px; border-radius:10px; font-weight:bold; color:#991b1b;">[評価]</span></td>
+                        </tr>
+                        <tr>
+                            <td>CTR</td>
+                            <td>[ ]%</td>
+                            <td>[ ]%</td>
+                            <td class="trend-flat">[ ]pt</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>CVR</td>
+                            <td>[ ]%</td>
+                            <td>[ ]%</td>
+                            <td class="trend-down">[ ]pt</td>
+                            <td><span class="status-badge bg-danger" style="background:#fee2e2; padding:2px 8px; border-radius:10px; font-weight:bold; color:#991b1b;">[評価]</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 3. CV実績記事一覧 -->
+        <section id="articles">
+            <h2><span class="material-icons-round">article</span>3. CV実績記事一覧</h2>
+            
+            <div class="chart-container" style="max-width: 100%;">
+                <div class="chart-title">
+                    <span class="material-icons-round">trending_up</span>
+                    CV実績記事一覧
+                </div>
+                <table style="margin:0; box-shadow:none; border:none;">
+                    <thead>
+                        <tr>
+                            <th style="width:50px; text-align:center;">順位</th>
+                            <th>記事タイトル</th>
+                            <th style="text-align:right;">セッション</th>
+                            <th style="text-align:right;">セッション前月比</th>
+                            <th style="text-align:right;">CV</th>
+                            <th style="text-align:right;">CV前月比</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align:center;"><span style="color:#f1c40f; font-weight:bold; font-size:18px;">1</span></td>
+                            <td style="font-weight:bold;">[記事タイトル]</td>
+                            <td style="text-align:right;">[ ]</td>
+                            <td style="text-align:right;" class="trend-up">[ ]%</td>
+                            <td style="text-align:right;">[ ]</td>
+                            <td style="text-align:right;" class="trend-up">[ ]%</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;"><span style="color:#95a5a6; font-weight:bold; font-size:16px;">2</span></td>
+                            <td>[記事タイトル]</td>
+                            <td style="text-align:right;">[ ]</td>
+                            <td style="text-align:right;">[ ]%</td>
+                            <td style="text-align:right;">[ ]</td>
+                            <td style="text-align:right;">[ ]%</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;"><span style="color:#cd7f32; font-weight:bold; font-size:16px;">3</span></td>
+                            <td>[記事タイトル]</td>
+                            <td style="text-align:right;">[ ]</td>
+                            <td style="text-align:right;">[ ]%</td>
+                            <td style="text-align:right;">[ ]</td>
+                            <td style="text-align:right;">[ ]%</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;">4</td>
+                            <td>[記事タイトル]</td>
+                            <td style="text-align:right;">[ ]</td>
+                            <td style="text-align:right;">[ ]%</td>
+                            <td style="text-align:right;">[ ]</td>
+                            <td style="text-align:right;">[ ]%</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;">5</td>
+                            <td>[記事タイトル]</td>
+                            <td style="text-align:right;">[ ]</td>
+                            <td style="text-align:right;" class="trend-up">[ ]%</td>
+                            <td style="text-align:right;">[ ]</td>
+                            <td style="text-align:right;" class="trend-up">[ ]%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 4. Actions & Effects -->
+        <section id="actions">
+            <h2><span class="material-icons-round">build</span>4. 実施施策と効果分析</h2>
+
+            <!-- Strategy 1: AIO -->
+            <div id="aio-action" class="phase-detail" style="border-left: 5px solid #3498db; margin-bottom: 30px;">
+                <div class="phase-header">
+                    <div class="phase-title">
+                        <span class="material-icons-round">psychology</span>
+                        戦略①: AIOに対応した編集体制
+                    </div>
+                    <div class="phase-status status-progress">進行中</div>
+                </div>
+                
+                <div style="background: #e0f2fe; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                    <h5 style="margin: 0 0 10px; color: #0284c7;">実施施策</h5>
+                    <ul style="font-size: 14px; color: #555; line-height: 1.8; margin: 0; padding-left: 20px;">
+                        <li><strong>FAQ型ショートコンテンツの展開</strong>: 既存記事の各見出しを「Q&A」形式のショートコンテンツとして再構築。AIが回答を引用しやすい単位（チャンク）を作る。</li>
+                        <li><strong>AIフレンドリー化</strong>: 結論ファースト、Q&A、箇条書き/表の活用、平易な言葉への置き換えを徹底する。</li>
+                        <li><strong>一次情報の埋め込み</strong>: アンケート結果や自社データを記事に盛り込み、AIが引用したくなる「ソース（情報源）」になる。</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box" style="margin-bottom: 0; border-left-color: #3498db;">
+                    <div class="box-title" style="color: #2980b9; font-size:14px;">
+                        <span class="material-icons-round">lightbulb</span>
+                        1月の進捗・成果
+                    </div>
+                    <p style="font-size:13px; margin:0;">
+                        [ここに1月の具体的な進捗（AIO対策記事数、引用獲得状況など）を記入]
+                    </p>
+                </div>
+            </div>
+
+            <!-- Strategy 2: CTA -->
+            <div id="cta-action" class="phase-detail" style="border-left: 5px solid #e67e22; margin-bottom: 30px;">
+                <div class="phase-header">
+                    <div class="phase-title">
+                        <span class="material-icons-round">touch_app</span>
+                        戦略②: CTA強化とフォーム改修
+                    </div>
+                    <div class="phase-status status-progress">進行中</div>
+                </div>
+                
+                <!-- Action 1 -->
+                <div style="margin-bottom: 25px;">
+                    <h6 style="font-size: 15px; margin: 0 0 10px; color: #333; display: flex; align-items: center;">
+                        <span class="status-badge bg-warning" style="margin-right: 8px;">進行中</span>
+                        ① テキストCTAの文言改修テスト
+                    </h6>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; font-size: 13px;">
+                        <p style="margin: 0 0 10px;">
+                            12月に実施したテストの途中経過を2026年1月の月次定例にて報告予定。CTR/CVRに改善が見られる場合、全記事へ展開する。
+                        </p>
+                        <div style="margin-bottom: 15px; background: #fff; padding: 10px; border-left: 3px solid #3498db; border-radius: 0 4px 4px 0;">
+                            <div style="margin-bottom: 5px;"><strong>【目的】</strong> フォーム遷移率（CTR）とCVRの改善</div>
+                            <div><strong>【成果指標】</strong> 平均数値（CTR 0.63% / CVR 16.44%）より向上するか否かで判定</div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div style="background: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                                <strong>第一弾CTA (12/11変更)</strong>
+                                <div style="color: #666; margin-top: 5px;">Before: 11/27(水) 〜 12/10(火)</div>
+                                <div style="color: #e74c3c; font-weight: bold;">After: 12/12(木) 〜 12/20(金)</div>
+                            </div>
+                            <div style="background: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                                <strong>第二弾CTA (12/18変更)</strong>
+                                <div style="color: #666; margin-top: 5px;">Before: 11/25(月) 〜 12/9(月)</div>
+                                <div style="color: #e74c3c; font-weight: bold;">After: 1/6(月) 〜 1/20(月)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action 2 -->
+                <div style="margin-bottom: 25px;">
+                    <h6 style="font-size: 15px; margin: 0 0 10px; color: #333; display: flex; align-items: center;">
+                        <span class="status-badge bg-danger" style="margin-right: 8px; background:#fee2e2; color:#ef4444;">NEW</span>
+                        ② フォーム一体型テスト
+                    </h6>
+                    <div style="font-size: 13px; color: #555;">
+                        <p>
+                            バナー改善だけでは爆発的なインパクトが見込めないため、CV実績のある記事に対して「フォーム一体型」を試験導入する。<br>
+                            2ステップ形式を採用し、資料ダウンロードのハードルを下げてCV獲得数を最大化できるかトライアルを行う。
+                        </p>
+                        <div style="margin-bottom: 15px; background: #fdf2e9; padding: 10px; border-left: 3px solid #ef4444; border-radius: 0 4px 4px 0;">
+                            <div style="margin-bottom: 5px;"><strong>【目的】</strong> 純粋にCVが増えるかどうかの検証（新しい取り組みとして成果が出るかの確認）</div>
+                            <div><strong>【成果指標】</strong> CV数の増加</div>
+                        </div>
+                        <a href="コラム一覧_仮想サイト.html" target="_blank" style="display: inline-flex; align-items: center; color: #3498db; text-decoration: none; font-weight: bold; margin-top: 5px;">
+                            <span class="material-icons-round" style="font-size: 16px; margin-right: 4px;">open_in_new</span>
+                            サイト制作イメージを確認 (コラム一覧_仮想サイト.html)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Action 3 -->
+                <div style="margin-bottom: 20px;">
+                    <h6 style="font-size: 15px; margin: 0 0 10px; color: #333; display: flex; align-items: center;">
+                        <span class="status-badge bg-danger" style="margin-right: 8px; background:#fee2e2; color:#ef4444;">NEW</span>
+                        ③ ギフト診断コンテンツ
+                    </h6>
+                    <div style="font-size: 13px; color: #555;">
+                        <p>
+                            CV未獲得かつフォームSSも低い記事（潜在層向け）に対し、テキスト型CTAを「ギフト診断」に変更する。<br>
+                            「自分に必要なギフトがわからない層」の獲得を促し、法人ニーズの掘り起こしが可能か検証する。
+                        </p>
+                        <div style="margin-bottom: 15px; background: #fdf2e9; padding: 10px; border-left: 3px solid #ef4444; border-radius: 0 4px 4px 0;">
+                            <div style="margin-bottom: 5px;"><strong>【目的】</strong> CV未獲得記事からのフォームSS増・CV獲得、および記事に「法人ニーズがあるか」の見極め</div>
+                            <div><strong>【成果指標】</strong> フォームSS数およびCV数の増加</div>
+                        </div>
+                        <a href="コラム一覧_診断CTA_仮想サイト.html" target="_blank" style="display: inline-flex; align-items: center; color: #3498db; text-decoration: none; font-weight: bold; margin-top: 5px;">
+                            <span class="material-icons-round" style="font-size: 16px; margin-right: 4px;">open_in_new</span>
+                            サイト制作イメージを確認 (コラム一覧_診断CTA_仮想サイト.html)
+                        </a>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-bottom: 0; border-left-color: #e67e22;">
+                    <div class="box-title" style="color: #d35400; font-size:14px;">
+                        <span class="material-icons-round">insights</span>
+                        1月の進捗・成果
+                    </div>
+                    <p style="font-size:13px; margin:0;">
+                        [ここに1月のCTAテスト結果、フォーム一体型の導入状況などを記入]
+                    </p>
+                </div>
+            </div>
+
+            <!-- Strategy 3: AI Update -->
+            <div id="rewrite-action" class="phase-detail" style="border-left: 5px solid #2ecc71;">
+                <div class="phase-header">
+                    <div class="phase-title">
+                        <span class="material-icons-round">auto_awesome</span>
+                        戦略③: AI編集部のアップデート
+                    </div>
+                    <div class="phase-status status-progress">進行中</div>
+                </div>
+                
+                <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                    <h5 style="margin: 0 0 10px; color: #166534;">実施施策</h5>
+                    <ul style="font-size: 14px; color: #555; line-height: 1.8; margin: 0; padding-left: 20px;">
+                        <li><strong>クリエイティブのAI化</strong>: テキストだけでなく、図版やバナー作成もAIによる自動化・半自動化を模索し、視覚的な質を向上させる。</li>
+                        <li><strong>フィードバックシステムの開発</strong>: Cursor等を活用し、giftee主体で「確認・フィードバック」を効率化するシステムを開発。公開までのリードタイムを短縮する。</li>
+                        <li><strong>ナレッジの移管・形式知化</strong>: AIデータプールを構築し、MOLTS依存から脱却。giftee×MOLTSで「仕組み」として回る体制へアップデートする。</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box" style="margin-bottom: 0; border-left-color: #2ecc71;">
+                    <div class="box-title" style="color: #166534; font-size:14px;">
+                        <span class="material-icons-round">update</span>
+                        1月の進捗・成果
+                    </div>
+                    <p style="font-size:13px; margin:0;">
+                        [ここに1月のリライト公開本数、システム開発の進捗状況などを記入]
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Issues -->
+        <section id="issues">
+            <h2><span class="material-icons-round">warning</span>5. 確認事項・共有</h2>
+            
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
+                <div class="highlight-box" style="margin-bottom:0; border-left-color: #f39c12; background: #fffcf5;">
+                    <div class="box-title" style="color: #d35400;">1. [確認事項1]</div>
+                    <p style="font-size:13px; margin-bottom:10px;">[内容]</p>
+                    <ul style="font-size:13px; padding-left:20px; color:#555;">
+                        <li>[項目1]</li>
+                        <li>[項目2]</li>
+                    </ul>
+                </div>
+                <div class="highlight-box" style="margin-bottom:0; border-left-color: #3498db;">
+                    <div class="box-title" style="color: #2980b9;">2. [確認事項2]</div>
+                    <p style="font-size:13px; margin-bottom:10px;">[内容]</p>
+                    <ul style="font-size:13px; padding-left:20px; color:#555;">
+                        <li>[項目1]</li>
+                        <li>[項目2]</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<script>
+    // Navigation Active State
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.agenda-item a');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (window.pageYOffset >= sectionTop - 100) {
+                current = section.getAttribute('id');
+            }
+        });
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // Charts
+    // 1. Device Ratio Chart
+    const ctxRatio = document.getElementById('deviceRatioChart').getContext('2d');
+    new Chart(ctxRatio, {
+        type: 'doughnut',
+        data: {
+            labels: ['PC ([ ]%)', 'Mobile ([ ]%)'],
+            datasets: [{
+                data: [0, 0], // TODO: データを入力
+                backgroundColor: ['#3498db', '#e67e22'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '60%',
+            plugins: {
+                legend: { position: 'right' }
+            }
+        }
+    });
+
+    // 3. Simulation Chart (2025 Actuals + 2026 Forecast)
+    const simLabels = ['8月', '9月', '10月', '11月', '12月', '1月(予)', '2月(予)', '3月(予)', '4月(予)', '5月(予)', '6月(予)'];
+    const simSsData = [14933, 17514, 23115, 25610, 31782, 34324, 37070, 40035, 43238, 46697, 50433]; // Actuals + 108% growth
+    const simCvData = [18, 20, 28, 27, 29, 34, 39, 44, 50, 56, 64]; // Actuals + CVR growth to 0.12%
+
+    const ctxSim = document.getElementById('simulationChart').getContext('2d');
+    new Chart(ctxSim, {
+        type: 'bar',
+        data: {
+            labels: simLabels,
+            datasets: [
+                {
+                    label: 'PC セッション (目標:月5.5万)',
+                    data: simSsData,
+                    backgroundColor: (ctx) => {
+                        return ctx.dataIndex < 5 ? '#bdc3c7' : '#3498db'; // Gray for 2025, Blue for 2026
+                    },
+                    order: 2,
+                    yAxisID: 'y_ss'
+                },
+                {
+                    label: 'PC CV数 (目標:月66件)',
+                    data: simCvData,
+                    type: 'line',
+                    borderColor: (ctx) => {
+                        return ctx.index < 4 ? '#7f8c8d' : '#e74c3c'; // Gray line for past, Red for future trajectory
+                    },
+                    segment: {
+                        borderColor: ctx => ctx.p0DataIndex < 4 ? '#7f8c8d' : '#e74c3c', // Connect colors
+                        borderDash: ctx => ctx.p0DataIndex >= 4 ? [5, 5] : undefined // Dashed line for forecast
+                    },
+                    borderWidth: 3,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#e74c3c',
+                    fill: false,
+                    order: 1,
+                    yAxisID: 'y_cv'
+                }
+            ]
+        },
+        options: {
+            animation: { duration: 0 },
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: { position: 'bottom' },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += context.parsed.y;
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y_ss: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'PC SS' }, grid: { display: false } },
+                y_cv: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'PC CV' }, grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
+

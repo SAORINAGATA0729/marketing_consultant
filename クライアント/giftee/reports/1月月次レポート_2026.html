@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>giftee for Business 1月月次レポート</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <style>
+        /* Material Icons Fix */
+        .material-icons-round {
+            font-family: 'Material Icons Round';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            -moz-osx-font-smoothing: grayscale;
+            font-feature-settings: 'liga';
+        }
+
+        :root {
+            /* Modern Flat Colors (Slate / Blue Gray based) */
+            --primary-color: #334155;    /* Slate 700 */
+            --secondary-color: #64748b;  /* Slate 500 */
+            --bg-color: #f1f5f9;         /* Slate 100 */
+            --border-color: #e2e8f0;     /* Slate 200 */
+            --card-bg: #ffffff;
+            --text-color: #1e293b;       /* Slate 800 */
+
+            /* Accents */
+            --accent-color: #0ea5e9;     /* Sky 500 */
+            --sidebar-bg: #1e293b;       /* Slate 800 */
+
+            /* Charts */
+            --chart-pc: #3b82f6;         /* Blue 500 */
+            --chart-sp: #f97316;         /* Orange 500 */
+
+            /* Status */
+            --success-color: #10b981;    /* Emerald 500 */
+            --success-bg: #ecfdf5;       /* Emerald 50 */
+            --warning-color: #f59e0b;    /* Amber 500 */
+            --warning-bg: #fffbeb;       /* Amber 50 */
+            --danger-color: #ef4444;     /* Red 500 */
+            --danger-bg: #fef2f2;        /* Red 50 */
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Layout Structure */
+        .wrapper {
+            display: flex;
+            max-width: 1600px;
+            margin: 0 auto;
+            background: var(--bg-color);
+            min-height: 100vh;
+        }
+
+        /* Fixed Sidebar (Agenda) */
+        .sidebar {
+            flex: 0 0 260px;
+            background-color: var(--sidebar-bg);
+            color: #f8fafc;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 30px 0;
+            box-sizing: border-box;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 0 24px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 20px;
+        }
+
+        .sidebar-header h1 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.4;
+            color: #f8fafc;
+            letter-spacing: 0.02em;
+        }
+
+        .sidebar-header .subtitle {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 6px;
+        }
+
+        .agenda-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .agenda-group {
+            margin-bottom: 30px;
+        }
+
+        .agenda-group-title {
+            padding: 0 24px;
+            margin-bottom: 10px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #64748b;
+            font-weight: 700;
+        }
+
+        .agenda-item {
+            border-left: 3px solid transparent;
+        }
+
+        .agenda-item a {
+            display: flex;
+            align-items: center;
+            padding: 10px 24px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .agenda-item a:hover, .agenda-item a.active {
+            background-color: rgba(255,255,255,0.05);
+            color: #fff;
+            border-left-color: var(--accent-color);
+        }
+
+        .agenda-item a .material-icons-round {
+            font-size: 18px;
+            margin-right: 12px;
+            opacity: 0.8;
+        }
+
+        .agenda-sub-item a {
+            padding: 8px 24px 8px 54px;
+            font-size: 12px;
+            color: #94a3b8;
+            display: block;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .agenda-sub-item a:hover {
+            color: #e2e8f0;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 50px 60px;
+            overflow-x: hidden;
+            background: #fff;
+            border-radius: 20px 0 0 20px;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.02);
+            margin-left: -20px; /* Overlap effect */
+            z-index: 10;
+        }
+
+        section {
+            margin-bottom: 80px;
+            scroll-margin-top: 40px;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: var(--primary-color);
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 30px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 0.02em;
+        }
+
+        h3 {
+            font-size: 18px;
+            color: var(--secondary-color);
+            margin: 40px 0 20px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 12px;
+            font-weight: 700;
+        }
+
+        h4 {
+            font-size: 15px;
+            margin: 20px 0 12px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* KPI Cards (Refined) */
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: transparent;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--secondary-color);
+            margin-bottom: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1;
+            margin-bottom: 12px;
+            font-feature-settings: "tnum";
+        }
+
+        .metric-sub {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 500;
+        }
+
+        .trend-up { color: var(--success-color); }
+        .trend-down { color: var(--danger-color); }
+        .trend-flat { color: var(--secondary-color); }
+
+        /* Charts */
+        .chart-container {
+            padding: 30px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.3s;
+        }
+
+        .chart-container:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .chart-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--secondary-color);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Detailed Phase Section (Used for Actions) */
+        .phase-detail {
+            margin-bottom: 40px;
+            padding: 32px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .phase-detail::before {
+            content: '';
+            position: absolute;
+            top: 32px;
+            left: 0;
+            width: 4px;
+            height: calc(100% - 64px);
+            background: var(--accent-color);
+            border-radius: 0 4px 4px 0;
+        }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .phase-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .phase-status {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 99px;
+            letter-spacing: 0.02em;
+        }
+        .status-done { background: var(--success-bg); color: var(--success-color); }
+        .status-alert { background: var(--danger-bg); color: var(--danger-color); }
+        .status-info { background: #e0f2fe; color: #0284c7; }
+        .status-progress { background: var(--warning-bg); color: var(--warning-color); }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 20px;
+            font-size: 13px;
+            background: transparent;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 16px;
+            background-color: transparent;
+            color: var(--secondary-color);
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+            white-space: nowrap;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        .pc-col { background-color: #f8fafc; color: var(--chart-pc); font-weight: 600; }
+        .sp-col { color: var(--chart-sp); font-weight: 600; }
+
+        /* Highlight Boxes */
+        .highlight-box {
+            background: var(--bg-color);
+            border-left: 4px solid var(--primary-color);
+            padding: 24px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 30px;
+        }
+
+        .highlight-box.alert {
+            background: var(--danger-bg);
+            border-left-color: var(--danger-color);
+        }
+
+        .highlight-box.success {
+            background: var(--success-bg);
+            border-left-color: var(--success-color);
+        }
+
+        .box-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .bg-success { background: var(--success-bg) !important; color: var(--success-color) !important; }
+        .bg-warning { background: var(--warning-bg) !important; color: var(--warning-color) !important; }
+        .bg-danger { background: var(--danger-bg) !important; color: var(--danger-color) !important; }
+
+        @media (max-width: 1000px) {
+            .charts-grid { grid-template-columns: 1fr; }
+            .wrapper { flex-direction: column; }
+            .sidebar { position: static; height: auto; padding: 20px 0; }
+            .main-content { padding: 30px; margin-left: 0; border-radius: 0; }
+        }
+
+        /* Print Specific Styles - Stronger Reset */
+        @media print {
+            @page { size: A4; margin: 10mm; }
+
+            html, body {
+                width: 100% !important;
+                height: auto !important;
+                background-color: #fff !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .wrapper { display: block !important; width: 100% !important; box-shadow: none !important; }
+            .sidebar { display: none !important; }
+            .print-header { display: block !important; text-align: center; margin-bottom: 30px; border-bottom: 2px solid #333; padding-bottom: 20px; }
+            .print-header h1 { margin: 0; font-size: 24px; }
+            .main-content { padding: 0 !important; width: 100% !important; margin: 0 !important; box-shadow: none !important; }
+            section { margin-bottom: 30px !important; break-inside: avoid; }
+            .chart-container, .metric-card, .phase-detail { box-shadow: none !important; border: 1px solid #ccc !important; break-inside: avoid; }
+            .metric-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 10px !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <!-- Sidebar Agenda -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h1>月次レポート</h1>
+            <div class="subtitle">2026年1月 (1/1〜1/21 暫定)</div>
+        </div>
+
+        <div class="agenda-group">
+            <div class="agenda-group-title">REPORT MENU</div>
+            <ul class="agenda-list">
+                <li class="agenda-item">
+                    <a href="#summary" class="active">
+                        <span class="material-icons-round">dashboard</span>エグゼクティブサマリー
+                    </a>
+                </li>
+                <li class="agenda-item">
+                    <a href="#overall">
+                        <span class="material-icons-round">analytics</span>全体・デバイス別実績
+                    </a>
+                </li>
+                <li class="agenda-item">
+                    <a href="#articles">
+                        <span class="material-icons-round">article</span>主要記事パフォーマンス
+                    </a>
+                </li>
+                <li class="agenda-item">
+                    <a href="#analysis">
+                        <span class="material-icons-round">search</span>トラフィック減少要因分析
+                    </a>
+                </li>
+                <li class="agenda-item">
+                    <a href="#actions">
+                        <span class="material-icons-round">build</span>実施施策と効果
+                    </a>
+                </li>
+                <li class="agenda-item">
+                    <a href="#issues">
+                        <span class="material-icons-round">warning</span>確認・課題事項
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="agenda-group" style="margin-top: 40px;">
+            <div class="agenda-group-title">QUICK ACCESS</div>
+            <ul class="agenda-list">
+                <li class="agenda-sub-item"><a href="#cta-action">CTA施策の進捗</a></li>
+                <li class="agenda-sub-item"><a href="#issues">確認事項</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Print Only Header -->
+        <div class="print-header" style="display: none;">
+            <h1>giftee for Business 1月月次レポート</h1>
+            <p>対象期間: 2026年1月1日〜1月21日（暫定）</p>
+        </div>
+
+        <!-- 1. Executive Summary -->
+        <section id="summary">
+            <h2><span class="material-icons-round">dashboard</span>1. エグゼクティブサマリー</h2>
+
+            <div style="background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); color: #fff; padding: 25px; border-radius: 12px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                <div>
+                    <h3 style="margin: 0; border: none; color: #fff; font-size: 14px; opacity: 0.9; padding: 0;">2026年上半期目標 (Target)</h3>
+                    <p style="font-size: 24px; font-weight: 700; margin: 5px 0 0;">6月末までにcolumn経由でのCVを60/月にする</p>
+                    <p style="font-size: 14px; opacity: 0.9; margin: 8px 0 0;">1月目標: PC CV 34件 / PC SS 34,324件 / PC CVR 0.10%</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 30px; font-weight: bold;">
+                    Status: 未達見込み
+                </div>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="metric-grid">
+                <div class="metric-card" style="border-top: 4px solid #e74c3c;">
+                    <div class="metric-label"><span class="material-icons-round" style="font-size:16px;">flag</span>PC CV数</div>
+                    <div class="metric-value">19<span style="font-size:14px; font-weight:500; color:#999;">件予測</span></div>
+                    <div class="metric-sub trend-down">
+                        <span class="material-icons-round" style="font-size:16px;">trending_down</span>
+                        前月比 -34% (12月: 29件)
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label"><span class="material-icons-round" style="font-size:16px;">visibility</span>PCセッション</div>
+                    <div class="metric-value">20,035<span style="font-size:14px; font-weight:500; color:#999;">予測</span></div>
+                    <div class="metric-sub trend-down">
+                        <span class="material-icons-round" style="font-size:16px;">trending_down</span>
+                        前月比 -31% (12月: 29,290)
+                    </div>
+                </div>
+                <div class="metric-card" style="border-top: 4px solid #27ae60;">
+                    <div class="metric-label"><span class="material-icons-round" style="font-size:16px;">touch_app</span>PC CTA到達数</div>
+                    <div class="metric-value">166<span style="font-size:14px; font-weight:500; color:#999;">件予測</span></div>
+                    <div class="metric-sub trend-down">
+                        <span class="material-icons-round" style="font-size:16px;">trending_down</span>
+                        前月比 -27% (12月: 228件)
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label"><span class="material-icons-round" style="font-size:16px;">percent</span>PC CVR</div>
+                    <div class="metric-value">0.09<span style="font-size:14px; font-weight:500; color:#999;">%</span></div>
+                    <div class="metric-sub trend-flat">
+                        <span class="material-icons-round" style="font-size:16px;">info</span>
+                        前月比 -0.01pt (12月: 0.10%)
+                    </div>
+                </div>
+            </div>
+
+            <!-- 目標シミュレーションチャート -->
+            <div class="chart-container" style="margin-bottom: 30px;">
+                <div class="chart-title">2026年6月目標：column経由でのCVを60/月にする</div>
+                <div style="position: relative; height: 300px;">
+                    <canvas id="simulationChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Summary Text -->
+            <div class="highlight-box alert">
+                <div class="box-title"><span class="material-icons-round">summarize</span>1月の総括</div>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.8;">
+                    <li><strong>トラフィック</strong>: PC SSが前月比-31%と大幅減。主因は<strong>季節要因</strong>（ギフト関連キーワードの検索ボリュームが12月→1月で28〜45%減少する市場傾向）。検索順位は維持されており、SEO上の問題ではない。</li>
+                    <li><strong>CV実績</strong>: PC CV 19件（予測）で前月比-34%。SS減少（-31%）に連動したCV減少であり、季節要因が主因。</li>
+                    <li><strong>ポジティブ要素</strong>: digitalgift-list（デジタルギフト比較）は引き続きCV獲得。BtoB向け記事は安定してCVを生んでいる。</li>
+                    <li><strong>次月への展望</strong>: 2月以降はギフト需要の回復が見込まれる。CTA改善施策の効果検証を継続し、CVR改善に注力する。</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 2. Overall & Device Performance -->
+        <section id="overall">
+            <h2><span class="material-icons-round">analytics</span>2. 全体・デバイス別実績</h2>
+
+            <!-- 実績推移表 -->
+            <div style="background: #fff; padding: 25px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 40px; box-shadow: var(--shadow-sm);">
+                <h4 style="margin: 0 0 20px; display: flex; align-items: center; gap: 8px;">
+                    <span class="material-icons-round" style="font-size: 20px; color: var(--primary-color);">assessment</span>
+                    実績推移（2026年1月〜）
+                </h4>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; font-size: 13px;">
+                        <thead>
+                            <tr style="background: #f8f9fa;">
+                                <th style="padding: 12px; text-align: center; white-space: nowrap;">月</th>
+                                <th style="padding: 12px; text-align: center; white-space: nowrap;">PC SS</th>
+                                <th style="padding: 12px; text-align: center; white-space: nowrap; background: #fff3e0;">フォームSS<br><span style="font-size:10px; font-weight: normal;">(CTAクリック)</span></th>
+                                <th style="padding: 12px; text-align: center; white-space: nowrap;">PC CV</th>
+                                <th style="padding: 12px; text-align: center; white-space: nowrap;">フォームCTR<br><span style="font-size:10px; font-weight: normal;">(SS→Form)</span></th>
+                                <th style="padding: 12px; text-align: center; white-space: nowrap;">フォームCVR<br><span style="font-size:10px; font-weight: normal;">(Form→CV)</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background: #e3f2fd; font-weight: bold; border-top: 2px solid var(--accent-color);">
+                                <td style="text-align: center;">1月</td>
+                                <td style="text-align: right;">20,035</td>
+                                <td style="text-align: right; background: #bbdefb;">166</td>
+                                <td style="text-align: right;">19</td>
+                                <td style="text-align: right;">0.83%</td>
+                                <td style="text-align: right;">11.4%</td>
+                            </tr>
+                            <tr style="background: #f5f5f5;">
+                                <td style="text-align: center;">2月</td>
+                                <td style="text-align: right;">-</td>
+                                <td style="text-align: right; background: #f0f0f0;">-</td>
+                                <td style="text-align: right;">-</td>
+                                <td style="text-align: right;">-</td>
+                                <td style="text-align: right;">-</td>
+                            </tr>
+                            <tr style="background: #f5f5f5;">
+                                <td style="text-align: center;">3月</td>
+                                <td style="text-align: right;">-</td>
+                                <td style="text-align: right; background: #f0f0f0;">-</td>
+                                <td style="text-align: right;">-</td>
+                                <td style="text-align: right;">-</td>
+                                <td style="text-align: right;">-</td>
+                            </tr>
+                            <tr style="background: #f5f5f5;">
+                                <td style="text-align: center;">4月</td>
+                                <td style="text-align: right;">-</td>
+                                <td style="text-align: right; background: #f0f0f0;">-</td>
+                                <td style="text-align: right;">-</td>
+                                <td style="text-align: right;">-</td>
+                                <td style="text-align: right;">-</td>
+                            </tr>
+                            <tr style="background: #f5f5f5;">
+                                <td style="text-align: center;">5月</td>
+                                <td style="text-align: right;">-</td>
+                                <td style="text-align: right; background: #f0f0f0;">-</td>
+                                <td style="text-align: right;">-</td>
+                                <td style="text-align: right;">-</td>
+                                <td style="text-align: right;">-</td>
+                            </tr>
+                            <tr style="background: #f5f5f5;">
+                                <td style="text-align: center;">6月</td>
+                                <td style="text-align: right;">-</td>
+                                <td style="text-align: right; background: #f0f0f0;">-</td>
+                                <td style="text-align: right;">-</td>
+                                <td style="text-align: right;">-</td>
+                                <td style="text-align: right;">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="font-size: 11px; color: #666; margin-top: 10px; text-align: right;">
+                    ※1月は1/21時点データを31日換算した予測値<br>
+                    ※フォームCTR = フォームSS / PC SS<br>
+                    ※フォームCVR = PC CV / フォームSS
+                </p>
+            </div>
+
+            <!-- Device Ratio & Details -->
+            <div style="display: flex; gap: 30px; align-items: flex-start; margin-bottom: 40px; flex-wrap: wrap;">
+                <!-- Device Ratio -->
+                <div class="chart-container" style="flex: 1; min-width: 300px; margin-bottom: 0;">
+                    <div class="chart-title"><span class="material-icons-round">pie_chart</span> 1月デバイス比率 (SS)</div>
+                    <div style="position: relative; height: 250px;">
+                        <canvas id="deviceRatioChart"></canvas>
+                    </div>
+                    <p style="font-size:12px; text-align:center; color:#666; margin-top:15px; border-top: 1px dashed #ddd; padding-top: 10px;">
+                        PC比率は約17%。CVはほぼ100%がPCから発生</p>
+                </div>
+
+                <!-- Device Details Table -->
+                <div style="flex: 2; min-width: 400px; overflow-x: auto;">
+                    <h4 style="margin-top: 0; display: flex; align-items: center; gap: 5px;">
+                        <span class="material-icons-round" style="color: var(--primary-color);">devices</span> デバイス別詳細 (PC vs Mobile)
+                    </h4>
+                    <table style="margin-bottom: 0;">
+                    <thead>
+                        <tr>
+                            <th>デバイス</th>
+                            <th>指標</th>
+                            <th>12月実績</th>
+                            <th>1月予測</th>
+                            <th>前月比</th>
+                            <th>評価</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- PC -->
+                        <tr style="background-color: #f0f7fb;">
+                            <td rowspan="3" style="font-weight:bold; color:var(--chart-pc); border-right:1px solid #ddd;">PC (Desktop)</td>
+                            <td>セッション</td>
+                            <td>29,290</td>
+                            <td><strong>20,035</strong></td>
+                            <td class="trend-down">-31%</td>
+                            <td><span class="status-badge bg-danger" style="background:#fee2e2; padding:2px 8px; border-radius:10px; font-weight:bold; color:#991b1b;">季節要因</span></td>
+                        </tr>
+                        <tr style="background-color: #f0f7fb;">
+                            <td>CTA到達数</td>
+                            <td>228</td>
+                            <td><strong>166</strong></td>
+                            <td class="trend-down">-27%</td>
+                            <td><span class="status-badge bg-warning" style="background:#fef3c7; padding:2px 8px; border-radius:10px; font-weight:bold; color:#92400e;">要観察</span></td>
+                        </tr>
+                        <tr style="background-color: #f0f7fb; border-bottom: 2px solid #ddd;">
+                            <td>CV数</td>
+                            <td>29</td>
+                            <td><strong>19</strong></td>
+                            <td class="trend-down">-34%</td>
+                            <td><span class="status-badge bg-danger" style="background:#fee2e2; padding:2px 8px; border-radius:10px; font-weight:bold; color:#991b1b;">季節要因</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 3. CV実績記事一覧 -->
+        <section id="articles">
+            <h2><span class="material-icons-round">article</span>3. CV実績記事一覧</h2>
+
+            <div class="chart-container" style="max-width: 100%;">
+                <div class="chart-title">
+                    <span class="material-icons-round">trending_up</span>
+                    CV実績記事一覧（1月 1/21時点）
+                </div>
+                <table style="margin:0; box-shadow:none; border:none;">
+                    <thead>
+                        <tr>
+                            <th style="width:50px; text-align:center;">順位</th>
+                            <th>記事タイトル</th>
+                            <th style="text-align:right;">PC SS</th>
+                            <th style="text-align:right;">12月SS</th>
+                            <th style="text-align:right;">1月CV</th>
+                            <th style="text-align:right;">12月CV</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align:center;"><span style="color:#f1c40f; font-weight:bold; font-size:18px;">1</span></td>
+                            <td style="font-weight:bold;">デジタルギフト 比較</td>
+                            <td style="text-align:right;">48</td>
+                            <td style="text-align:right;">67</td>
+                            <td style="text-align:right;"><strong>2</strong></td>
+                            <td style="text-align:right;">3</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;"><span style="color:#95a5a6; font-weight:bold; font-size:16px;">2</span></td>
+                            <td>保険キャンペーン</td>
+                            <td style="text-align:right;">143</td>
+                            <td style="text-align:right;">364</td>
+                            <td style="text-align:right;"><strong>1</strong></td>
+                            <td style="text-align:right;">1</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;"><span style="color:#cd7f32; font-weight:bold; font-size:16px;">3</span></td>
+                            <td>amazonギフトカード eメールタイプ</td>
+                            <td style="text-align:right;">126</td>
+                            <td style="text-align:right;">196</td>
+                            <td style="text-align:right;"><strong>1</strong></td>
+                            <td style="text-align:right;">0</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;">4</td>
+                            <td>Amazonギフトカード 支払い方法</td>
+                            <td style="text-align:right;">107</td>
+                            <td style="text-align:right;">192</td>
+                            <td style="text-align:right;"><strong>1</strong></td>
+                            <td style="text-align:right;">2</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;">5</td>
+                            <td>キャンペーン 販促</td>
+                            <td style="text-align:right;">92</td>
+                            <td style="text-align:right;">104</td>
+                            <td style="text-align:right;"><strong>1</strong></td>
+                            <td style="text-align:right;">0</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;">6</td>
+                            <td>友達紹介キャンペーンとは</td>
+                            <td style="text-align:right;">30</td>
+                            <td style="text-align:right;">29</td>
+                            <td style="text-align:right;"><strong>1</strong></td>
+                            <td style="text-align:right;">1</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;">7</td>
+                            <td>インスタントウィンとは</td>
+                            <td style="text-align:right;">25</td>
+                            <td style="text-align:right;">36</td>
+                            <td style="text-align:right;"><strong>1</strong></td>
+                            <td style="text-align:right;">0</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;">8</td>
+                            <td>イオンギフトカードとは</td>
+                            <td style="text-align:right;">23</td>
+                            <td style="text-align:right;">31</td>
+                            <td style="text-align:right;"><strong>1</strong></td>
+                            <td style="text-align:right;">0</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;">9</td>
+                            <td>社内表彰 景品</td>
+                            <td style="text-align:right;">16</td>
+                            <td style="text-align:right;">-</td>
+                            <td style="text-align:right;"><strong>1</strong></td>
+                            <td style="text-align:right;">0</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;">10</td>
+                            <td>人的資本経営とは</td>
+                            <td style="text-align:right;">11</td>
+                            <td style="text-align:right;">-</td>
+                            <td style="text-align:right;"><strong>1</strong></td>
+                            <td style="text-align:right;">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 12px; color: #666; margin-top: 15px;">
+                    <strong>注目ポイント:</strong> happy-receive（もらって嬉しいギフトカード）は12月CV4件→1月CV0件。同記事はBtoC向けであり、法人CVには元々貢献しにくい構造。
+                </p>
+            </div>
+        </section>
+
+        <!-- 4. トラフィック減少要因分析 -->
+        <section id="analysis">
+            <h2><span class="material-icons-round">search</span>4. トラフィック減少要因分析</h2>
+
+            <div class="highlight-box" style="border-left-color: #3498db; background: #e0f2fe;">
+                <div class="box-title" style="color: #0284c7;"><span class="material-icons-round">lightbulb</span>結論: 季節要因による検索ボリューム減少（SEO問題ではない）</div>
+                <p style="font-size: 14px; margin: 0;">
+                    PC SSが<strong>29,290 → 20,035（-9,255セッション、-31.6%）</strong>と大幅減少。<br>
+                    原因の内訳: <strong>ギフトカード系記事の季節変動 60.4%</strong> + <strong>季節記事（忘年会等） 15.7%</strong> + その他 24%。<br>
+                    検索順位は維持されており、SEO問題ではなく市場全体の検索ボリューム減少が主因。
+                </p>
+            </div>
+
+            <!-- 分析プロセス全体像 -->
+            <h3>分析プロセス</h3>
+
+            <div style="background: #fff; border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 30px;">
+                <h4 style="margin-top: 0; color: #334155;">Step 1: 問題の切り分け（サービスサイト vs コラム）</h4>
+                <p style="font-size: 14px; margin-bottom: 15px;">
+                    まず「どこが落ちているのか」を特定するため、サービスサイト（コラム除く）とコラムに分けて分析。
+                </p>
+                <table style="margin-bottom: 15px; font-size: 13px;">
+                    <thead>
+                        <tr style="background: #f8fafc;">
+                            <th>セグメント</th>
+                            <th style="text-align: right;">12月クリック</th>
+                            <th style="text-align: right;">1月クリック</th>
+                            <th style="text-align: right;">前年同期比</th>
+                            <th>判定</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>サービスサイト（コラム除く）</strong></td>
+                            <td style="text-align: right;">-</td>
+                            <td style="text-align: right;">-</td>
+                            <td style="text-align: right; color: var(--danger-color);"><strong>-54%</strong></td>
+                            <td><span class="status-badge bg-danger">要調査</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>コラム</strong></td>
+                            <td style="text-align: right;">-</td>
+                            <td style="text-align: right;">-</td>
+                            <td style="text-align: right; color: var(--success-color);"><strong>+73%</strong></td>
+                            <td><span class="status-badge bg-success">好調</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="background: #fef3c7; padding: 12px; border-radius: 6px; font-size: 13px;">
+                    <strong>発見①:</strong> サービスサイトの「えらべるPay」関連KWが大幅減少（17,002→4,669クリック、-72%）。ただしこれは検索ボリューム自体の減少であり、順位は1位を維持。
+                </div>
+            </div>
+
+            <div style="background: #fff; border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 30px;">
+                <h4 style="margin-top: 0; color: #334155;">Step 2: コラムのPC SS減少を因数分解</h4>
+                <p style="font-size: 14px; margin-bottom: 15px;">
+                    PC SS全体: <strong>29,290 → 20,035（-9,255セッション、-31.6%）</strong><br>
+                    この-9,255セッションの内訳を記事別に分解すると以下の通り。
+                </p>
+                <table style="margin-bottom: 15px; font-size: 13px;">
+                    <thead>
+                        <tr style="background: #f8fafc;">
+                            <th>記事</th>
+                            <th style="text-align: right;">12月</th>
+                            <th style="text-align: right;">1月予測</th>
+                            <th style="text-align: right;">差分</th>
+                            <th style="text-align: right;">寄与度</th>
+                            <th>分類</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #fef2f2;">
+                            <td><strong>happy-receive（もらって嬉しいギフトカード）</strong></td>
+                            <td style="text-align: right;">8,299</td>
+                            <td style="text-align: right;">4,190</td>
+                            <td style="text-align: right; color: var(--danger-color);"><strong>-4,109</strong></td>
+                            <td style="text-align: right;"><strong>44.4%</strong></td>
+                            <td><span class="status-badge bg-danger">ギフト系</span></td>
+                        </tr>
+                        <tr style="background: #fef3c7;">
+                            <td>yearendparty-prizes（忘年会景品）</td>
+                            <td style="text-align: right;">1,652</td>
+                            <td style="text-align: right;">202</td>
+                            <td style="text-align: right; color: var(--danger-color);"><strong>-1,450</strong></td>
+                            <td style="text-align: right;"><strong>15.7%</strong></td>
+                            <td><span class="status-badge bg-warning">季節記事</span></td>
+                        </tr>
+                        <tr>
+                            <td>giftcertificate（商品券種類）</td>
+                            <td style="text-align: right;">1,141</td>
+                            <td style="text-align: right;">677</td>
+                            <td style="text-align: right; color: var(--danger-color);">-464</td>
+                            <td style="text-align: right;">5.0%</td>
+                            <td><span class="status-badge" style="background:#e0f2fe; color:#0284c7;">ギフト系</span></td>
+                        </tr>
+                        <tr>
+                            <td>jcbgiftcard</td>
+                            <td style="text-align: right;">942</td>
+                            <td style="text-align: right;">574</td>
+                            <td style="text-align: right; color: var(--danger-color);">-368</td>
+                            <td style="text-align: right;">4.0%</td>
+                            <td><span class="status-badge" style="background:#e0f2fe; color:#0284c7;">ギフト系</span></td>
+                        </tr>
+                        <tr>
+                            <td>lineギフト、quoカード、その他ギフト系</td>
+                            <td style="text-align: right;">-</td>
+                            <td style="text-align: right;">-</td>
+                            <td style="text-align: right; color: var(--danger-color);">-648</td>
+                            <td style="text-align: right;">7.0%</td>
+                            <td><span class="status-badge" style="background:#e0f2fe; color:#0284c7;">ギフト系</span></td>
+                        </tr>
+                        <tr style="background: #f8fafc;">
+                            <td>その他記事（景表法、アンケート等）</td>
+                            <td style="text-align: right;">-</td>
+                            <td style="text-align: right;">-</td>
+                            <td style="text-align: right; color: var(--danger-color);">-2,216</td>
+                            <td style="text-align: right;">23.9%</td>
+                            <td>-</td>
+                        </tr>
+                        <tr style="background: #334155; color: #fff; font-weight: bold;">
+                            <td>合計</td>
+                            <td style="text-align: right;">29,290</td>
+                            <td style="text-align: right;">20,035</td>
+                            <td style="text-align: right;">-9,255</td>
+                            <td style="text-align: right;">100%</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- 円グラフで可視化 -->
+                <div style="display: flex; gap: 30px; align-items: center; margin-top: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 280px;">
+                        <div style="position: relative; height: 280px;">
+                            <canvas id="ssDecreaseChart"></canvas>
+                        </div>
+                    </div>
+                    <div style="flex: 1; min-width: 300px;">
+                        <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; border-left: 4px solid #10b981;">
+                            <h5 style="margin: 0 0 15px; color: #166534;">PC SS減少（-9,255）の内訳</h5>
+                            <div style="font-size: 14px; line-height: 2;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <span style="display: inline-block; width: 16px; height: 16px; background: #ef4444; border-radius: 3px;"></span>
+                                    <strong>ギフトカード系（季節変動）</strong>
+                                    <span style="margin-left: auto; font-weight: bold;">-5,589 (60.4%)</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <span style="display: inline-block; width: 16px; height: 16px; background: #f59e0b; border-radius: 3px;"></span>
+                                    <strong>季節記事（忘年会等）</strong>
+                                    <span style="margin-left: auto; font-weight: bold;">-1,450 (15.7%)</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <span style="display: inline-block; width: 16px; height: 16px; background: #94a3b8; border-radius: 3px;"></span>
+                                    <strong>その他</strong>
+                                    <span style="margin-left: auto; font-weight: bold;">-2,216 (23.9%)</span>
+                                </div>
+                            </div>
+                            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ccc; font-size: 13px; color: #166534;">
+                                <strong>結論:</strong> 減少の<strong>76%</strong>が季節要因で説明可能。<br>
+                                SEOの問題ではなく、市場の検索需要減少が主因。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: #fff; border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 30px;">
+                <h4 style="margin-top: 0; color: #334155;">Step 3: happy-receive記事の深掘り（検索順位 vs 検索ボリューム）</h4>
+                <p style="font-size: 14px; margin-bottom: 15px;">
+                    happy-receiveが落ちた原因は「順位下落」か「検索ボリューム減少」か？Search Consoleで検証。
+                </p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px;">
+                    <div style="background: #f0fdf4; padding: 15px; border-radius: 8px;">
+                        <h5 style="margin: 0 0 10px; color: #166534; font-size: 14px;">検索順位の確認</h5>
+                        <table style="font-size: 12px; margin: 0;">
+                            <tr>
+                                <td>「ギフトカード おすすめ」</td>
+                                <td style="text-align: right;"><strong style="color: #166534;">1位維持</strong></td>
+                            </tr>
+                            <tr>
+                                <td>「もらって嬉しいギフトカード」</td>
+                                <td style="text-align: right;"><strong style="color: #166534;">1位維持</strong></td>
+                            </tr>
+                            <tr>
+                                <td>「ギフトカード 人気」</td>
+                                <td style="text-align: right;"><strong style="color: #166534;">1位維持</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="background: #fef2f2; padding: 15px; border-radius: 8px;">
+                        <h5 style="margin: 0 0 10px; color: #991b1b; font-size: 14px;">インプレッション数の確認</h5>
+                        <table style="font-size: 12px; margin: 0;">
+                            <tr>
+                                <td>12月</td>
+                                <td style="text-align: right;">約65,000</td>
+                            </tr>
+                            <tr>
+                                <td>1月（1/21時点換算）</td>
+                                <td style="text-align: right;">約37,000</td>
+                            </tr>
+                            <tr>
+                                <td>変動率</td>
+                                <td style="text-align: right; color: var(--danger-color);"><strong>-43%</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="background: #dbeafe; padding: 12px; border-radius: 6px; font-size: 13px;">
+                    <strong>発見③:</strong> 順位は1位を維持しているが、インプレッション（表示回数）自体が-43%減少。<br>
+                    → これは「検索する人が減った」= <strong>検索ボリューム自体の減少</strong>を意味する。SEO問題ではない。
+                </div>
+            </div>
+
+            <div style="background: #fff; border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 30px;">
+                <h4 style="margin-top: 0; color: #334155;">Step 4: Google Keyword Plannerによる検証</h4>
+                <p style="font-size: 14px; margin-bottom: 15px;">
+                    「検索ボリュームが12月→1月で減る」が本当に市場全体の傾向なのか、Keyword Plannerの月別データで検証。
+                </p>
+                <table style="margin-bottom: 15px; font-size: 13px;">
+                    <thead>
+                        <tr style="background: #f8fafc;">
+                            <th>キーワード</th>
+                            <th style="text-align: right;">12月 Vol</th>
+                            <th style="text-align: right;">1月 Vol</th>
+                            <th style="text-align: right;">変動率</th>
+                            <th>備考</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ギフトカード</td>
+                            <td style="text-align: right;">40,500</td>
+                            <td style="text-align: right;">27,100</td>
+                            <td style="text-align: right; color: var(--danger-color);"><strong>-33%</strong></td>
+                            <td>毎年同傾向</td>
+                        </tr>
+                        <tr>
+                            <td>ギフトカード おすすめ</td>
+                            <td style="text-align: right;">6,600</td>
+                            <td style="text-align: right;">3,600</td>
+                            <td style="text-align: right; color: var(--danger-color);"><strong>-45%</strong></td>
+                            <td>毎年同傾向</td>
+                        </tr>
+                        <tr>
+                            <td>商品券</td>
+                            <td style="text-align: right;">22,200</td>
+                            <td style="text-align: right;">14,800</td>
+                            <td style="text-align: right; color: var(--danger-color);"><strong>-33%</strong></td>
+                            <td>毎年同傾向</td>
+                        </tr>
+                        <tr>
+                            <td>デジタルギフト</td>
+                            <td style="text-align: right;">4,400</td>
+                            <td style="text-align: right;">3,600</td>
+                            <td style="text-align: right; color: var(--danger-color);">-18%</td>
+                            <td>BtoB系は減少幅小</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="background: #f0fdf4; padding: 12px; border-radius: 6px; font-size: 13px;">
+                    <strong>発見④:</strong> ギフト関連KWは<strong>毎年12月がピーク・1月が谷</strong>となる季節パターンを持つ。<br>
+                    これは年末年始のギフト需要（お歳暮、クリスマス、年賀）が12月に集中し、1月は需要が落ち着くため。過去数年のデータでも同傾向が確認されている。
+                </div>
+            </div>
+
+            <!-- CV減少の分析 -->
+            <h3>CV減少の分析</h3>
+
+            <div style="background: #fff; border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 30px;">
+                <h4 style="margin-top: 0; color: #334155;">happy-receiveのCV減少（4件→0件）について</h4>
+                <p style="font-size: 14px; margin-bottom: 15px;">
+                    happy-receiveは12月にCV4件を獲得していたが、1月は0件。この理由を分析。
+                </p>
+
+                <table style="margin-bottom: 15px; font-size: 13px;">
+                    <thead>
+                        <tr style="background: #f8fafc;">
+                            <th>記事</th>
+                            <th>想定読者</th>
+                            <th style="text-align: right;">12月CV</th>
+                            <th style="text-align: right;">1月CV</th>
+                            <th>コンテンツ性質</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #fef2f2;">
+                            <td>happy-receive（もらって嬉しいギフトカード）</td>
+                            <td>個人（ギフトをもらう側）</td>
+                            <td style="text-align: right;">4</td>
+                            <td style="text-align: right; color: var(--danger-color);"><strong>0</strong></td>
+                            <td><span class="status-badge bg-warning">BtoC寄り</span></td>
+                        </tr>
+                        <tr style="background: #f0fdf4;">
+                            <td>digitalgift-list（デジタルギフト比較）</td>
+                            <td>法人担当者</td>
+                            <td style="text-align: right;">3</td>
+                            <td style="text-align: right; color: var(--success-color);"><strong>2</strong></td>
+                            <td><span class="status-badge bg-success">BtoB</span></td>
+                        </tr>
+                        <tr style="background: #f0fdf4;">
+                            <td>insurancebusiness-law（保険キャンペーン）</td>
+                            <td>法人担当者</td>
+                            <td style="text-align: right;">1</td>
+                            <td style="text-align: right; color: var(--success-color);"><strong>1</strong></td>
+                            <td><span class="status-badge bg-success">BtoB</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="background: #fef3c7; padding: 15px; border-radius: 6px; font-size: 13px; margin-bottom: 15px;">
+                    <strong>構造的な問題:</strong><br>
+                    happy-receiveは「もらって嬉しいギフトカード」というタイトルからもわかる通り、<strong>ギフトを受け取る個人</strong>向けのコンテンツ。<br>
+                    giftee for Businessの顧客（法人担当者）とは検索意図が異なり、法人CVには元々貢献しにくい構造。<br>
+                    12月のCV4件は「たまたま法人担当者が個人的に調べていた」等の偶発的な可能性が高い。
+                </div>
+
+                <div style="background: #dbeafe; padding: 15px; border-radius: 6px; font-size: 13px;">
+                    <strong>ポジティブな発見:</strong><br>
+                    BtoB向け記事（digitalgift-list、insurancebusiness-law等）は、トラフィック減少下でも<strong>安定してCVを獲得</strong>している。<br>
+                    これらの記事はPC比率が60〜70%と高く、法人担当者がPCから検索・CVする動線として機能している。
+                </div>
+            </div>
+
+            <!-- 結論 -->
+            <div class="highlight-box success" style="border-left-width: 6px;">
+                <div class="box-title" style="color: var(--success-color); font-size: 16px;"><span class="material-icons-round">check_circle</span>結論</div>
+                <div style="font-size: 14px;">
+                    <ol style="margin: 0; padding-left: 20px;">
+                        <li>PC SS減少（-31%）は<strong>季節要因</strong>（ギフト関連KWの検索ボリューム減少）が主因</li>
+                        <li>検索順位は維持されており、<strong>SEO上の問題ではない</strong></li>
+                        <li>happy-receiveのCV減少は、同記事が<strong>BtoC向けコンテンツ</strong>であることに起因（構造的な課題）</li>
+                        <li>BtoB向け記事（digitalgift-list等）は<strong>安定してCV獲得</strong>を継続</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- 2月以降の戦略提案 -->
+            <h3 style="margin-top: 40px;">2月以降の戦略提案：記事ポートフォリオの棚卸し</h3>
+
+            <div style="background: #fff; border: 2px solid #8b5cf6; border-radius: 12px; padding: 24px; margin-bottom: 30px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                    <span class="material-icons-round" style="color: #8b5cf6; font-size: 28px;">inventory_2</span>
+                    <h4 style="margin: 0; color: #5b21b6;">提案：記事棚卸し＆リライト優先度の策定</h4>
+                </div>
+
+                <div style="background: #faf5ff; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                    <h5 style="margin: 0 0 15px; color: #7c3aed; font-size: 14px;">現状の課題</h5>
+                    <p style="font-size: 14px; margin: 0; line-height: 1.8;">
+                        年間目標<strong>50,000 SS</strong>に対し、1月着地想定は<strong>20,035 SS（達成率40%）</strong>。<br>
+                        季節回復を「待つ」だけでは<strong>+30,000 SS</strong>のギャップを埋められない。記事ポートフォリオの棚卸しとリライトで底上げが必要。
+                    </p>
+                </div>
+
+                <a href="記事別PCSS目標シート_2026.html" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background: #8b5cf6; color: #fff; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px;">
+                    <span class="material-icons-round" style="font-size: 20px;">open_in_new</span>
+                    記事別PCSS目標シートを開く（TOP 100記事の詳細）
+                </a>
+            </div>
+
+            <!-- 補足施策 -->
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                        <span class="material-icons-round" style="font-size: 20px; color: #3498db;">psychology</span>
+                        <h5 style="margin: 0; font-size: 14px; color: #334155;">LLMO対策</h5>
+                        <span style="background: #dbeafe; color: #1d4ed8; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600;">進行中</span>
+                    </div>
+                    <p style="font-size: 13px; color: #64748b; margin: 0;">tadaさんと現在進行中</p>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                        <span class="material-icons-round" style="font-size: 20px; color: #10b981;">check_circle</span>
+                        <h5 style="margin: 0; font-size: 14px; color: #334155;">編集システム</h5>
+                        <span style="background: #d1fae5; color: #059669; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600;">Phase1完了</span>
+                    </div>
+                    <p style="font-size: 13px; color: #64748b; margin: 0;">
+                        Phase1: システム大枠完成（1月）<br>
+                        Phase2: リライト学習機能追加（2月）
+                    </p>
+                    <a href="https://aio-friendly.vercel.app/index.html" target="_blank" style="display: inline-block; margin-top: 10px; font-size: 12px; color: #3b82f6; text-decoration: none;">システムを見る →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. CTA施策 -->
+        <section id="cta-action">
+            <h2><span class="material-icons-round">touch_app</span>5. CTA施策の進捗</h2>
+
+            <!-- 現状の課題 -->
+            <div style="background: #fff; border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                    <span class="material-icons-round" style="font-size: 24px; color: #ef4444;">error_outline</span>
+                    <h4 style="margin: 0; font-size: 16px; color: #334155; border: none; padding: 0;">現状の課題：記事タイプでCV効率が大きく異なる</h4>
+                </div>
+                <p style="font-size: 13px; color: #64748b; margin: 0 0 15px;">
+                    現在、全記事に同じCTAを設置しているが、記事の読者層によってCV効率に大きな差が出ている。
+                </p>
+                <table style="width: 100%; font-size: 12px; margin-bottom: 15px; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #f8fafc;">
+                            <th style="padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0;">記事</th>
+                            <th style="padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0;">想定読者</th>
+                            <th style="padding: 10px; text-align: right; border-bottom: 1px solid #e2e8f0;">SS</th>
+                            <th style="padding: 10px; text-align: right; border-bottom: 1px solid #e2e8f0;">CV</th>
+                            <th style="padding: 10px; text-align: right; border-bottom: 1px solid #e2e8f0;">CVR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #f0fdf4;">
+                            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">digitalgift-list（デジタルギフト比較）</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;"><span style="color: #3b82f6; font-weight: 600;">法人担当者</span></td>
+                            <td style="padding: 10px; text-align: right; border-bottom: 1px solid #e2e8f0;">279</td>
+                            <td style="padding: 10px; text-align: right; border-bottom: 1px solid #e2e8f0;">4</td>
+                            <td style="padding: 10px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #166534;"><strong>1.43%</strong></td>
+                        </tr>
+                        <tr style="background: #fef2f2;">
+                            <td style="padding: 10px;">happy-receive（もらって嬉しいギフトカード）</td>
+                            <td style="padding: 10px;"><span style="color: #f59e0b; font-weight: 600;">個人（ギフトをもらう側）</span></td>
+                            <td style="padding: 10px; text-align: right;">134,692</td>
+                            <td style="padding: 10px; text-align: right;">6</td>
+                            <td style="padding: 10px; text-align: right; color: #991b1b;">0.00%</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="background: #fef3c7; padding: 12px; border-radius: 6px; font-size: 13px;">
+                    <strong>発見：</strong>BtoB記事とBtoC記事でCVRに<strong>約90倍</strong>の差がある。<br>
+                    同じCTAを全記事に置いても、記事の読者層が違うから効果が出ない。
+                </div>
+            </div>
+
+            <!-- テキストCTA文言改修テスト結果 -->
+            <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                    <span style="background: #f3f4f6; color: #6b7280; font-size: 11px; padding: 4px 10px; border-radius: 10px; font-weight: 600;">検証結果</span>
+                    <h4 style="margin: 0; font-size: 16px; color: #334155;">テキストCTA文言改修テスト</h4>
+                </div>
+                <p style="font-size: 13px; color: #64748b; margin: 0 0 15px;">
+                    まず「CTAの文言を変えれば改善するか」をテスト。
+                </p>
+
+                <!-- テスト結果テーブル -->
+                <table style="width: 100%; font-size: 12px; margin-bottom: 15px; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #f8fafc;">
+                            <th style="padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0;">テスト</th>
+                            <th style="padding: 10px; text-align: center; border-bottom: 1px solid #e2e8f0;">期間</th>
+                            <th style="padding: 10px; text-align: right; border-bottom: 1px solid #e2e8f0;">Before CTR</th>
+                            <th style="padding: 10px; text-align: right; border-bottom: 1px solid #e2e8f0;">After CTR</th>
+                            <th style="padding: 10px; text-align: right; border-bottom: 1px solid #e2e8f0;">Before CVR</th>
+                            <th style="padding: 10px; text-align: right; border-bottom: 1px solid #e2e8f0;">After CVR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">12/11〜（22記事）</td>
+                            <td style="padding: 10px; text-align: center; border-bottom: 1px solid #e2e8f0;">12/12-12/20</td>
+                            <td style="padding: 10px; text-align: right; border-bottom: 1px solid #e2e8f0;">0.20%</td>
+                            <td style="padding: 10px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #10b981;">0.31%</td>
+                            <td style="padding: 10px; text-align: right; border-bottom: 1px solid #e2e8f0;">25.0%</td>
+                            <td style="padding: 10px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #ef4444;">0.0%</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px;">12/18〜（30記事）</td>
+                            <td style="padding: 10px; text-align: center;">1/6-1/20</td>
+                            <td style="padding: 10px; text-align: right;">0.15%</td>
+                            <td style="padding: 10px; text-align: right; color: #10b981;">0.17%</td>
+                            <td style="padding: 10px; text-align: right;">30.8%</td>
+                            <td style="padding: 10px; text-align: right;">30.4%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- 結論 -->
+                <div style="background: #fef2f2; padding: 15px; border-radius: 8px; border-left: 4px solid #ef4444;">
+                    <p style="font-size: 13px; color: #991b1b; margin: 0; font-weight: 600;">
+                        結論：CTRは微増するも、CVRは横ばい〜低下。文言改善だけではインパクトは限定的。
+                    </p>
+                </div>
+            </div>
+
+            <!-- 提案：CTA出し分け戦略 -->
+            <div style="background: #fff; border: 2px solid #8b5cf6; border-radius: 12px; padding: 24px; margin-top: 20px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                    <span class="material-icons-round" style="font-size: 24px; color: #8b5cf6;">call_split</span>
+                    <h4 style="margin: 0; font-size: 16px; color: #5b21b6; border: none; padding: 0;">提案：CTA出し分け戦略</h4>
+                </div>
+                <p style="font-size: 13px; color: #64748b; margin: 0 0 20px;">
+                    「文言を変える」のではなく、「記事の性質に応じてCTAの種類を変える」アプローチ。
+                </p>
+
+                <!-- 根拠：事例ページのCVR -->
+                <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #10b981;">
+                    <h5 style="margin: 0 0 10px; color: #166534; font-size: 13px;">根拠：事例ページのCVR（10〜12月実績）</h5>
+                    <table style="width: 100%; font-size: 12px; margin: 0 0 10px; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #dcfce7;">
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #bbf7d0;">ページ</th>
+                                <th style="padding: 8px; text-align: right; border-bottom: 1px solid #bbf7d0;">SS</th>
+                                <th style="padding: 8px; text-align: right; border-bottom: 1px solid #bbf7d0;">CV</th>
+                                <th style="padding: 8px; text-align: right; border-bottom: 1px solid #bbf7d0;">CVR</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #e2e8f0;"><strong>/cases（事例一覧）</strong></td>
+                                <td style="padding: 8px; text-align: right; border-bottom: 1px solid #e2e8f0;">1,609</td>
+                                <td style="padding: 8px; text-align: right; border-bottom: 1px solid #e2e8f0;">16</td>
+                                <td style="padding: 8px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #166534;"><strong>0.99%</strong></td>
+                            </tr>
+                            <tr style="background: #fef2f2;">
+                                <td style="padding: 8px;">/columns/happy-receive（BtoC記事）</td>
+                                <td style="padding: 8px; text-align: right;">134,692</td>
+                                <td style="padding: 8px; text-align: right;">6</td>
+                                <td style="padding: 8px; text-align: right; color: #991b1b;">0.00%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 12px; color: #166534; margin: 0;">
+                        → 事例ページはCVR 0.99%と高効率。BtoC記事から直接CVを狙うより、事例ページへ誘導した方が転換率が高い。
+                    </p>
+                </div>
+
+                <!-- 出し分けルール -->
+                <h5 style="margin: 0 0 10px; font-size: 13px; color: #5b21b6;">出し分けルール</h5>
+                <table style="width: 100%; font-size: 12px; margin-bottom: 0; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #f8fafc;">
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #e2e8f0;">記事タイプ</th>
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #e2e8f0;">条件</th>
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #e2e8f0;">CTA</th>
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #e2e8f0;">理由</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;"><strong style="color: #3b82f6;">BtoB</strong></td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">PC率 50%以上</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">フォーム一体型</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-size: 11px; color: #64748b;">CVRが高い→直接CVを狙う</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;"><strong style="color: #f59e0b;">BtoC（CV出てる）</strong></td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">PC率 50%未満 & CV実績あり</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">資料DL + 事例リンク（両方）</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-size: 11px; color: #64748b;">CV実績あり→両方で機会最大化</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px;"><strong style="color: #94a3b8;">BtoC（CV出てない）</strong></td>
+                            <td style="padding: 10px;">PC率 50%未満 & CV実績なし</td>
+                            <td style="padding: 10px;"><span style="background: #fef3c7; color: #92400e; padding: 2px 6px; border-radius: 4px; font-weight: 600;">要検討</span></td>
+                            <td style="padding: 10px; font-size: 11px; color: #64748b;">事例誘導 / ギフト診断 / 資料DL</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 6. Issues -->
+        <section id="issues">
+            <h2><span class="material-icons-round">help_outline</span>6. 確認事項</h2>
+
+            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:15px;">
+                <div class="highlight-box" style="margin-bottom:0; border-left-color: #3498db; background: #f0f9ff;">
+                    <div class="box-title" style="color: #2980b9;">ダウンロードフォームについて</div>
+                    <p style="font-size:13px; margin:0;">フォーム一体型の導入にあたり、giftee側での対応可否・スケジュールについてご相談させてください。</p>
+                </div>
+                <div class="highlight-box" style="margin-bottom:0; border-left-color: #8b5cf6; background: #faf5ff;">
+                    <div class="box-title" style="color: #7c3aed;">2月の予算配分について</div>
+                    <p style="font-size:13px; margin:0;">2月は<strong>リライト60本</strong>（上位記事から優先）に振り切り、<strong>新規記事は0本</strong>でよいか確認させてください。</p>
+                </div>
+                <div class="highlight-box" style="margin-bottom:0; border-left-color: #e67e22; background: #fef7ed;">
+                    <div class="box-title" style="color: #d35400;">CTA出し分け戦略について</div>
+                    <p style="font-size:13px; margin:0;">BtoB/BtoC記事でCTAを分ける案（上記参照）について、実装可否をご相談させてください。</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<script>
+    // Navigation Active State
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.agenda-item a');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (window.pageYOffset >= sectionTop - 100) {
+                current = section.getAttribute('id');
+            }
+        });
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // Charts
+    // 1. Device Ratio Chart
+    const ctxRatio = document.getElementById('deviceRatioChart').getContext('2d');
+    new Chart(ctxRatio, {
+        type: 'doughnut',
+        data: {
+            labels: ['PC (17%)', 'Mobile (83%)'],
+            datasets: [{
+                data: [20108, 100000],
+                backgroundColor: ['#3498db', '#e67e22'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '60%',
+            plugins: {
+                legend: { position: 'right' }
+            }
+        }
+    });
+
+    // 3. Simulation Chart (2025 Actuals + 2026 Forecast)
+    const simLabels = ['8月', '9月', '10月', '11月', '12月', '1月', '2月(予)', '3月(予)', '4月(予)', '5月(予)', '6月(予)'];
+    const simSsData = [14933, 17514, 23115, 25610, 29290, 20108, 25000, 30000, 35000, 40000, 50000]; // Actuals + forecast
+    const simCvData = [18, 20, 28, 27, 29, 19, 25, 32, 40, 50, 60]; // Actuals + CVR growth to target
+
+    const ctxSim = document.getElementById('simulationChart').getContext('2d');
+    new Chart(ctxSim, {
+        type: 'bar',
+        data: {
+            labels: simLabels,
+            datasets: [
+                {
+                    label: 'PC セッション (目標:月5.5万)',
+                    data: simSsData,
+                    backgroundColor: (ctx) => {
+                        return ctx.dataIndex < 5 ? '#bdc3c7' : (ctx.dataIndex === 5 ? '#3498db' : '#85c1e9');
+                    },
+                    order: 2,
+                    yAxisID: 'y_ss'
+                },
+                {
+                    label: 'PC CV数 (目標:月60件)',
+                    data: simCvData,
+                    type: 'line',
+                    borderColor: '#e74c3c',
+                    segment: {
+                        borderDash: ctx => ctx.p0DataIndex >= 5 ? [5, 5] : undefined
+                    },
+                    borderWidth: 3,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#e74c3c',
+                    fill: false,
+                    order: 1,
+                    yAxisID: 'y_cv'
+                }
+            ]
+        },
+        options: {
+            animation: { duration: 0 },
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += context.parsed.y.toLocaleString();
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y_ss: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'PC SS' }, grid: { display: false } },
+                y_cv: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'PC CV' }, grid: { display: false }, max: 70 }
+            }
+        }
+    });
+
+    // 4. SS Decrease Breakdown Pie Chart (PC SS減少要因の内訳)
+    const ctxDecrease = document.getElementById('ssDecreaseChart');
+    if (ctxDecrease) {
+        new Chart(ctxDecrease.getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['ギフトカード系（季節変動）', '季節記事（忘年会等）', 'その他'],
+                datasets: [{
+                    data: [60.4, 15.7, 23.9],
+                    backgroundColor: ['#ef4444', '#f59e0b', '#94a3b8'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '55%',
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.parsed;
+                                const labels = {
+                                    'ギフトカード系（季節変動）': '-5,589',
+                                    '季節記事（忘年会等）': '-1,450',
+                                    'その他': '-2,216'
+                                };
+                                return context.label + ': ' + value + '% (' + labels[context.label] + ')';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

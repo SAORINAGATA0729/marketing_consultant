@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>giftee for Business 2026年1月以降の戦略</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --bg-color: #f8f9fa;
+            --border-color: #e9ecef;
+            --text-color: #333;
+            --accent-color: #3498db;
+            --sidebar-bg: #2c3e50;
+            --chart-pc: #3498db;     /* 青 */
+            --chart-sp: #e67e22;     /* オレンジ */
+            --chart-total: #95a5a6;  /* グレー */
+            --highlight-bg: #e8f4f8;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Layout Structure */
+        .wrapper {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            min-height: 100vh;
+        }
+
+        /* Fixed Sidebar (Agenda) */
+        .sidebar {
+            flex: 0 0 280px;
+            background-color: var(--sidebar-bg);
+            color: #fff;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 40px 0;
+            box-sizing: border-box;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 0 30px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+        }
+
+        .sidebar-header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.4;
+            color: #fff;
+        }
+
+        .agenda-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .agenda-group {
+            margin-bottom: 25px;
+        }
+
+        .agenda-group-title {
+            padding: 10px 30px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.5);
+            font-weight: 700;
+        }
+
+        .agenda-item {
+            border-left: 4px solid transparent;
+        }
+
+        .agenda-item a {
+            display: block;
+            padding: 10px 30px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .agenda-item a:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: #fff;
+            border-left-color: var(--accent-color);
+        }
+
+        .agenda-sub-item a {
+            padding: 8px 30px 8px 50px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .agenda-sub-item a:hover {
+            color: #fff;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 60px 80px;
+            overflow-x: hidden;
+        }
+
+        section {
+            margin-bottom: 100px;
+            scroll-margin-top: 40px;
+        }
+
+        h2 {
+            font-size: 28px;
+            color: var(--primary-color);
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 40px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: var(--secondary-color);
+            margin: 50px 0 25px;
+            border-left: 5px solid var(--accent-color);
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        h4 {
+            font-size: 16px;
+            margin: 20px 0 10px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        h5 {
+            font-size: 14px;
+            margin: 15px 0 10px;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        /* Charts */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .chart-container {
+            padding: 25px;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .chart-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Topic Summary Cards */
+        .topic-summary-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .topic-summary-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .topic-summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-color: var(--accent-color);
+        }
+
+        /* Phase Detail */
+        .phase-detail {
+            margin-bottom: 60px;
+            padding: 30px;
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+        
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .phase-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 13px;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            text-align: center;
+            padding: 12px;
+            background-color: #f8f9fa;
+            color: var(--secondary-color);
+            font-weight: 700;
+            border-bottom: 2px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: right;
+        }
+
+        td:first-child { text-align: left; font-weight: bold; }
+        tr:last-child td { border-bottom: none; }
+        
+        .pc-col { background-color: rgba(52, 152, 219, 0.05); color: #2980b9; font-weight: bold; }
+
+        /* Custom for this page */
+        .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: #ecf0f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7f8c8d;
+            font-weight: bold;
+            border: 2px dashed #bdc3c7;
+            border-radius: 8px;
+            margin: 20px 0;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .data-highlight {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .badge-new {
+            background: #e74c3c;
+            color: #fff;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+        .badge-ongoing {
+            background: #3498db;
+            color: #fff;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <!-- Sidebar Agenda -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h1>giftee for Business<br>2026年事業計画書</h1>
+        </div>
+        
+        <div class="agenda-group">
+            <div class="agenda-group-title">MAIN STRATEGY</div>
+            <ul class="agenda-list">
+                <li class="agenda-item"><a href="#strategy-2026">1. 2026年の戦略方針</a></li>
+                <li class="agenda-sub-item"><a href="#simulation">- 目標シミュレーション</a></li>
+                <li class="agenda-sub-item"><a href="#logic">- 戦略策定の背景</a></li>
+            </ul>
+        </div>
+
+        <div class="agenda-group">
+            <div class="agenda-group-title">ACTION PLANS</div>
+            <ul class="agenda-list">
+                <li class="agenda-item"><a href="#strategy-1">2. 戦略① AIO体制</a></li>
+                <li class="agenda-item"><a href="#strategy-2">3. 戦略② CTA強化</a></li>
+                <li class="agenda-item"><a href="#strategy-3">4. 戦略③ AI編集部</a></li>
+            </ul>
+        </div>
+        
+        <div class="agenda-group">
+            <div class="agenda-group-title">FINANCIALS</div>
+            <ul class="agenda-list">
+                <li class="agenda-item"><a href="#financial-plan">5. 事業収支計画 (PL)</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- 1. Strategy Policy (Re-post) -->
+        <section id="strategy-2026">
+            <h2>1. 【再掲】2026年の戦略方針</h2>
+            
+            <div style="background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); color: #fff; padding: 30px; border-radius: 12px; margin-bottom: 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <h3 style="margin: 0; border: none; color: #fff; font-size: 14px; opacity: 0.8; padding: 0;">2026年上半期テーマ</h3>
+                <p style="font-size: 24px; font-weight: 700; margin: 10px 0 0; line-height: 1.4;">
+                    AI駆動型編集部のさらなるグロースと<br>持続的な成長曲線を描く
+                </p>
+            </div>
+
+            <!-- Simulation Chart -->
+            <h3 id="simulation" style="margin-top: 0;">目標シミュレーション（〜6月末）</h3>
+            <div class="chart-container">
+                <div class="chart-title">2026年6月目標：月間PC CV 60件体制の確立</div>
+                <canvas id="simulationChart" height="120"></canvas>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #eee;">
+                    <strong style="color: #2c3e50;">【シミュレーションの根拠】現実的かつ堅実な成長ライン</strong>
+                    <ul style="margin: 10px 0 0; padding-left: 20px; font-size: 13px; color: #555;">
+                        <li><strong>SS成長率 (108%)</strong>: 12月までの大量リライト効果（ストック効果）と、月5〜7本の新規記事追加により、広告費をかけずに自然増で達成可能なライン。</li>
+                        <li><strong>CVR改善 (0.12%)</strong>: 現在の0.09%から、CTA改善やLP化を進めることで0.03ptの改善を見込む（BtoB平均水準への回帰）。</li>
+                        <li><strong>結論</strong>: 6月末時点でPCセッション5.5万、PC CV 66件（約70件）への着地を目指す。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Strategic Topics -->
+            <h3>上半期・戦略の3本柱</h3>
+            <div class="topic-summary-container">
+                <!-- Topic 1 -->
+                <div class="topic-summary-card" style="text-align: left; padding: 25px;">
+                    <div style="color: #3498db; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+                        <span class="material-icons-round">psychology</span>戦略 ①
+                    </div>
+                    <h4 style="margin: 0 0 10px; font-size: 18px; color: #2c3e50;">AIOに対応した編集体制</h4>
+                    <p style="font-size: 13px; color: #666; margin: 0;">
+                        SGE（AI検索）時代の到来を見据え、「AIに引用される」ための一次情報・信頼性強化を行う。ただ作るだけでなく、AIに選ばれる構造へ記事を進化させる。
+                    </p>
+                </div>
+
+                <!-- Topic 2 -->
+                <div class="topic-summary-card" style="text-align: left; padding: 25px;">
+                    <div style="color: #e67e22; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+                        <span class="material-icons-round">touch_app</span>戦略 ②
+                    </div>
+                    <h4 style="margin: 0 0 10px; font-size: 18px; color: #2c3e50;">CTAのさらなる強化</h4>
+                    <p style="font-size: 13px; color: #666; margin: 0;">
+                        記事下の定型CTAだけでなく、記事文脈に合わせた「マイクロコンバージョン」ポイントを設計。CVR 0.12%達成のための最重要レバー。
+                    </p>
+                </div>
+
+                <!-- Topic 3 -->
+                <div class="topic-summary-card" style="text-align: left; padding: 25px;">
+                    <div style="color: #2ecc71; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+                        <span class="material-icons-round">auto_awesome</span>戦略 ③
+                    </div>
+                    <h4 style="margin: 0 0 10px; font-size: 18px; color: #2c3e50;">AI編集部のアップデート</h4>
+                    <p style="font-size: 13px; color: #666; margin: 0;">
+                        「テキスト生成」は完了したが、「クリエイティブ（図版）」と「公開プロセス」に課題が残る。システム開発とナレッジの形式知化を進め、脱・属人化を目指す。
+                    </p>
+                </div>
+            </div>
+
+            <!-- 戦略策定の背景（ロジック） -->
+            <h3 id="logic" style="margin: 60px 0 20px; font-size: 20px; color: #34495e; border-left: 5px solid #2c3e50; padding-left: 15px;">
+                戦略策定の背景：なぜ今、この3本柱なのか？
+            </h3>
+            
+            <div class="card" style="margin-bottom: 40px; background: #f8f9fa; border: none; padding: 30px;">
+                <!-- Logic 1: Market Shift (AIO) -->
+                <div style="display: flex; gap: 30px; margin-bottom: 40px; border-bottom: 1px dashed #bdc3c7; padding-bottom: 30px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <h4 style="color: #3498db; margin: 0 0 15px; font-size: 16px;">
+                            <span class="material-icons-round" style="vertical-align: bottom; margin-right: 5px;">public</span>
+                            1. 外部環境：検索市場の変化への適応
+                        </h4>
+                        <p style="font-size: 14px; color: #555; line-height: 1.8;">
+                            これまでオウンドメディアの流入は「検索（SEO）」がほぼ100%でした。しかし、今後は「検索 + AI（AIO）」のハイブリッド環境へ急速に移行します。
+                            <br><strong style="color: #c0392b;">「検索」だけの対策では、メディアとしてのパイは確実にシュリンクします。</strong>
+                            これからの成長には、AI検索（AIO）での露出獲得が不可欠です。
+                        </p>
+                    </div>
+                    <div style="flex: 1; min-width: 300px; display: flex; align-items: center; justify-content: center; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                        <div style="text-align: center; width: 100%; display: flex; justify-content: center; gap: 40px; align-items: flex-end;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 12px; margin-bottom: 5px; color: #7f8c8d;">現在</div>
+                                <div style="width: 80px; height: 100px; background: #95a5a6; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; margin: 0 auto;">検索<br>100%</div>
+                            </div>
+                            <div style="font-size: 24px; color: #7f8c8d; padding-bottom: 40px;">➡</div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 12px; margin-bottom: 5px; color: #3498db; font-weight: bold;">未来 (Search + AI)</div>
+                                <div style="width: 80px;">
+                                    <div style="height: 40px; background: #3498db; border-radius: 4px 4px 0 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 10px;">AIO<br>(拡大)</div>
+                                    <div style="height: 80px; background: #95a5a6; border-radius: 0 0 4px 4px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px;">検索</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logic 2: Growth Lever (CTA/CVR) -->
+                <div style="display: flex; gap: 30px; margin-bottom: 40px; border-bottom: 1px dashed #bdc3c7; padding-bottom: 30px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <h4 style="color: #e67e22; margin: 0 0 15px; font-size: 16px;">
+                            <span class="material-icons-round" style="vertical-align: bottom; margin-right: 5px;">trending_up</span>
+                            2. 成長課題：集客の方程式 vs CVRの壁
+                        </h4>
+                        <p style="font-size: 14px; color: #555; line-height: 1.8;">
+                            2025年の実績から「PC強化＝セッション増」という集客の勝ち筋は見えました（PC SSは右肩上がり）。
+                            <br><strong style="color: #e67e22;">しかし、転換率（CVR）がボトルネックとなり、セッションの伸びが成果（CV）に直結しにくい構造です。</strong>
+                            この「CVRの壁」を突破しない限り、成長曲線は鈍化します。
+                        </p>
+                    </div>
+                    <div style="flex: 1; min-width: 300px; display: flex; gap: 15px;">
+                        <!-- Success Column -->
+                        <div style="flex: 1; background: #fff; padding: 15px; border-radius: 8px; border-top: 3px solid #27ae60; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                            <div style="color: #27ae60; font-weight: bold; font-size: 14px; margin-bottom: 10px; text-align: center;">成果: 集客成功</div>
+                            <div style="height: 60px; display: flex; align-items: flex-end; justify-content: space-around; padding: 0 10px;">
+                                <div style="width: 15%; background: #2ecc71; height: 30%;"></div>
+                                <div style="width: 15%; background: #2ecc71; height: 50%;"></div>
+                                <div style="width: 15%; background: #2ecc71; height: 70%;"></div>
+                                <div style="width: 15%; background: #27ae60; height: 90%;"></div>
+                            </div>
+                            <p style="font-size: 11px; color: #666; margin: 10px 0 0; text-align: center;">PCセッションは<br>計画通り増加</p>
+                        </div>
+                        <!-- Challenge Column -->
+                        <div style="flex: 1; background: #fff; padding: 15px; border-radius: 8px; border-top: 3px solid #c0392b; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                            <div style="color: #c0392b; font-weight: bold; font-size: 14px; margin-bottom: 10px; text-align: center;">課題: CVR停滞</div>
+                            <div style="height: 60px; display: flex; align-items: flex-end; justify-content: center; position: relative;">
+                                <div style="width: 80%; border-top: 2px dashed #c0392b; position: absolute; top: 40%;"></div>
+                                <span class="material-icons-round" style="color: #c0392b; font-size: 40px;">block</span>
+                            </div>
+                            <p style="font-size: 11px; color: #666; margin: 10px 0 0; text-align: center;">CVR向上が<br>次の成長レバー</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logic 3: System (Editorial) -->
+                <div style="display: flex; gap: 30px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <h4 style="color: #2ecc71; margin: 0 0 15px; font-size: 16px;">
+                            <span class="material-icons-round" style="vertical-align: bottom; margin-right: 5px;">speed</span>
+                            3. 体制課題：生成速度と公開速度の乖離
+                        </h4>
+                        <p style="font-size: 14px; color: #555; line-height: 1.8;">
+                            AI導入により「記事を作る」速度は劇的に上がりましたが、「確認・公開する」人間系のプロセスが追いついていません。
+                            <br><strong style="color: #27ae60;">結果として「在庫」が滞留し、実質的な進捗（公開数）が最大化されていません。</strong>
+                            システム開発でここを自動化・効率化しないと、AIの恩恵をフル活用できません。
+                        </p>
+                    </div>
+                    <div style="flex: 1; min-width: 300px; background: #fff; padding: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                         <div style="text-align: center; width: 100%;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; padding: 0 20px;">
+                                <div style="text-align: center;">
+                                    <div style="font-size: 30px;">🚀</div>
+                                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">AI生成</div>
+                                    <div style="font-size: 11px; color: #27ae60; font-weight: bold;">爆速</div>
+                                </div>
+                                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; margin: 0 15px;">
+                                    <div style="font-size: 20px; color: #e74c3c;">⚠️</div>
+                                    <div style="height: 2px; width: 100%; background: #e74c3c; margin: 5px 0;"></div>
+                                    <div style="font-size: 10px; color: #e74c3c; font-weight: bold;">ここが詰まっている</div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 30px;">🐢</div>
+                                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">公開・実装</div>
+                                    <div style="font-size: 11px; color: #7f8c8d;">人間ボトルネック</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Strategy 1 (AIO) -->
+        <section id="strategy-1">
+            <h2>2. 戦略① AIOに対応した編集体制</h2>
+
+            <div class="phase-detail" style="border-left: 5px solid #3498db;">
+                <div class="phase-header">
+                    <div class="phase-title"><span class="material-icons-round">psychology</span>戦略詳細・実行プラン</div>
+                </div>
+                
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <div style="text-align: center; margin-bottom: 10px; font-weight: bold; color: #2c3e50;">▼ コラム配下 (/columns)</div>
+                        <img src="26年キックオフ/コラム_251231.png" alt="コラム分析データ" style="width: 100%; height: auto; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    </div>
+                    <div style="flex: 1; min-width: 300px;">
+                        <div style="text-align: center; margin-bottom: 10px; font-weight: bold; color: #2c3e50;">▼ サイト全体 (giftee.biz)</div>
+                        <img src="26年キックオフ/プロダクトサイト_251231.png" alt="プロダクトサイト分析データ" style="width: 100%; height: auto; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    </div>
+                </div>
+                <p style="font-size: 11px; color: #888; text-align: center; margin-top: 5px;">
+                    ※画像データ参照元: 26年キックオフ/コラム_251231.png, 26年キックオフ/プロダクトサイト_251231.png
+                </p>
+
+                <div style="background: #fff; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px; margin-top: 30px;">
+                    <h5 style="margin-top: 0; color: #2c3e50; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                        <span class="material-icons-round" style="vertical-align: middle; margin-right: 5px; color: #3498db;">analytics</span>
+                        現状分析：AIO引用の95%は「コラム」が支えている
+                    </h5>
+                    
+                    <div style="margin: 20px 0;">
+                        <!-- Comparison Table -->
+                        <table style="width: 100%; border: 1px solid #eee;">
+                            <thead>
+                                <tr style="background: #f8f9fa;">
+                                    <th style="padding: 10px; text-align: left;">プラットフォーム</th>
+                                    <th style="padding: 10px;">サイト全体<br><span style="font-size:10px; font-weight:normal;">(giftee.biz)</span></th>
+                                    <th style="padding: 10px;">コラム配下<br><span style="font-size:10px; font-weight:normal;">(/columns)</span></th>
+                                    <th style="padding: 10px; color: #3498db;">コラム寄与率</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight: bold; color: #4285f4;"><span class="material-icons-round" style="font-size:14px; vertical-align:middle;">search</span> Google AIO</td>
+                                    <td style="text-align: center;">857</td>
+                                    <td style="text-align: center;">818</td>
+                                    <td style="text-align: center; font-weight: bold; color: #3498db; background: #f0f7fb;">95.4%</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; color: #10a37f;"><span class="material-icons-round" style="font-size:14px; vertical-align:middle;">chat</span> ChatGPT</td>
+                                    <td style="text-align: center;">328</td>
+                                    <td style="text-align: center;">274</td>
+                                    <td style="text-align: center; font-weight: bold; color: #3498db; background: #f0f7fb;">83.5%</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; color: #22b8cf;"><span class="material-icons-round" style="font-size:14px; vertical-align:middle;">travel_explore</span> Perplexity</td>
+                                    <td style="text-align: center;">158</td>
+                                    <td style="text-align: center;">134</td>
+                                    <td style="text-align: center; font-weight: bold; color: #3498db; background: #f0f7fb;">84.8%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="background: #f0f7fb; padding: 15px; border-radius: 6px;">
+                        <strong>【分析からの考察】</strong>
+                        <ul style="font-size: 13px; color: #555; margin: 10px 0 0; padding-left: 20px; line-height: 1.6;">
+                            <li><strong>AIO対策の本丸は「コラム」である</strong>: Google AI Overviewにおいて、サイト全体の引用数（857件）のうち、実に<strong>95.4%（818件）</strong>がコラム記事からの引用であることが判明しました。プロダクトページ（サービス紹介）は指名検索やCVの受け皿としては機能していますが、AIが情報探索フェーズで参照するのは圧倒的に「コラム（お役立ち情報）」です。</li>
+                            <li><strong>コラムの質がドメイン全体の評価を牽引</strong>: ChatGPTやPerplexityにおいても8割以上がコラム由来です。これは、コラムが「信頼できる情報源（ソース）」としてLLMに認識されている証左であり、今後のAIO対策においてもコラムの構造化・一次情報強化が最もレバレッジの効く施策となります。</li>
+                            <li><strong>結論</strong>: 「AIO対策＝コラムのリライト・強化」と定義し、リソースを集中投下します。</li>
+                        </ul>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <strong>【今後の対策方針】</strong>
+                        <p style="font-size: 13px; color: #555; margin-top: 5px;">
+                            この数値データをベースラインとし、2026年上半期は<strong>「AI Overview 1,500件」「Gemini 引用獲得」</strong>をKPIに設定します。<br>
+                            そのために、記事の「構造化（表・リスト）」と「一次情報の明記」を徹底し、AIにとって"最も参照しやすい情報源"としての地位を確立します。
+                        </p>
+                    </div>
+                </div>
+
+                <div style="background: #f0f7fb; padding: 20px; border-radius: 8px; margin-top: 20px;">
+                    <h5 style="margin: 0 0 10px; color: #2980b9;">実際に何をやるのか？</h5>
+                    <ul style="font-size: 14px; color: #555; line-height: 1.8;">
+                        <li><strong>FAQ型ショートコンテンツの展開</strong>: 
+                            既存記事の各見出しを「Q&A」形式のショートコンテンツとして再構築。AIがピンポイントで回答を引用しやすい単位（チャンク）を作る。<br>
+                            <span style="font-size: 12px; color: #e67e22;">※具体的な進め方については、1月以降に別途協議・決定する。</span>
+                        </li>
+                        <li><strong>AIフレンドリー化</strong>: 結論ファースト、Q&A、箇条書き/表の活用、平易な言葉への置き換えを徹底する。</li>
+                        <li><strong>一次情報の埋め込み</strong>: アンケート結果や自社データを記事に盛り込み、AIが引用したくなる「ソース（情報源）」になる。</li>
+                        <li><strong>ダブル・ウィニング戦略</strong>: 「AIの回答」で認知され、「検索の裏取り」で指名される両取りを狙う。</li>
+                    </ul>
+                </div>
+
+                <!-- 測定指標とエビデンス記録 -->
+                <div style="background: #fff; padding: 25px; border: 2px solid #3498db; border-radius: 8px; margin-top: 30px;">
+                    <h5 style="margin: 0 0 15px; color: #2980b9; display: flex; align-items: center;">
+                        <span class="material-icons-round" style="margin-right: 5px;">assessment</span>
+                        AIO対策の効果測定とエビデンス記録
+                    </h5>
+                    <p style="font-size: 13px; color: #555; margin: 0 0 20px;">
+                        実施前後のエビデンスを記録し、施策の効果を定量的に評価します。各指標を月次で更新し、進捗を可視化します。
+                    </p>
+
+                    <!-- 測定指標テーブル -->
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px;">
+                        <thead>
+                            <tr style="background: #e3f2fd;">
+                                <th style="padding: 12px; text-align: left; border: 1px solid #90caf9;">測定指標</th>
+                                <th style="padding: 12px; text-align: center; border: 1px solid #90caf9;">ベースライン<br><span style="font-size:11px; font-weight:normal;">(2025年12月31日時点)</span></th>
+                                <th style="padding: 12px; text-align: center; border: 1px solid #90caf9;">短期目標<br><span style="font-size:11px; font-weight:normal;">(2026年上半期)</span></th>
+                                <th style="padding: 12px; text-align: center; border: 1px solid #90caf9;">測定方法</th>
+                                <th style="padding: 12px; text-align: center; border: 1px solid #90caf9;">記録頻度</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 12px; border: 1px solid #e0e0e0; font-weight: bold; background: #f5f5f5;">AIO引用数<br><span style="font-size:11px; font-weight:normal; color:#666;">(Google AI Overview)</span></td>
+                                <td style="padding: 12px; border: 1px solid #e0e0e0; text-align: center; font-weight: bold; color: #2c3e50;">857件</td>
+                                <td style="padding: 12px; border: 1px solid #e0e0e0; text-align: center; font-weight: bold; color: #27ae60; background: #e8f5e9;">1,200件以上</td>
+                                <td style="padding: 12px; border: 1px solid #e0e0e0; font-size: 12px;">Ahrefs AI Citations<br>（Google AI Overview）</td>
+                                <td style="padding: 12px; border: 1px solid #e0e0e0; text-align: center; font-size: 12px;">月次</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px; border: 1px solid #e0e0e0; font-weight: bold; background: #f5f5f5;">検索順位の変化<br><span style="font-size:11px; font-weight:normal; color:#666;">(引用された記事)</span></td>
+                                <td style="padding: 12px; border: 1px solid #e0e0e0; text-align: center; font-size: 12px; color: #7f8c8d;">-</td>
+                                <td style="padding: 12px; border: 1px solid #e0e0e0; text-align: center; font-weight: bold; color: #27ae60; background: #e8f5e9;">順位向上を測定</td>
+                                <td style="padding: 12px; border: 1px solid #e0e0e0; font-size: 12px;">Ahrefs / Search Console<br>（引用された記事のキーワード順位）</td>
+                                <td style="padding: 12px; border: 1px solid #e0e0e0; text-align: center; font-size: 12px;">月次</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px; border: 1px solid #e0e0e0; font-weight: bold; background: #f5f5f5;">検索トラフィック<br><span style="font-size:11px; font-weight:normal; color:#666;">(AIO経由の流入)</span></td>
+                                <td style="padding: 12px; border: 1px solid #e0e0e0; text-align: center; font-size: 12px; color: #7f8c8d;">-</td>
+                                <td style="padding: 12px; border: 1px solid #e0e0e0; text-align: center; font-weight: bold; color: #27ae60; background: #e8f5e9;">増加傾向を確認</td>
+                                <td style="padding: 12px; border: 1px solid #e0e0e0; font-size: 12px;">Google Analytics<br>（AIO経由の流入を推定）</td>
+                                <td style="padding: 12px; border: 1px solid #e0e0e0; text-align: center; font-size: 12px;">月次</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- エビデンス記録テーブル -->
+                    <div style="margin-top: 25px;">
+                        <h6 style="margin: 0 0 10px; font-size: 14px; color: #2c3e50; font-weight: bold;">【エビデンス記録表】</h6>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                            <thead>
+                                <tr style="background: #e3f2fd;">
+                                    <th style="padding: 10px; text-align: center; border: 1px solid #90caf9;">測定月</th>
+                                    <th style="padding: 10px; text-align: center; border: 1px solid #90caf9;">AIO引用数<br><span style="font-size:10px;">(Google AI Overview)</span></th>
+                                    <th style="padding: 10px; text-align: center; border: 1px solid #90caf9;">前月比</th>
+                                    <th style="padding: 10px; text-align: center; border: 1px solid #90caf9;">検索順位向上記事数<br><span style="font-size:10px;">(引用された記事)</span></th>
+                                    <th style="padding: 10px; text-align: center; border: 1px solid #90caf9;">AIO経由流入<br><span style="font-size:10px;">(推定)</span></th>
+                                    <th style="padding: 10px; text-align: center; border: 1px solid #90caf9;">備考・施策内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background: #fff3e0;">
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; font-weight: bold;">2025年12月<br><span style="font-size:10px; font-weight:normal; color:#999;">(ベースライン)</span></td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; font-weight: bold;">857件</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: left; border: 1px solid #e0e0e0; font-size: 11px; color: #666;">Ahrefs AI Citationsデータ取得</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0;">2026年1月</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: left; border: 1px solid #e0e0e0; font-size: 11px; color: #999;">（記録待ち）</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0;">2026年2月</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: left; border: 1px solid #e0e0e0; font-size: 11px; color: #999;">（記録待ち）</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0;">2026年3月</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: left; border: 1px solid #e0e0e0; font-size: 11px; color: #999;">（記録待ち）</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0;">2026年4月</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: left; border: 1px solid #e0e0e0; font-size: 11px; color: #999;">（記録待ち）</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0;">2026年5月</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: left; border: 1px solid #e0e0e0; font-size: 11px; color: #999;">（記録待ち）</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0;">2026年6月</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e0e0e0; color: #7f8c8d;">-</td>
+                                    <td style="padding: 10px; text-align: left; border: 1px solid #e0e0e0; font-size: 11px; color: #999;">（記録待ち）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="background: #fff3e0; padding: 15px; border-radius: 6px; margin-top: 20px; border: 1px solid #ffe0b2;">
+                        <strong style="color: #d35400; font-size: 13px;">【記録方法】</strong>
+                        <ul style="font-size: 12px; color: #555; margin: 8px 0 0; padding-left: 20px; line-height: 1.6;">
+                            <li><strong>AIO引用数</strong>: Ahrefsの「AI Citations」機能で月次取得。Google AI Overviewの引用数を記録。</li>
+                            <li><strong>検索順位の変化</strong>: AhrefsまたはSearch Consoleで、引用された記事の対象キーワード順位を記録。順位向上した記事数をカウント。</li>
+                            <li><strong>検索トラフィック</strong>: Google Analyticsで、AIO経由と推定される流入を記録（参照元や行動パターンから推定）。</li>
+                            <li><strong>備考・施策内容</strong>: その月に実施したAIO対策の具体的な内容を記録（例：「FAQ型コンテンツ追加 5記事」「一次情報追加 3記事」など）。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Strategy 2 (CTA) -->
+        <section id="strategy-2">
+            <h2>3. 戦略② CTA強化とフォーム改修</h2>
+
+            <div class="phase-detail" style="border-left: 5px solid #e67e22;">
+                <div class="phase-header">
+                    <div class="phase-title"><span class="material-icons-round">touch_app</span>戦略詳細・実行プラン</div>
+                </div>
+
+                <h5 style="margin: 0 0 15px; color: #2c3e50;">現状のパフォーマンス実績 (2025年6月〜12月)</h5>
+                <div style="overflow-x: auto; margin-bottom: 30px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>月</th>
+                                <th>PC SS</th>
+                                <th style="background: #fff3e0;">フォームSS<br><span style="font-size:10px;">(CTAクリック)</span></th>
+                                <th>PC CV</th>
+                                <th>フォームCTR<br><span style="font-size:10px;">(SS→Form)</span></th>
+                                <th>フォームCVR<br><span style="font-size:10px;">(Form→CV)</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>6月</td><td>13,624</td><td>81</td><td>13</td><td>0.59%</td><td>16.05%</td></tr>
+                            <tr><td>7月</td><td>13,424</td><td>120</td><td>11</td><td>0.89%</td><td>9.17%</td></tr>
+                            <tr><td>8月</td><td>14,933</td><td>106</td><td>18</td><td>0.71%</td><td>16.98%</td></tr>
+                            <tr><td>9月</td><td>17,514</td><td>110</td><td>20</td><td>0.63%</td><td>18.18%</td></tr>
+                            <tr><td>10月</td><td>23,115</td><td>122</td><td>28</td><td>0.53%</td><td>22.95%</td></tr>
+                            <tr><td>11月</td><td>25,610</td><td>140</td><td>27</td><td>0.55%</td><td>19.29%</td></tr>
+                            <tr style="background: #fffde7; font-weight: bold;">
+                                <td>12月</td>
+                                <td>31,782</td>
+                                <td>209</td>
+                                <td>29</td>
+                                <td>0.66%</td>
+                                <td>13.88%</td>
+                            </tr>
+                            <tr style="background: #e8f5e9; font-weight: bold; border-top: 2px solid #2ecc71;">
+                                <td style="color: #27ae60;">平均 (6-12月)</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td style="color: #27ae60;">0.63%</td>
+                                <td style="color: #27ae60;">16.44%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 12px; color: #666; text-align: right;">※フォームCTR = フォームSS / PC SS<br>※フォームCVR = PC CV / フォームSS</p>
+                </div>
+
+                <div style="display: flex; gap: 20px; margin-bottom: 30px;">
+                    <div style="flex: 1; background: #fdf2e9; padding: 20px; border-radius: 8px; border: 1px solid #fae5d3;">
+                        <div style="color: #d35400; font-weight: bold; margin-bottom: 5px;">【現状の課題】</div>
+                        <ul style="font-size: 13px; margin: 0; padding-left: 20px; color: #555;">
+                            <li>フォームへの遷移率（CTR）が0.5%前後で推移しており、改善の余地がある（目標1%）。</li>
+                            <li>CVRは平均して高い水準（15-20%）にあるが、流入増に伴い低下するリスクがあるため、高水準の維持が重要。</li>
+                        </ul>
+                    </div>
+                    <div style="flex: 1; background: #e8f8f5; padding: 20px; border-radius: 8px; border: 1px solid #d1f2eb;">
+                        <div style="color: #16a085; font-weight: bold; margin-bottom: 5px;">【改善目標】</div>
+                        <div style="display: flex; justify-content: space-around; align-items: center; margin-top: 10px;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 11px; color: #7f8c8d;">PC SS → フォームSS</div>
+                                <div style="font-size: 24px; font-weight: bold; color: #16a085;">1.0%</div>
+                                <div style="font-size: 10px; color: #999;">(現在 0.5%)</div>
+                            </div>
+                            <div style="font-size: 20px; color: #ccc;">▶</div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 11px; color: #7f8c8d;">PC フォームSS → CV</div>
+                                <div style="font-size: 24px; font-weight: bold; color: #16a085;">15〜20%</div>
+                                <div style="font-size: 10px; color: #999;">(維持・向上)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h5 style="margin: 0 0 15px; color: #2c3e50;">実際に何をやるのか？</h5>
+
+                <!-- Action 1 -->
+                <div style="margin-bottom: 25px;">
+                    <h6 style="font-size: 15px; margin: 0 0 10px; color: #333; display: flex; align-items: center;">
+                        <span class="badge-completed" style="background: #95a5a6; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px;">完了</span>
+                        <span style="margin-left: 8px;">① テキストCTAの文言改修テスト</span>
+                    </h6>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; font-size: 13px;">
+                        <div style="margin-bottom: 15px; background: #fff; padding: 10px; border-left: 3px solid #3498db; border-radius: 0 4px 4px 0;">
+                            <div style="margin-bottom: 5px;"><strong>【目的】</strong> フォーム遷移率（CTR）とCVRの改善</div>
+                            <div><strong>【成果指標】</strong> 平均数値（CTR 0.63% / CVR 16.44%）より向上するか否かで判定</div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                            <div style="background: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                                <strong>第一弾CTA (12/11変更) - 22記事</strong>
+                                <div style="color: #666; margin-top: 5px;">Before: 11/27(水) 〜 12/10(火)</div>
+                                <div style="color: #666;">After: 12/12(木) 〜 12/20(金)</div>
+                            </div>
+                            <div style="background: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                                <strong>第二弾CTA (12/18変更) - 30記事</strong>
+                                <div style="color: #666; margin-top: 5px;">Before: 11/25(月) 〜 12/9(月)</div>
+                                <div style="color: #666;">After: 1/6(月) 〜 1/20(月)</div>
+                            </div>
+                        </div>
+
+                        <!-- 結果テーブル -->
+                        <div style="background: #fff; padding: 15px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 15px;">
+                            <strong style="display: block; margin-bottom: 10px;">【テスト結果】</strong>
+                            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                                <thead>
+                                    <tr style="background: #f5f5f5;">
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">テスト</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">CTR（変更前）</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">CTR（変更後）</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">CVR（変更前）</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">CVR（変更後）</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">第一弾（22記事）</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">0.20%</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">0.31%</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">25.00%</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">0.00%</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">第二弾（30記事）</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">0.15%</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">0.17%</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">30.77%</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">30.43%</td>
+                                    </tr>
+                                    <tr style="background: #fff3e0;">
+                                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">目標値</td>
+                                        <td colspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center; font-weight: bold;">0.63%</td>
+                                        <td colspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center; font-weight: bold;">16.44%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- 結論 -->
+                        <div style="background: #fdecea; padding: 12px; border-left: 3px solid #e74c3c; border-radius: 0 4px 4px 0;">
+                            <strong style="color: #c0392b;">【結論】文言変更のみでは効果が限定的</strong>
+                            <ul style="margin: 8px 0 0; padding-left: 20px; color: #555;">
+                                <li>CTRは目標値0.63%に対し、いずれも0.2〜0.3%台で大幅に未達</li>
+                                <li>CVRは母数（フォームSS数）が少なく統計的に有意な差は確認できず</li>
+                                <li>テキスト文言の変更だけではユーザー行動に大きな影響を与えられない</li>
+                            </ul>
+                        </div>
+
+                        <!-- 今後の方針 -->
+                        <div style="background: #e8f5e9; padding: 12px; border-left: 3px solid #27ae60; border-radius: 0 4px 4px 0; margin-top: 10px;">
+                            <strong style="color: #27ae60;">【今後の方針】</strong>
+                            <ul style="margin: 8px 0 0; padding-left: 20px; color: #555;">
+                                <li>全記事への展開は見送り</li>
+                                <li>②フォーム一体型、③ギフト診断など、より構造的な改善施策に注力</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action 2 -->
+                <div style="margin-bottom: 25px;">
+                    <h6 style="font-size: 15px; margin: 0 0 10px; color: #333; display: flex; align-items: center;">
+                        <span class="badge-new">NEW</span>
+                        <span style="margin-left: 8px;">② フォーム一体型テスト</span>
+                    </h6>
+                    <div style="font-size: 13px; color: #555;">
+                        <p>
+                            バナー改善だけでは爆発的なインパクトが見込めないため、CV実績のある記事に対して「フォーム一体型」を試験導入する。<br>
+                            2ステップ形式を採用し、資料ダウンロードのハードルを下げてCV獲得数を最大化できるかトライアルを行う。
+                        </p>
+                        <div style="margin-bottom: 15px; background: #fdf2e9; padding: 10px; border-left: 3px solid #e67e22; border-radius: 0 4px 4px 0;">
+                            <div style="margin-bottom: 5px;"><strong>【目的】</strong> 純粋にCVが増えるかどうかの検証（新しい取り組みとして成果が出るかの確認）</div>
+                            <div><strong>【成果指標】</strong> CV数の増加</div>
+                        </div>
+                        <a href="コラム一覧_仮想サイト.html" target="_blank" style="display: inline-flex; align-items: center; color: #3498db; text-decoration: none; font-weight: bold; margin-top: 5px;">
+                            <span class="material-icons-round" style="font-size: 16px; margin-right: 4px;">open_in_new</span>
+                            サイト制作イメージを確認 (コラム一覧_仮想サイト.html)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Action 3 -->
+                <div style="margin-bottom: 25px;">
+                    <h6 style="font-size: 15px; margin: 0 0 10px; color: #333; display: flex; align-items: center;">
+                        <span class="badge-new">NEW</span>
+                        <span style="margin-left: 8px;">③ ギフト診断コンテンツ</span>
+                    </h6>
+                    <div style="font-size: 13px; color: #555;">
+                        <p>
+                            CV未獲得かつフォームSSも低い記事（潜在層向け）に対し、テキスト型CTAを「ギフト診断」に変更する。<br>
+                            「自分に必要なギフトがわからない層」の獲得を促し、法人ニーズの掘り起こしが可能か検証する。
+                        </p>
+                        <div style="margin-bottom: 15px; background: #fdf2e9; padding: 10px; border-left: 3px solid #e67e22; border-radius: 0 4px 4px 0;">
+                            <div style="margin-bottom: 5px;"><strong>【目的】</strong> CV未獲得記事からのフォームSS増・CV獲得、および記事に「法人ニーズがあるか」の見極め</div>
+                            <div><strong>【成果指標】</strong> フォームSS数およびCV数の増加</div>
+                        </div>
+                        <a href="コラム一覧_診断CTA_仮想サイト.html" target="_blank" style="display: inline-flex; align-items: center; color: #3498db; text-decoration: none; font-weight: bold; margin-top: 5px;">
+                            <span class="material-icons-round" style="font-size: 16px; margin-right: 4px;">open_in_new</span>
+                            サイト制作イメージを確認 (コラム一覧_診断CTA_仮想サイト.html)
+                        </a>
+                    </div>
+                </div>
+
+                <div style="background: #fff3e0; padding: 15px; border-radius: 6px; border: 1px solid #ffe0b2;">
+                    <strong>【進め方】</strong>
+                <ul style="font-size: 13px; color: #d35400; margin: 5px 0 0; padding-left: 20px;">
+                    <li>①に関しては1月中に決着をつける。</li>
+                    <li>②タスク: CVR改善チームへの共有、設置記事の洗い出し</li>
+                    <li>③タスク: CVR改善チームへの進捗確認、設置記事の洗い出し、コンテンツ内に設置するバナーの作成（もお願いできるのかを確認する）、ギフト診断ロジック確認（宮田さん）</li>
+                </ul>
+                </div>
+
+                <!-- 新規キーワード候補 -->
+                <div style="background: #e8f5e9; padding: 20px; border-radius: 8px; border: 1px solid #2ecc71; margin-top: 30px;">
+                    <h5 style="margin: 0 0 15px; color: #27ae60; display: flex; align-items: center;">
+                        <span class="material-icons-round" style="margin-right: 5px;">search</span>
+                        新規キーワード候補（2026年上半期）
+                    </h5>
+                    <p style="font-size: 13px; color: #555; margin: 0 0 15px;">
+                        CV実績データ（2025年9月〜11月）を分析し、CV獲得の可能性が高いキーワードを選定しました。
+                    </p>
+                    
+                    <div style="background: #fff; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+                        <strong style="color: #2c3e50; font-size: 14px; display: block; margin-bottom: 10px;">【選定キーワード一覧】</strong>
+                        <ul style="font-size: 13px; color: #333; margin: 0; padding-left: 20px; line-height: 1.8;">
+                            <li><strong>ギフトカード 大量購入</strong></li>
+                            <li><strong>資料請求 特典</strong></li>
+                            <li><strong>ギフトカード 有効期限</strong></li>
+                            <li><strong>ギフトカード 後払い</strong></li>
+                            <li><strong>ギフトカード 経費</strong></li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #fff; padding: 15px; border-radius: 6px;">
+                        <strong style="color: #2c3e50; font-size: 14px; display: block; margin-bottom: 10px;">【選定理由】</strong>
+                        <div style="font-size: 13px; color: #555; line-height: 1.8;">
+                            <p style="margin: 0 0 10px;">
+                                <strong>1. ギフトカード 大量購入</strong><br>
+                                CV実績があるキーワードのパターン分析から、「購入」を含むキーワード（amazonギフトカード 購入、PayPayポイントコード 購入など）がCVに強い傾向があることを確認。「大量購入」は法人ニーズが明確で、CV獲得の可能性が高い。
+                            </p>
+                            <p style="margin: 0 0 10px;">
+                                <strong>2. 資料請求 特典</strong><br>
+                                CV実績がある「アンケート謝礼」「来場者プレゼント」など、用途が明確なキーワードがCVに強い傾向から選定。資料請求時の特典としてギフトカードを提供する法人ニーズに対応。
+                            </p>
+                            <p style="margin: 0 0 10px;">
+                                <strong>3. ギフトカード 有効期限</strong><br>
+                                CV実績がある「デジタルギフト 受け取り方」「amazonギフトカード チャージ 方法」など、具体的な操作方法・使い方系のキーワードがCVに強い傾向から選定。法人が気になる実務的な情報ニーズに対応。
+                            </p>
+                            <p style="margin: 0 0 10px;">
+                                <strong>4. ギフトカード 後払い</strong><br>
+                                CV実績がある「Amazonギフトカード 支払い方法」など、支払い・決済方法系のキーワードがCVに強い傾向から選定。法人の経理・財務部門のニーズに対応。
+                            </p>
+                            <p style="margin: 0;">
+                                <strong>5. ギフトカード 経費</strong><br>
+                                CV実績がある「景表法 わかりやすく」「福利厚生費」など、問題解決・疑問解決型のキーワードがCVに強い傾向から選定。法人が最も関心の高い税務・会計処理の疑問に対応。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Strategy 3 (AI Editorial Update) -->
+        <section id="strategy-3">
+            <h2>4. 戦略③ AI編集部のアップデート</h2>
+
+            <div class="phase-detail" style="border-left: 5px solid #2ecc71;">
+                <div class="phase-header">
+                    <div class="phase-title"><span class="material-icons-round">auto_awesome</span>戦略詳細・実行プラン</div>
+                </div>
+                
+                <div style="background: #f0f7fb; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                    <h5 style="margin: 0 0 10px; color: #27ae60;">現状の課題：生産性は上がったが「詰まり」が発生</h5>
+                    <p style="font-size: 13px; margin: 0 0 10px;">
+                        AI導入により記事制作（特にテキスト）のスピードは劇的に向上しましたが、<strong>「確認・公開」のプロセスがボトルネック</strong>となり、最終的なアウトプット量は期待ほど伸びていません。
+                    </p>
+                    <p style="font-size: 13px; margin: 0;">
+                        また、運用のノウハウがMOLTS（永田）に依存しており、giftee社内に資産として残っていないという<strong>「属人化」</strong>のリスクも顕在化しています。
+                    </p>
+                </div>
+
+                <!-- Conceptual Diagram: Before vs After -->
+                <div style="display: flex; gap: 20px; margin-bottom: 30px; align-items: stretch; flex-wrap: wrap;">
+                    <!-- Before Card -->
+                    <div style="flex: 1; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; min-width: 280px; position: relative;">
+                        <div style="position: absolute; top: -10px; left: 20px; background: #95a5a6; color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 11px; font-weight: bold;">Before: 今の状態</div>
+                        <h6 style="margin: 10px 0 15px; font-size: 15px; color: #555; text-align: center;">MOLTS依存・人力ボトルネック</h6>
+                        <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+                            <div style="background: #e8f5e9; border: 1px solid #2ecc71; padding: 8px 15px; border-radius: 20px; font-size: 12px; color: #27ae60; width: 80%; text-align: center;">AI記事生成 (爆速)</div>
+                            <div style="font-size: 20px; color: #ccc;">↓</div>
+                            <div style="background: #ffebee; border: 1px dashed #e74c3c; padding: 15px; border-radius: 4px; width: 80%; text-align: center;">
+                                <div style="font-size: 12px; font-weight: bold; color: #c0392b;">ここが詰まり (ボトルネック)</div>
+                                <div style="font-size: 11px; color: #555; margin-top: 5px;">人間による確認・修正・公開</div>
+                                <div style="font-size: 10px; color: #999; margin-top: 5px;">(※MOLTS永田に依存)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div style="display: flex; align-items: center; justify-content: center; color: #2ecc71;">
+                        <span class="material-icons-round" style="font-size: 32px;">arrow_forward</span>
+                    </div>
+
+                    <!-- After Card -->
+                    <div style="flex: 1; background: #fff; border: 2px solid #2ecc71; border-radius: 8px; padding: 20px; min-width: 280px; position: relative; box-shadow: 0 4px 15px rgba(46, 204, 113, 0.1);">
+                        <div style="position: absolute; top: -10px; left: 20px; background: #2ecc71; color: #fff; padding: 2px 10px; border-radius: 4px; font-size: 11px; font-weight: bold;">After: 目指す姿</div>
+                        <h6 style="margin: 10px 0 15px; font-size: 15px; color: #27ae60; text-align: center;">システム化・脱属人化</h6>
+                        <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+                            <div style="background: #e8f5e9; border: 1px solid #2ecc71; padding: 8px 15px; border-radius: 20px; font-size: 12px; color: #27ae60; width: 80%; text-align: center;">AI記事 & 図版生成</div>
+                            <div style="font-size: 20px; color: #2ecc71;">↓</div>
+                            <div style="background: #f0f4c3; border: 1px solid #d4e157; padding: 15px; border-radius: 4px; width: 80%; text-align: center;">
+                                <div style="font-size: 12px; font-weight: bold; color: #827717;">システムによる高速FB</div>
+                                <div style="font-size: 11px; color: #555; margin-top: 5px;">Cursor開発ツール等の活用</div>
+                                <div style="font-size: 10px; color: #666; margin-top: 5px; border-top: 1px solid #d4e157; padding-top: 3px;">giftee資産としてナレッジ蓄積</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 新規記事制作計画 -->
+                <div style="background: #fff; padding: 25px; border: 2px solid #2ecc71; border-radius: 8px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(46, 204, 113, 0.1);">
+                    <h5 style="margin: 0 0 15px; color: #27ae60; display: flex; align-items: center; font-size: 18px;">
+                        <span class="material-icons-round" style="margin-right: 5px;">article</span>
+                        新規記事制作計画（2026年上半期）
+                    </h5>
+                    <p style="font-size: 13px; color: #555; margin: 0 0 20px;">
+                        CV実績データ（2025年9月〜11月）を分析し、CV獲得の可能性が高いキーワードを選定。各キーワードで1本ずつ記事を制作し、合計5本を2026年上半期に公開予定。
+                    </p>
+
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 15px;">
+                        <thead>
+                            <tr style="background: #e8f5e9;">
+                                <th style="padding: 10px; text-align: left; border: 1px solid #a5d6a7;">選定キーワード</th>
+                                <th style="padding: 10px; text-align: center; border: 1px solid #a5d6a7;">制作本数</th>
+                                <th style="padding: 10px; text-align: left; border: 1px solid #a5d6a7;">選定理由</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; font-weight: bold;">ギフトカード 大量購入</td>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; text-align: center;">1本</td>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; font-size: 12px; text-align: left;">CV実績がある「購入」系キーワード（amazonギフトカード 購入、PayPayポイントコード 購入など）がCVに強い傾向。法人の大量購入ニーズに対応。</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; font-weight: bold;">資料請求 特典</td>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; text-align: center;">1本</td>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; font-size: 12px; text-align: left;">CV実績がある「アンケート謝礼」「来場者プレゼント」など、用途が明確なキーワードがCVに強い傾向。資料請求時の特典としてギフトカードを提供する法人ニーズに対応。</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; font-weight: bold;">ギフトカード 有効期限</td>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; text-align: center;">1本</td>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; font-size: 12px; text-align: left;">CV実績がある「デジタルギフト 受け取り方」「amazonギフトカード チャージ 方法」など、具体的な操作方法・使い方系のキーワードがCVに強い傾向。法人が気になる実務的な情報ニーズに対応。</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; font-weight: bold;">ギフトカード 後払い</td>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; text-align: center;">1本</td>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; font-size: 12px; text-align: left;">CV実績がある「Amazonギフトカード 支払い方法」など、支払い・決済方法系のキーワードがCVに強い傾向。法人の経理・財務部門のニーズに対応。</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; font-weight: bold;">ギフトカード 経費</td>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; text-align: center;">1本</td>
+                                <td style="padding: 10px; border: 1px solid #e0e0e0; font-size: 12px; text-align: left;">CV実績がある「景表法 わかりやすく」「福利厚生費」など、問題解決・疑問解決型のキーワードがCVに強い傾向。法人が最も関心の高い税務・会計処理の疑問に対応。</td>
+                            </tr>
+                            <tr style="background: #f1f8e9; font-weight: bold;">
+                                <td style="padding: 10px; border: 1px solid #a5d6a7; text-align: right;">合計</td>
+                                <td style="padding: 10px; border: 1px solid #a5d6a7; text-align: center;">5本</td>
+                                <td style="padding: 10px; border: 1px solid #a5d6a7; font-size: 12px; text-align: left;">2026年上半期に順次公開予定</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h5 style="margin: 15px 0 10px; color: #2c3e50;">実行アクション：システム化とクリエイティブ強化</h5>
+                <ul style="font-size: 14px; color: #555; line-height: 1.8; margin-bottom: 30px;">
+                    <li><strong>クリエイティブのAI化</strong>: テキストだけでなく、図版やバナー作成もAIによる自動化・半自動化を模索し、視覚的な質を向上させる。</li>
+                    <li><strong>フィードバックシステムの開発</strong>: Cursor等を活用し、giftee主体で「確認・フィードバック」を効率化するシステムを開発。公開までのリードタイムを短縮する。</li>
+                    <li><strong>ナレッジの移管・形式知化</strong>: AIデータプールを構築し、MOLTS依存から脱却。giftee×MOLTSで「仕組み」として回る体制へアップデートする。</li>
+                </ul>
+
+                <h5 style="margin: 0 0 15px; color: #2c3e50; border-bottom: 1px dashed #ccc; padding-bottom: 5px;">2026年1Q 実行ロードマップと予算配分案</h5>
+                
+                <!-- 1月 -->
+                <div style="background: #fff; border: 1px solid #2ecc71; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(46, 204, 113, 0.1);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h6 style="margin: 0; font-size: 18px; color: #27ae60; display: flex; align-items: center;">
+                            <span class="material-icons-round" style="margin-right: 5px;">flag</span>
+                            【1月】体制整備・滞留解消・システム導入
+                        </h6>
+                        <span class="badge-ongoing" style="background: #e74c3c;">最優先</span>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <strong style="font-size: 14px; color: #333;">実施事項:</strong>
+                        <ul style="font-size: 13px; color: #555; margin: 8px 0 0; padding-left: 20px; line-height: 1.6;">
+                            <li><strong>Cursor導入 & レクチャー</strong>: 基本操作の習得（対象: 宮田さん・森本・永田）</li>
+                            <li><strong>滞留記事の完全公開</strong>: 12月未達分を解消し、ストック効果を最大化する。
+                                <ul style="margin: 5px 0; color: #c0392b; font-weight: bold;">
+                                    <li>目標: 新規記事 5本 / CTA修正 2本 / リライト 56本 の全公開完了</li>
+                                </ul>
+                                <span style="font-size: 12px; color: #7f8c8d; margin-left: 15px;">担当: 宮田さん・森本（永田サポート）</span>
+                            </li>
+                            <li><strong>新規記事制作（2026年上半期）</strong>: CV実績データ分析に基づき、CV獲得可能性の高いキーワードで新規記事を制作する。</li>
+                            <li><strong>システム開発要件定義</strong>: 永田（宮田さん）<br>
+                                <span style="font-size: 12px; color: #7f8c8d; margin-left: 15px;">今編集部に何が足りないのかをブレストし開発を進める</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #f1f8e9; padding: 15px; border-radius: 6px; border: 1px dashed #2ecc71;">
+                        <strong style="font-size: 14px; color: #2e7d32; display: flex; align-items: center; margin-bottom: 10px;">
+                            <span class="material-icons-round" style="font-size: 18px; margin-right: 5px;">monetization_on</span>
+                            1月予算概算 (100万円)
+                        </strong>
+                        <p style="font-size: 12px; color: #555; margin: 0 0 10px;">
+                            12月未公開分の解消と、新体制構築へリソースを配分します。<br>
+                            ※詳細および半年間の収支シミュレーションは <a href="#financial-plan" style="color: #27ae60; font-weight: bold;">5. 事業収支計画 (PL)</a> を参照してください。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 2月・3月 -->
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 250px; background: #f8f9fa; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
+                        <h6 style="margin: 0 0 10px; font-size: 15px; color: #555; display: flex; align-items: center;">
+                            <span class="material-icons-round" style="margin-right: 5px; color: #7f8c8d;">schedule</span>
+                            【2月】システム開発開始
+                        </h6>
+                        <p style="font-size: 13px; color: #666; margin: 0; line-height: 1.6;">
+                            要件定義に基づき、記事生成〜確認フローを効率化するシステムの本格開発に着手。
+                        </p>
+                    </div>
+                    <div style="flex: 1; min-width: 250px; background: #f8f9fa; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
+                        <h6 style="margin: 0 0 10px; font-size: 15px; color: #555; display: flex; align-items: center;">
+                            <span class="material-icons-round" style="margin-right: 5px; color: #7f8c8d;">schedule</span>
+                            【3月】システム開発・実装
+                        </h6>
+                        <p style="font-size: 13px; color: #666; margin: 0; line-height: 1.6;">
+                            開発継続およびβ版のテスト運用開始。新体制への移行準備を進める。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Financial Plan -->
+        <section id="financial-plan">
+            <h2>5. 事業収支計画 (PL)</h2>
+            
+            <div class="phase-detail" style="border-left: 5px solid #34495e;">
+                <div class="phase-header">
+                    <div class="phase-title"><span class="material-icons-round">monetization_on</span>2026年上半期 収支シミュレーション</div>
+                </div>
+
+                <div style="background: #e8f4f8; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
+                    <h5 style="margin: 0 0 10px; color: #2980b9;">前提条件</h5>
+                    <ul style="font-size: 13px; margin: 0; padding-left: 20px; color: #555;">
+                        <li><strong>想定単価</strong>: ¥30,000 / CV (BtoBリード獲得単価の市場相場として設定)</li>
+                        <li><strong>コスト</strong>: 1-3月はシステム開発投資を含むため高止まりし、4月以降は開発完了により最適化される見込み。</li>
+                    </ul>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table style="font-size: 12px;">
+                        <thead>
+                            <tr>
+                                <th style="text-align: left; background: #34495e; color: #fff;">項目</th>
+                                <th>1月(予)</th>
+                                <th>2月(予)</th>
+                                <th>3月(予)</th>
+                                <th>4月(予)</th>
+                                <th>5月(予)</th>
+                                <th>6月(予)</th>
+                                <th style="background: #f1c40f; color: #333;">合計</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- KPI -->
+                            <tr style="background: #f9f9f9;">
+                                <td colspan="8" style="font-weight: bold; color: #7f8c8d;">▼ KPI 目標</td>
+                            </tr>
+                            <tr>
+                                <td>PC セッション</td>
+                                <td>34,324</td>
+                                <td>37,070</td>
+                                <td>40,035</td>
+                                <td>43,238</td>
+                                <td>46,697</td>
+                                <td>50,433</td>
+                                <td style="font-weight: bold;">251,797</td>
+                            </tr>
+                            <tr>
+                                <td>PC CV数</td>
+                                <td style="color: #e74c3c; font-weight: bold;">34</td>
+                                <td style="color: #e74c3c; font-weight: bold;">39</td>
+                                <td style="color: #e74c3c; font-weight: bold;">44</td>
+                                <td style="color: #e74c3c; font-weight: bold;">50</td>
+                                <td style="color: #e74c3c; font-weight: bold;">56</td>
+                                <td style="color: #e74c3c; font-weight: bold;">64</td>
+                                <td style="color: #e74c3c; font-weight: bold;">287</td>
+                            </tr>
+                            <tr>
+                                <td>CVR</td>
+                                <td>0.10%</td>
+                                <td>0.11%</td>
+                                <td>0.11%</td>
+                                <td>0.12%</td>
+                                <td>0.12%</td>
+                                <td>0.13%</td>
+                                <td>0.11%</td>
+                            </tr>
+
+                            <!-- Sales -->
+                            <tr style="background: #f9f9f9;">
+                                <td colspan="8" style="font-weight: bold; color: #7f8c8d;">▼ 売上見込 (想定単価 ¥30,000)</td>
+                            </tr>
+                            <tr>
+                                <td style="color: #2980b9; font-weight: bold;">想定売上</td>
+                                <td>¥1,020,000</td>
+                                <td>¥1,170,000</td>
+                                <td>¥1,320,000</td>
+                                <td>¥1,500,000</td>
+                                <td>¥1,680,000</td>
+                                <td>¥1,920,000</td>
+                                <td style="color: #2980b9; font-weight: bold; background: #eaf2f8;">¥8,610,000</td>
+                            </tr>
+
+                            <!-- Cost -->
+                            <tr style="background: #f9f9f9;">
+                                <td colspan="8" style="font-weight: bold; color: #7f8c8d;">▼ コスト計画</td>
+                            </tr>
+                            <tr>
+                                <td>PM・全体監修</td>
+                                <td>¥400,000</td>
+                                <td>¥400,000</td>
+                                <td>¥400,000</td>
+                                <td>¥400,000</td>
+                                <td>¥400,000</td>
+                                <td>¥400,000</td>
+                                <td>¥2,400,000</td>
+                            </tr>
+                            <tr>
+                                <td>システム開発</td>
+                                <td>¥300,000</td>
+                                <td>¥300,000</td>
+                                <td>¥300,000</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>¥900,000</td>
+                            </tr>
+                            <tr>
+                                <td>記事制作・運用</td>
+                                <td>¥100,000</td>
+                                <td>¥200,000</td>
+                                <td>¥200,000</td>
+                                <td>¥200,000</td>
+                                <td>¥200,000</td>
+                                <td>¥200,000</td>
+                                <td>¥1,100,000</td>
+                            </tr>
+                            <tr>
+                                <td>その他・予備費</td>
+                                <td>¥200,000</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>¥200,000</td>
+                            </tr>
+                            <tr style="background: #fff3e0;">
+                                <td style="font-weight: bold;">コスト合計</td>
+                                <td style="font-weight: bold;">¥1,000,000</td>
+                                <td style="font-weight: bold;">¥900,000</td>
+                                <td style="font-weight: bold;">¥900,000</td>
+                                <td style="font-weight: bold;">¥600,000</td>
+                                <td style="font-weight: bold;">¥600,000</td>
+                                <td style="font-weight: bold;">¥600,000</td>
+                                <td style="font-weight: bold; color: #d35400;">¥4,600,000</td>
+                            </tr>
+
+                            <!-- Profit -->
+                            <tr style="border-top: 2px solid #34495e;">
+                                <td style="font-weight: bold; background: #34495e; color: #fff;">想定粗利</td>
+                                <td style="font-weight: bold;">¥20,000</td>
+                                <td style="font-weight: bold;">¥270,000</td>
+                                <td style="font-weight: bold;">¥420,000</td>
+                                <td style="font-weight: bold;">¥900,000</td>
+                                <td style="font-weight: bold;">¥1,080,000</td>
+                                <td style="font-weight: bold;">¥1,320,000</td>
+                                <td style="font-weight: bold; background: #f1c40f; color: #333;">¥4,010,000</td>
+                            </tr>
+                            <tr>
+                                <td>利益率</td>
+                                <td>2.0%</td>
+                                <td>23.1%</td>
+                                <td>31.8%</td>
+                                <td>60.0%</td>
+                                <td>64.3%</td>
+                                <td>68.8%</td>
+                                <td style="font-weight: bold;">46.6%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<script>
+    // Simulation Chart (2025 Actuals + 2026 Forecast)
+    const simLabels = ['8月', '9月', '10月', '11月', '12月', '1月(予)', '2月(予)', '3月(予)', '4月(予)', '5月(予)', '6月(予)'];
+    const simSsData = [14933, 17514, 23115, 25610, 31782, 34324, 37070, 40035, 43238, 46697, 50433]; // Actuals + 108% growth
+    const simCvData = [18, 20, 28, 27, 29, 34, 39, 44, 50, 56, 64]; // Actuals + CVR growth to 0.12%
+
+    new Chart(document.getElementById('simulationChart'), {
+        type: 'bar',
+        data: {
+            labels: simLabels,
+            datasets: [
+                {
+                    label: 'PC セッション (目標:月5.5万)',
+                    data: simSsData,
+                    backgroundColor: (ctx) => {
+                        return ctx.dataIndex < 5 ? '#bdc3c7' : '#3498db'; // Gray for 2025, Blue for 2026
+                    },
+                    order: 2,
+                    yAxisID: 'y_ss'
+                },
+                {
+                    label: 'PC CV数 (目標:月66件)',
+                    data: simCvData,
+                    type: 'line',
+                    borderColor: (ctx) => {
+                        return ctx.index < 4 ? '#7f8c8d' : '#e74c3c'; // Gray line for past, Red for future trajectory
+                    },
+                    segment: {
+                        borderColor: ctx => ctx.p0DataIndex < 4 ? '#7f8c8d' : '#e74c3c', // Connect colors
+                        borderDash: ctx => ctx.p0DataIndex >= 4 ? [5, 5] : undefined // Dashed line for forecast
+                    },
+                    borderWidth: 3,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#e74c3c',
+                    fill: false,
+                    order: 1,
+                    yAxisID: 'y_cv'
+                }
+            ]
+        },
+        options: {
+            animation: { duration: 0 },
+            responsive: true,
+            plugins: { 
+                legend: { position: 'bottom' },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += context.parsed.y;
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y_ss: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'PC SS' }, grid: { display: false } },
+                y_cv: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'PC CV' }, grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
+
