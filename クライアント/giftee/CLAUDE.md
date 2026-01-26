@@ -105,10 +105,19 @@ gifteeのコンテンツSS（検索セッション）を増加させるための
 ### ツールURL
 https://aio-pdca-system.vercel.app/
 
-### 改修状況（2026/1/22時点）
+### 改修状況（2026/1/26時点）
 - [x] AIO関連項目の削除
 - [x] Plan/Record/Report：SS特化に変更
-- [x] API作成（fetch.js, generate.js）
+- [x] API作成（fetch.js, generate.js, research.js）
+- [x] **UI改修（1/26完了）**
+  - 目次サイドバー固定（position: sticky）
+  - 操作選択を「新規編集」「既存編集」の2ボタンに分離
+  - 新規編集フローでは引継ぎボタン非表示
+  - モーダルレイアウト修正
+- [x] **競合分析AI Research機能（1/26完了）** ← NEW
+  - 競合記事URL入力（1〜5件）
+  - Claude Haiku + Sonnetでギャップ分析
+  - 追加すべき見出し・内容を自動提案
 - [ ] **AIライティング機能：保留**
   - 問題：Anthropic APIクレジット不足（Maxプランは別）
   - 検討中：プロンプトコピー方式（claude.aiで手動実行）
