@@ -234,7 +234,8 @@ def main():
         return
 
     print("Fetching recent transcripts...")
-    transcripts = get_recent_transcripts(days=1)
+    # 2日分チェック（週末・祝日対応、重複は自動スキップ）
+    transcripts = get_recent_transcripts(days=2)
 
     if not transcripts:
         print("No new transcripts found")
