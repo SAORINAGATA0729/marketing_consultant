@@ -1,3 +1,30 @@
+# macOS
 .DS_Store
 *.tmp
 *~
+
+# Large binary files
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp4
+*.m4a
+*.mp3
+*.wav
+*.mov
+*.zip
+*.tar.gz
+
+# Sensitive
+.env
+*.env
+credentials*.json
+
+# Python
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
