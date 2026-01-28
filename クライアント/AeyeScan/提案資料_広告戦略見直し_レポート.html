@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeyeScan 広告戦略見直しレポート</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <style>
+        /* A4 Landscape Setup */
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #004085;
+            --secondary-color: #64748b;
+            --border-color: #e2e8f0;
+            --text-color: #1e293b;
+            --accent-color: #0056b3;
+            --danger-color: #ef4444;
+            --danger-bg: #fef2f2;
+            --warning-color: #f59e0b;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            line-height: 1.5;
+            color: var(--text-color);
+            background-color: #ccc;
+            margin: 0;
+            padding: 20px;
+            font-size: 13px; /* ベースフォントを少し小さく */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .slide {
+            width: 297mm;
+            height: 210mm;
+            padding: 12mm 15mm; /* 余白を詰めて見切れ防止 */
+            position: relative;
+            background: #fff;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            flex-shrink: 0;
+        }
+
+        .slide-title {
+            font-size: 24px; /* タイトルサイズ調整 */
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .slide-number {
+            font-size: 12px;
+            color: var(--secondary-color);
+        }
+        
+        /* Footer Numbering */
+        .slide-footer {
+            position: absolute;
+            bottom: 10mm;
+            right: 15mm;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .material-icons-round {
+            font-family: 'Material Icons Round';
+            font-size: 28px;
+            vertical-align: middle;
+        }
+
+        h3 {
+            font-size: 16px;
+            color: var(--text-color);
+            margin: 15px 0 10px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 10px;
+            font-weight: 700;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+
+        th {
+            text-align: left;
+            padding: 8px 10px;
+            background-color: #f8fafc;
+            color: var(--secondary-color);
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 8px 10px;
+            border: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        .highlight-box {
+            background: #fef2f2;
+            border-left: 4px solid var(--danger-color);
+            padding: 12px 15px;
+            border-radius: 0 4px 4px 0;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .flex-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .flex-1 {
+            flex: 1;
+        }
+
+        .card {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+            background: #fff;
+        }
+
+        .card-label {
+            font-size: 12px;
+            color: var(--secondary-color);
+        }
+
+        .card-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 5px 0;
+        }
+
+        .card-sub {
+            font-size: 11px;
+            color: var(--secondary-color);
+        }
+
+        .text-danger { color: var(--danger-color); }
+        .text-primary { color: var(--primary-color); }
+        .text-warning { color: var(--warning-color); }
+        .bg-danger { background: var(--danger-bg); }
+        .fw-bold { font-weight: bold; }
+
+        p {
+            margin: 8px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .apology-box {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 6px;
+            padding: 30px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        .choice-box {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+        }
+
+        .choice-box.selected {
+            border: 2px solid var(--primary-color);
+            background: #f0f9ff;
+        }
+
+        .choice-title {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        /* Print Styles */
+        @media print {
+            body { 
+                margin: 0; 
+                padding: 0; 
+                background: none; 
+                display: block;
+            }
+            .slide { 
+                page-break-after: always; 
+                margin: 0; 
+                box-shadow: none;
+                border: none;
+                width: 297mm;
+                height: 210mm;
+            }
+            .slide:last-child {
+                page-break-after: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 表紙 -->
+<div class="slide" style="justify-content: center; align-items: center; text-align: center;">
+    <div style="margin-bottom: 60px;">
+        <p style="font-size: 18px; color: #64748b; margin: 0 0 20px 0;">株式会社エーアイセキュリティラボ 御中</p>
+        <h1 style="font-size: 42px; font-weight: 700; color: #004085; margin: 0; line-height: 1.4;">
+            2026年1月23日の定例に関して
+        </h1>
+        <p style="font-size: 24px; color: #64748b; margin: 30px 0 0 0;">
+            広告戦略見直しのご提案
+        </p>
+    </div>
+    <div style="margin-top: 60px;">
+        <p style="font-size: 16px; color: #64748b; margin: 0;">2026年1月</p>
+        <p style="font-size: 20px; color: #1e293b; margin: 15px 0 0 0; font-weight: bold;">THE MOLTS</p>
+    </div>
+    <div class="slide-footer">1 / 7</div>
+</div>
+
+<!-- スライド1: 謝罪 -->
+<div class="slide">
+    <div style="padding: 10px 30px;">
+        <div class="apology-box">
+            <p style="font-size: 20px; line-height: 1.8; margin: 0 0 20px 0;">
+                1月7日の定例で「予算を5倍にして一般KWで取れるか検証しよう」と決定いただきました。
+                しかし、成果が出なかったことを理由に、<strong>事前のご相談なく広告を抑制してしまいました。</strong>
+            </p>
+            <p style="font-size: 20px; line-height: 1.8; margin: 0;">
+                御社が決定された検証を、一方的に中断したことは、報告・連絡・相談の基本を欠いた行動でした。
+                <strong>深くお詫び申し上げます。</strong>
+            </p>
+        </div>
+
+        <p style="font-size: 18px; margin-top: 30px; line-height: 1.8;">
+            本資料では、何が起きたのか、なぜそうなったのか、今後どうすべきかを整理しました。<br>
+            リード獲得から商談創出という共通のゴールに向けて、改めてご相談させてください。
+        </p>
+    </div>
+    <div class="slide-footer">2 / 7</div>
+</div>
+
+<!-- スライド2: 現状 -->
+<div class="slide">
+    <div class="slide-header">
+        <h2 class="slide-title"><span class="material-icons-round">assessment</span>1. 現状</h2>
+        <span class="slide-number">AeyeScan 広告戦略見直し｜2026年1月</span>
+    </div>
+    <div class="slide-content">
+        <h3>目標と実績のギャップ</h3>
+        <div class="flex-row" style="margin-bottom: 20px;">
+            <div class="flex-1 card" style="background: #f8fafc;">
+                <div class="card-label">目標</div>
+                <div class="card-value text-primary">58件/月</div>
+                <div class="card-sub">指名33 + 一般25</div>
+            </div>
+            <div class="flex-1 card bg-danger">
+                <div class="card-label">1月実績</div>
+                <div class="card-value text-danger">14件</div>
+                <div class="card-sub text-danger">指名14 + 一般0</div>
+            </div>
+        </div>
+
+        <h3>月次推移</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>月</th>
+                    <th>指名</th>
+                    <th>一般</th>
+                    <th>合計</th>
+                    <th>広告費</th>
+                    <th>CPA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>10月</td>
+                    <td>27件</td>
+                    <td>5件</td>
+                    <td>32件</td>
+                    <td>129万円</td>
+                    <td>4.0万円</td>
+                </tr>
+                <tr>
+                    <td>11月</td>
+                    <td>17件</td>
+                    <td class="text-warning">2件</td>
+                    <td>19件</td>
+                    <td>131万円</td>
+                    <td>6.9万円</td>
+                </tr>
+                <tr>
+                    <td>12月</td>
+                    <td>19件</td>
+                    <td class="text-danger fw-bold">0件</td>
+                    <td>19件</td>
+                    <td>103万円</td>
+                    <td>5.4万円</td>
+                </tr>
+                <tr class="bg-danger">
+                    <td><strong>1月</strong></td>
+                    <td>14件</td>
+                    <td class="text-danger fw-bold">0件</td>
+                    <td class="text-danger fw-bold">14件</td>
+                    <td class="text-danger fw-bold">285万円</td>
+                    <td class="text-danger fw-bold">20.4万円</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>1月に何が起きたか</h3>
+        <table>
+            <tr>
+                <td style="width:12%; background:#f8fafc;"><strong>12月</strong></td>
+                <td>一般KW CV=0。競合調査でGMOが3〜10倍の予算をかけていると判明。</td>
+            </tr>
+            <tr>
+                <td style="background:#f8fafc;"><strong>1/7</strong></td>
+                <td>「本当に取れないのか検証しよう」→ 予算5倍に増額して実験開始。</td>
+            </tr>
+            <tr>
+                <td style="background:#f8fafc;"><strong>1/14</strong></td>
+                <td>IS（広告表示率）20%達成。しかしCV=0が続く。</td>
+            </tr>
+            <tr>
+                <td class="bg-danger text-danger"><strong>1/23</strong></td>
+                <td>品質スコアが1〜3と判明。<span class="text-danger fw-bold">→ 報告・相談なく弊社単独で配信を抑制。</span></td>
+            </tr>
+        </table>
+    </div>
+    <div class="slide-footer">3 / 7</div>
+</div>
+
+<!-- スライド3: 原因 -->
+<div class="slide">
+    <div class="slide-header">
+        <h2 class="slide-title"><span class="material-icons-round">search</span>2. 原因</h2>
+        <span class="slide-number">AeyeScan 広告戦略見直し｜2026年1月</span>
+    </div>
+
+    <div class="slide-content">
+        <div class="highlight-box">
+            <strong class="text-danger" style="font-size: 16px;">判明したこと：品質スコアが1〜3（10段階中）と極端に低かった。</strong>
+        </div>
+
+        <div class="flex-row" style="gap: 25px;">
+            <div class="flex-1">
+                <h3>品質スコアとは</h3>
+                <table style="margin-bottom: 5px;">
+                    <thead>
+                        <tr>
+                            <th>構成要素</th>
+                            <th>意味</th>
+                            <th>改善方法</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>① 推定クリック率</td>
+                            <td>広告がクリックされる可能性</td>
+                            <td>広告文とKWの関連性を高める</td>
+                        </tr>
+                        <tr>
+                            <td>② 広告の関連性</td>
+                            <td>検索意図と広告内容の一致度</td>
+                            <td>検索意図に合った広告文に</td>
+                        </tr>
+                        <tr>
+                            <td>③ LPの利便性</td>
+                            <td>LPがユーザーにとって有用か</td>
+                            <td>KWと関連するコンテンツ設計</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 11px; color: #64748b; margin-top: 0;">※品質スコアは7以上あれば理想です。</p>
+
+                <h3>現状の評価</h3>
+                <table>
+                    <tr>
+                        <td style="width:35%;">推定クリック率</td>
+                        <td class="text-danger">平均より下</td>
+                    </tr>
+                    <tr>
+                        <td>広告の関連性</td>
+                        <td class="text-danger">平均どまり</td>
+                    </tr>
+                    <tr>
+                        <td>LPの利便性</td>
+                        <td class="text-warning">平均</td>
+                    </tr>
+                    <tr>
+                        <td>キーワード構造</td>
+                        <td class="text-danger">分散（意図が混在）</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="flex-1">
+                <h3>品質スコアが低いと何が起きるか</h3>
+                <div class="flex-row" style="align-items: center; margin-bottom: 15px;">
+                    <div class="card" style="flex:1;">
+                        <div class="card-label">品質スコア正常時（5以上）</div>
+                        <div style="margin-top:5px; font-size: 12px;">CPC</div>
+                        <div class="card-value" style="color:#10b981; font-size: 24px;">495円</div>
+                    </div>
+                    <div style="padding: 0 5px; font-size: 20px; color: #64748b;">→</div>
+                    <div class="card bg-danger" style="flex:1; border: 2px solid #ef4444;">
+                        <div class="card-label text-danger fw-bold">実際（品質スコア1〜3）</div>
+                        <div style="margin-top:5px; font-size: 12px;">CPC</div>
+                        <div class="card-value text-danger" style="font-size: 24px;">2,381円</div>
+                        <div class="card-sub text-danger">（4.8倍に高騰）</div>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="background: #fffbeb; border-left-color: #f59e0b; color: #333; font-size: 13px;">
+                    <p style="margin:0;">
+                        CPCが高騰したため、<strong>予算を5倍にしてもクリック数は想定の1/5</strong>しか獲得できなかった。<br><br>
+                        <strong>品質スコアを改善しない限り、いくら予算を増やしても効率は上がらない。</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">4 / 7</div>
+</div>
+
+<!-- スライド4: 対策 -->
+<div class="slide">
+    <div class="slide-header">
+        <h2 class="slide-title"><span class="material-icons-round">build</span>3. 対策</h2>
+        <span class="slide-number">AeyeScan 広告戦略見直し｜2026年1月</span>
+    </div>
+
+    <div class="slide-content">
+        <p style="font-size: 14px;">一般KWを継続する場合、品質スコアの改善が必要です。以下の施策をご提案します。</p>
+
+        <h3>品質スコア改善施策（3ステップ）</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:5%; text-align: center;">順</th>
+                    <th style="width:18%;">目標</th>
+                    <th>具体策</th>
+                    <th style="width:12%;">担当</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align:center;"><strong>1</strong></td>
+                    <td>推定クリック率を上げる</td>
+                    <td>
+                        ・広告グループを意図別に分割<br>
+                        ・RSA広告で「選ばれる理由」を明示<br>
+                        ・広告表示オプションの見直し
+                    </td>
+                    <td>東山</td>
+                </tr>
+                <tr>
+                    <td style="text-align:center;"><strong>2</strong></td>
+                    <td>広告の関連性を上げる</td>
+                    <td>
+                        ・検索語句と広告文の一致度向上<br>
+                        ・完全一致/フレーズ一致でKW整理<br>
+                        ・購入クエリの除外・出し分け
+                    </td>
+                    <td>東山</td>
+                </tr>
+                <tr>
+                    <td style="text-align:center;"><strong>3</strong></td>
+                    <td>LPの利便性を上げる</td>
+                    <td>
+                        <strong>【課題】</strong>一般KWユーザーはAeyeScanを知らない。LPを読まずにフォームへ→離脱<br>
+                        <strong>【改善案】</strong>自分ごと化できるストーリー構成に変更<br>
+                        　①こんな課題で悩んでませんか？（共感）→ ②AeyeScanなら解決できます（解決策）<br>
+                        　→ ③他社も使っています（事例・信頼）→ ④資料DLしてお話聞いてみませんか（CTA）
+                    </td>
+                    <td>永田・西・伊藤</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="slide-footer">5 / 7</div>
+</div>
+
+<!-- スライド5: 判断ポイント -->
+<div class="slide">
+    <div class="slide-header">
+        <h2 class="slide-title"><span class="material-icons-round">gavel</span>4. 判断ポイント</h2>
+        <span class="slide-number">AeyeScan 広告戦略見直し｜2026年1月</span>
+    </div>
+
+    <div class="slide-content">
+        <p style="font-size: 14px; margin-bottom: 20px;">
+            今回の検証で「品質スコアが低い」ことが判明しました。<br>
+            品質スコアを改善すれば成果が出る可能性はありますが、改善には時間とコストがかかります。<br>
+            <strong>一般KWに投資を続けるか、指名KW+他施策に集中するか</strong>をご相談させてください。
+        </p>
+
+        <h3>選択肢</h3>
+        <div class="flex-row" style="margin-bottom: 25px;">
+            <div class="flex-1 choice-box">
+                <div class="choice-title">A. 一般KWを継続</div>
+                <div style="font-size: 14px; color: #64748b;">
+                    品質スコア改善に取り組み、成果を出す
+                </div>
+            </div>
+            <div class="flex-1 choice-box selected">
+                <div class="choice-title">B. 一般KWから撤退</div>
+                <div style="font-size: 14px; color: #64748b;">
+                    指名KWに集中し、他施策などに投資
+                </div>
+            </div>
+        </div>
+
+        <h3>撤退ライン（Aを選択する場合）</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:15%;">期限</th>
+                    <th>確認項目</th>
+                    <th>達成基準</th>
+                    <th>未達の場合</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>3月末</strong></td>
+                    <td>品質スコア（3要素すべて）</td>
+                    <td>平均以上に改善</td>
+                    <td class="text-danger fw-bold">一般KW撤退</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="slide-footer">6 / 7</div>
+</div>
+
+<!-- スライド6: 計画 -->
+<div class="slide">
+    <div class="slide-header">
+        <h2 class="slide-title"><span class="material-icons-round">event</span>5. 計画</h2>
+        <span class="slide-number">AeyeScan 広告戦略見直し｜2026年1月</span>
+    </div>
+
+    <div class="slide-content">
+        <h3>次のアクション</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:5%;">#</th>
+                    <th>アクション</th>
+                    <th style="width:15%;">担当</th>
+                    <th style="width:12%;">期限</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background:#fffbeb;">
+                    <td><strong>1</strong></td>
+                    <td><strong>一般KWの方針を決定（A継続 or B撤退）</strong></td>
+                    <td>御社</td>
+                    <td>要相談</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="flex-row" style="gap: 25px; margin-top: 25px;">
+            <div class="flex-1">
+                <h3>A（継続）選択時のスケジュール</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:20%;">時期</th>
+                            <th>アクション</th>
+                            <th style="width:35%;">判断ポイント</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>2月</strong></td>
+                            <td>
+                                ・品質スコア改善施策の実行<br>
+                                ・LP改善案の作成
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3月末</strong></td>
+                            <td>品質スコア評価</td>
+                            <td class="bg-danger"><strong class="text-danger">3要素すべて平均以上 → 継続<br>未達 → 撤退</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flex-1">
+                <h3>B（撤退）選択時</h3>
+                <div class="card" style="text-align: left; padding: 20px; border: 2px solid var(--accent-color); background: #f0f9ff;">
+                    <p style="margin: 0; font-weight: bold; color: var(--primary-color);">
+                        広告施策では指名KWに集中。その他の足りない数値に関しては、他施策（純広告・比較サイトなど）にて補填する形でご提案させていただきたい。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">7 / 7</div>
+</div>
+
+</body>
+</html>

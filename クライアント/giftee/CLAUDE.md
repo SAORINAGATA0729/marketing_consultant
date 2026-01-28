@@ -103,7 +103,7 @@ gifteeのコンテンツSS（検索セッション）を増加させるための
 - ギャップ：+29,965 SS/月
 
 ### ツールURL
-https://aio-pdca-system.vercel.app/
+https://aio-friendly.vercel.app/
 
 ### 改修状況（2026/1/26時点）
 - [x] AIO関連項目の削除
@@ -132,3 +132,18 @@ https://aio-pdca-system.vercel.app/
 - 「giftee FAQ」→ FAQコンテンツ作成の続き
 - 「Circuitの続き」→ AIO_PDCA爆速システム/CLAUDE.md を読んで続行
 - 「giftee SS改修」→ 同上
+
+---
+
+## 寺倉ナレッジ活用
+
+寺倉さんのナレッジをgiftee戦略に適用できる箇所：
+
+| 寺倉メソッド | gifteeでの活用 | 状況 |
+|-------------|--------------|------|
+| **FAQ作成（1問1ページ）** | ペルソナ別FAQ記事 | ✅実施中 |
+| **LLMO対策** | AIに選ばれるコンテンツ構造 | ✅実施中 |
+| **AIコーディング支援** | Circuit機能拡張 | 検討中 |
+| **カスタマージャーニー理解** | BtoB向けCTA出し分け | 設計済み |
+
+**呼び出し**: `/terakura-perspective gifteeの〇〇` で寺倉視点アドバイス取得
