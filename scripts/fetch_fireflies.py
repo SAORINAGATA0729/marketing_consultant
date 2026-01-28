@@ -133,9 +133,15 @@ def detect_client(title):
     return best_match or "その他/議事録"
 
 
-def format_date(date_str):
-    """日付をYYMMDD形式に変換"""
-    dt = datetime.fromisoformat(date_str.replace("Z", "+00:00"))
+def format_date(date_val):
+    """日付をYYMMDD形式に変換（ISO文字列またはUnixタイムスタンプ対応）"""
+    if isinstance(date_val, int):
+        # Unixタイムスタンプ（ミリ秒の場合は秒に変換）
+        if date_val > 10000000000:
+            date_val = date_val / 1000
+        dt = datetime.fromtimestamp(date_val)
+    else:
+        dt = datetime.fromisoformat(str(date_val).replace("Z", "+00:00"))
     return dt.strftime("%y%m%d")
 
 
