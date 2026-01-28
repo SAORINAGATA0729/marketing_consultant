@@ -1,0 +1,23 @@
+name: Weekly Summary Reminder
+
+on:
+  schedule:
+    # 毎週月曜 10:00（JST）= UTC 01:00
+    - cron: '0 1 * * 1'
+  workflow_dispatch:
+    # 手動実行も可能
+
+jobs:
+  send-reminder:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send Slack Notification
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+            --data '{
+              "text": "📊 *週次サマリーの時間です*\n\nClaude Codeで `/weekly-summary` を実行してください。\n\n• 寺倉ナレッジの今週の会議\n• 各クライアントの進捗\n• 寺倉メソッド適用状況\n\nをまとめたサマリーが生成されます。"
+            }' \
+            $SLACK_WEBHOOK_URL
